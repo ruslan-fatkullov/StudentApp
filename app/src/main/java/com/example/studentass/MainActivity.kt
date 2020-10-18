@@ -24,7 +24,8 @@ class MainActivity : AppCompatActivity() {
         var name : String = editTextName?.text.toString()
         var pincode : String = editTextPincode?.text.toString()
 
-        Toast.makeText(this, "Name: " + name + ";   Pincode: " + pincode, Toast.LENGTH_SHORT).show()
+        var message : String = "Name: " + name + "   Pincode: " + pincode
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
 
