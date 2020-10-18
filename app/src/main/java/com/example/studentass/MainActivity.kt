@@ -10,22 +10,35 @@ import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
     private var editTextName : EditText? = null
-    private var editTextPincode : EditText? = null
+    private var editTextPassword : EditText? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         editTextName = findViewById(R.id.editTextName)
-        editTextPincode = findViewById(R.id.editTextPincode)
+        editTextPassword = findViewById(R.id.editTextPassword)
     }
 
     fun onButtonLoginClick(view: View) {
-        var name : String = editTextName?.text.toString()
-        var pincode : String = editTextPincode?.text.toString()
+        try {
+            var name : String = editTextName?.text.toString()
+            var password : String = editTextPassword?.text.toString()
 
-        var message : String = "Name: " + name + "    Pincode: " + pincode
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+            if (name.length < 1)
+                throw Exception("Не указано имя пользователя")
+            if (name.indexOf(' ', 0, true) != -1)
+                throw Exception("Имя пользователя содержит недопустимые символы")
+            if (password.length < 1)
+                throw Exception("Не указан пароль")
+
+            var message : String = "Name: " + name + "    Pincode: " + password
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        }
+        catch (e: Exception) {
+            var errorMessage : String = "Ошибка: " + e.message
+            Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
+        }
     }
 
 
