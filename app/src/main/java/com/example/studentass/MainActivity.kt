@@ -1,12 +1,11 @@
 package com.example.studentass
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
-import android.os.Debug
-import android.os.Message
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
     private var editTextEmail : EditText? = null
@@ -33,7 +32,11 @@ class MainActivity : AppCompatActivity() {
                 throw Exception("Не указан пароль")
 
             var message : String = "Почта: " + email + "    Пароль: " + password
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+
+            val intentActivity = Intent(this, MainActivity2::class.java)
+            intentActivity.putExtra(MainActivity2.MESSAGE, message)
+            startActivity(intentActivity)
         }
         catch (e: Exception) {
             var errorMessage : String = "Ошибка: " + e.message
