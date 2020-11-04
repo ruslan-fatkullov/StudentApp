@@ -1,27 +1,58 @@
 package com.example.studentass
 
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import androidx.annotation.RequiresApi
+import java.net.HttpURLConnection
+import java.net.URL
+import kotlin.concurrent.thread
 
 class MainActivity2 : AppCompatActivity() {
+    var textViewMessage : TextView? = null
+
     companion object {
         const val MESSAGE = "message"
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main2)
 
+        textViewMessage = findViewById(R.id.textViewMessage)
+
+
         val message = intent.getStringExtra(MESSAGE)
-        val textViewMessage : TextView = findViewById(R.id.textViewMessage)
-        textViewMessage.text = message
+        //textViewMessage?.text = message
+        thread {
+            textViewMessage?.text = sendGet("https://postman-echo.com/get")
+        }
     }
 
     fun onButtonBackClick(view: View) {
         val intentActivity = Intent(this, MainActivity::class.java)
         startActivity(intentActivity)
+    }
+
+    fun sendGet(url : String) : String {
+        val url = URL(url)
+        var responceStr : String;
+        with(url.openConnection() as HttpURLConnection) {
+            requestMethod = "GET"  // optional default is GET
+
+            responceStr = inputStream.use { it.reader().use { reader -> reader.readText() } }
+            //println("\nSent 'GET' request to URL : $url; Response Code : $responseCode")
+
+            /*inputStream.bufferedReader().use {
+                it.lines().forEach { line ->
+                    println(line)
+                }
+            }*/
+        }
+        return responceStr;
     }
 }
