@@ -18,20 +18,19 @@ class MainActivity2 : AppCompatActivity() {
         const val MESSAGE = "message"
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main2)
 
-        textViewMessage = findViewById(R.id.textViewMessage)
+        //textViewMessage = findViewById(R.id.textViewMessage)
 
 
         val message = intent.getStringExtra(MESSAGE)
         //textViewMessage?.text = message
-        thread {
+        /*thread {
             textViewMessage?.text = sendGet("https://my-json-server.typicode.com/fridayeveryday/testService/test")
             //textViewMessage?.text = sendGet("https://4b7af1df-c62e-49e5-b0a5-929837fb7e36.mock.pstmn.io/group/?name_group=testgrp")
-        }
+        }*/
     }
 
     fun onButtonBackClick(view: View) {
