@@ -29,7 +29,8 @@ class MainActivity2 : AppCompatActivity() {
         val message = intent.getStringExtra(MESSAGE)
         //textViewMessage?.text = message
         thread {
-            textViewMessage?.text = sendGet("https://postman-echo.com/get")
+            textViewMessage?.text = sendGet("https://my-json-server.typicode.com/fridayeveryday/testService/test")
+            //textViewMessage?.text = sendGet("https://4b7af1df-c62e-49e5-b0a5-929837fb7e36.mock.pstmn.io/group/?name_group=testgrp")
         }
     }
 
