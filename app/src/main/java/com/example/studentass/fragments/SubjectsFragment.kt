@@ -10,7 +10,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.studentass.MainActivity
 import com.example.studentass.MainActivity2
+import com.example.studentass.Questions
 import com.example.studentass.R
+import com.google.gson.GsonBuilder
+import kotlinx.android.synthetic.main.fragment_schedule.*
 import kotlinx.android.synthetic.main.fragment_subjects.*
 import kotlin.concurrent.thread
 
@@ -50,10 +53,10 @@ class SubjectsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         thread {
-            val text = MainActivity.sendGet("https://4b7af1df-c62e-49e5-b0a5-929837fb7e36.mock.pstmn.io/group/?name_group=testgrp")
-            MainActivity.mHandler.post({
-                subjectsTestTV?.text = text
-            })
+            val jsonString = MainActivity.sendGet("https://4b7af1df-c62e-49e5-b0a5-929837fb7e36.mock.pstmn.io/group/?name_group=testgrp")
+            MainActivity.mHandler.post {
+                subjectsTestTV?.text = jsonString
+            }
         }
 
 

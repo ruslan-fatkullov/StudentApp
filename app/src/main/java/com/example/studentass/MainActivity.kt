@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.gson.GsonBuilder
 import java.net.HttpURLConnection
 import java.net.URL
 
@@ -23,11 +24,6 @@ class MainActivity : AppCompatActivity() {
                 responseStr = inputStream.use { it.reader().use { reader -> reader.readText() } }
             }
             return responseStr;
-        }
-
-        fun serialize(jsonString: String) {
-            //val obj = JSON.parse(MyModel.serializer(), """{"a":42}""")
-            //println(obj) // MyModel(a=42, b="42")
         }
     }
 
@@ -70,4 +66,5 @@ class MainActivity : AppCompatActivity() {
 
 }
 
-data class MyModel(val a: Int, val b: String)
+class Questions(val subject : String, val questions : List<Question>)
+class Question(val id : Int, val question : String, val answers : List<String>)
