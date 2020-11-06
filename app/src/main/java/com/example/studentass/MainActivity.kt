@@ -2,12 +2,35 @@ package com.example.studentass
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import java.net.HttpURLConnection
+import java.net.URL
 
 class MainActivity : AppCompatActivity() {
+    companion object {
+        val mHandler : Handler = Handler(Looper.getMainLooper())
+
+        fun sendGet(url : String) : String {
+            val url = URL(url)
+            var responseStr : String;
+            with(url.openConnection() as HttpURLConnection) {
+                requestMethod = "GET"  // optional default is GET
+                responseStr = inputStream.use { it.reader().use { reader -> reader.readText() } }
+            }
+            return responseStr;
+        }
+
+        fun serialize(jsonString: String) {
+            //val obj = JSON.parse(MyModel.serializer(), """{"a":42}""")
+            //println(obj) // MyModel(a=42, b="42")
+        }
+    }
+
     private var editTextEmail : EditText? = null
     private var editTextPassword : EditText? = null
 
@@ -46,3 +69,5 @@ class MainActivity : AppCompatActivity() {
 
 
 }
+
+data class MyModel(val a: Int, val b: String)

@@ -23,31 +23,12 @@ class MainActivity2 : AppCompatActivity() {
 
     companion object {
         const val MESSAGE = "message"
-
-        fun sendGet(url : String) : String {
-            val url = URL(url)
-            var responceStr : String;
-            with(url.openConnection() as HttpURLConnection) {
-                requestMethod = "GET"  // optional default is GET
-
-                responceStr = inputStream.use { it.reader().use { reader -> reader.readText() } }
-                //println("\nSent 'GET' request to URL : $url; Response Code : $responseCode")
-
-                /*inputStream.bufferedReader().use {
-                    it.lines().forEach { line ->
-                        println(line)
-                    }
-                }*/
-            }
-            return responceStr;
-        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main2)
 
-        //textViewMessage = findViewById(R.id.textViewMessage)
         bnv = findViewById(R.id.bottomNavigationView)
 
         val scheduleFragment = ScheduleFragment()
@@ -67,11 +48,6 @@ class MainActivity2 : AppCompatActivity() {
 
 
         val message = intent.getStringExtra(MESSAGE)
-        //textViewMessage?.text = message
-        /*thread {
-            textViewMessage?.text = sendGet("https://my-json-server.typicode.com/fridayeveryday/testService/test")
-            //textViewMessage?.text = sendGet("https://4b7af1df-c62e-49e5-b0a5-929837fb7e36.mock.pstmn.io/group/?name_group=testgrp")
-        }*/
     }
 
     fun onButtonBackClick(view: View) {

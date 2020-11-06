@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.example.studentass.MainActivity
 import com.example.studentass.MainActivity2
 import com.example.studentass.R
 import kotlinx.android.synthetic.main.fragment_schedule.*
@@ -48,14 +49,11 @@ class ScheduleFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        val mainHandler : Handler = Handler(Looper.getMainLooper())
         thread {
-            val text = MainActivity2.sendGet("https://my-json-server.typicode.com/fridayeveryday/testService/test")
-            val gsRunnable = Runnable {
+            val text = MainActivity.sendGet("https://my-json-server.typicode.com/fridayeveryday/testService/test")
+            MainActivity.mHandler.post({
                 scheduleTestTV?.text = text
-            }
-            mainHandler.post(gsRunnable)
+            })
         }
 
     }
