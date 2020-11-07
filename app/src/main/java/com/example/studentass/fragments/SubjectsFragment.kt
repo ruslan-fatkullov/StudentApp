@@ -13,6 +13,7 @@ import com.example.studentass.MainActivity2
 import com.example.studentass.Questions
 import com.example.studentass.R
 import com.google.gson.GsonBuilder
+import kotlinx.android.synthetic.main.fragment_notifications.*
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import kotlinx.android.synthetic.main.fragment_subjects.*
 import kotlin.concurrent.thread
@@ -52,14 +53,14 @@ class SubjectsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Получение тестовых вопросов из сервиса
         thread {
-            val jsonString = MainActivity.sendGet("https://4b7af1df-c62e-49e5-b0a5-929837fb7e36.mock.pstmn.io/group/?name_group=testgrp")
+            val questionsJsonString = MainActivity.sendGet("https://my-json-server.typicode.com/fridayeveryday/testService/test")
+            val questions = GsonBuilder().create().fromJson(questionsJsonString, Questions::class.java)
             MainActivity.mHandler.post {
-                subjectsTestTV?.text = jsonString
+                notificationsTestTV?.text = GsonBuilder().create().toJson(questions)
             }
         }
-
-
     }
 
     companion object {
