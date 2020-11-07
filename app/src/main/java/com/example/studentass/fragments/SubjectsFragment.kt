@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.studentass.MainActivity
 import com.example.studentass.MainActivity2
-import com.example.studentass.Questions
 import com.example.studentass.R
 import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.fragment_notifications.*
@@ -53,14 +52,7 @@ class SubjectsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Получение тестовых вопросов из сервиса
-        thread {
-            val questionsJsonString = MainActivity.sendGet("https://my-json-server.typicode.com/fridayeveryday/testService/test")
-            val questions = GsonBuilder().create().fromJson(questionsJsonString, Questions::class.java)
-            MainActivity.mHandler.post {
-                notificationsTestTV?.text = GsonBuilder().create().toJson(questions)
-            }
-        }
+
     }
 
     companion object {

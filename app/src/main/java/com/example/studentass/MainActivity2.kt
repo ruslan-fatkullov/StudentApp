@@ -70,20 +70,6 @@ class MainActivity2 : AppCompatActivity() {
             true
         }
 
-        // Получение данных из сервисов
-        thread {
-            // Расписание
-            val scheduleJsonString = MainActivity.sendGet("https://4b7af1df-c62e-49e5-b0a5-929837fb7e36.mock.pstmn.io/group/?name_group=testgrp")
-            MainActivity.mHandler.post {
-                scheduleTestTV?.text = scheduleJsonString
-            }
-            // Тестовые вопросы
-            val questionsJsonString = MainActivity.sendGet("https://my-json-server.typicode.com/fridayeveryday/testService/test")
-            val questions = GsonBuilder().create().fromJson(questionsJsonString, Questions::class.java)
-            MainActivity.mHandler.post {
-                notificationsTestTV?.text = GsonBuilder().create().toJson(questions)
-            }
-        }
         //val message = intent.getStringExtra(MESSAGE)
     }
 

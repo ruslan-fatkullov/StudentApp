@@ -65,6 +65,3 @@ class MainActivity : AppCompatActivity() {
 
 
 }
-
-class Questions(val subject : String, val questions : List<Question>)
-class Question(val id : Int, val question : String, val answers : List<String>)

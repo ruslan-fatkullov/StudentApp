@@ -10,8 +10,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.example.studentass.MainActivity
 import com.example.studentass.MainActivity2
-import com.example.studentass.Questions
 import com.example.studentass.R
+import com.example.studentass.models.Schedule
 import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.fragment_notifications.*
 import kotlinx.android.synthetic.main.fragment_schedule.*
@@ -54,9 +54,10 @@ class ScheduleFragment : Fragment() {
 
         // Получение расписания из сервиса
         thread {
-            val scheduleJsonString = MainActivity.sendGet("https://4b7af1df-c62e-49e5-b0a5-929837fb7e36.mock.pstmn.io/group/?name_group=testgrp")
+            val scheduleJsonString = MainActivity.sendGet("https://my-json-server.typicode.com/AntonScript/schedule-service/GroupStudent")
+            val schedule = GsonBuilder().create().fromJson(scheduleJsonString, Schedule::class.java)
             MainActivity.mHandler.post {
-                scheduleTestTV?.text = scheduleJsonString
+                scheduleTestTV?.text = GsonBuilder().create().toJson(schedule)
             }
         }
     }

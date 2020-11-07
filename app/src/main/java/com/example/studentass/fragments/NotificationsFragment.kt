@@ -5,7 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.studentass.MainActivity
 import com.example.studentass.R
+import com.example.studentass.models.Questions
+import com.google.gson.GsonBuilder
+import kotlinx.android.synthetic.main.fragment_notifications.*
+import kotlin.concurrent.thread
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -27,6 +32,19 @@ class NotificationsFragment : Fragment() {
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Получение тестовых вопросов из сервиса
+        thread {
+            val questionsJsonString = MainActivity.sendGet("https://my-json-server.typicode.com/fridayeveryday/testService/test")
+            val questions = GsonBuilder().create().fromJson(questionsJsonString, Questions::class.java)
+            MainActivity.mHandler.post {
+                notificationsTestTV?.text = GsonBuilder().create().toJson(questions)
+            }
         }
     }
 
