@@ -54,10 +54,16 @@ class ScheduleFragment : Fragment() {
 
         // Получение расписания из сервиса
         thread {
-            val scheduleJsonString = MainActivity.sendGet("https://my-json-server.typicode.com/AntonScript/schedule-service/GroupStudent")
-            val schedule = GsonBuilder().create().fromJson(scheduleJsonString, Schedule::class.java)
+            var text : String
+            try {
+                val scheduleJsonString = MainActivity.sendGet("https://my-json-server.typicode.com/AntonScript/schedule-service/GroupStudent")
+                val schedule = GsonBuilder().create().fromJson(scheduleJsonString, Schedule::class.java)
+                text = GsonBuilder().create().toJson(schedule)
+            } catch (e : Exception) {
+                text = e.toString()
+            }
             MainActivity.mHandler.post {
-                scheduleTestTV?.text = GsonBuilder().create().toJson(schedule)
+                scheduleTestTV?.text = text
             }
         }
     }

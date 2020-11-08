@@ -7,9 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.studentass.MainActivity
 import com.example.studentass.R
-import com.example.studentass.models.Questions
+import com.example.studentass.models.Schedule
+import com.example.studentass.models.Test
 import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.fragment_notifications.*
+import kotlinx.android.synthetic.main.fragment_schedule.*
 import kotlin.concurrent.thread
 
 // TODO: Rename parameter arguments, choose names that match
@@ -40,10 +42,16 @@ class NotificationsFragment : Fragment() {
 
         // Получение тестовых вопросов из сервиса
         thread {
-            val questionsJsonString = MainActivity.sendGet("https://my-json-server.typicode.com/fridayeveryday/testService/test")
-            val questions = GsonBuilder().create().fromJson(questionsJsonString, Questions::class.java)
+            var text : String
+            try {
+                val questionsJsonString = MainActivity.sendGet("https://my-json-server.typicode.com/fridayeveryday/testService/test")
+                val questions = GsonBuilder().create().fromJson(questionsJsonString, Test::class.java)
+                text = GsonBuilder().create().toJson(questions)
+            } catch (e : Exception) {
+                text = e.toString()
+            }
             MainActivity.mHandler.post {
-                notificationsTestTV?.text = GsonBuilder().create().toJson(questions)
+                notificationsTestTV?.text = text
             }
         }
     }

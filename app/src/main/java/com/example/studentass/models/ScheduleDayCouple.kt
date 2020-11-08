@@ -1,8 +1,8 @@
 package com.example.studentass.models
 
 class ScheduleDayCouple(
-    val id : Int,
-    val day_id : Int,
+    val id : Long,
+    val day_id : Long,
     val pair_number : Int,
     val teacher : String,
     val subject : String,
