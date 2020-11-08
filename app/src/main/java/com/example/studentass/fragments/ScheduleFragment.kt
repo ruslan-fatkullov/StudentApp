@@ -7,10 +7,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.studentass.MainActivity
 import com.example.studentass.MainActivity2
 import com.example.studentass.R
+import com.example.studentass.adapters.ScheduleDaysLayoutAdapter
+import com.example.studentass.adapters.ScheduleDaysLayoutItem
 import com.example.studentass.models.Schedule
 import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.fragment_notifications.*
@@ -52,6 +56,18 @@ class ScheduleFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        var days = ArrayList<ScheduleDaysLayoutItem>()
+        days.add(ScheduleDaysLayoutItem("ПН", "0"))
+        days.add(ScheduleDaysLayoutItem("ВТ", "0"))
+        days.add(ScheduleDaysLayoutItem("СР", "0"))
+        days.add(ScheduleDaysLayoutItem("ЧТ", "0"))
+        days.add(ScheduleDaysLayoutItem("ПТ", "0"))
+        days.add(ScheduleDaysLayoutItem("СБ", "0"))
+        days.add(ScheduleDaysLayoutItem("ВС", "0"))
+        scheduleDaysLayout.hasFixedSize()
+        scheduleDaysLayout.layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.HORIZONTAL, false)
+        scheduleDaysLayout.adapter = ScheduleDaysLayoutAdapter(context!!, days)
+
         // Получение расписания из сервиса
         thread {
             var text : String
@@ -63,7 +79,7 @@ class ScheduleFragment : Fragment() {
                 text = e.toString()
             }
             MainActivity.mHandler.post {
-                scheduleTestTV?.text = text
+                //scheduleTestTV?.text = text
             }
         }
     }

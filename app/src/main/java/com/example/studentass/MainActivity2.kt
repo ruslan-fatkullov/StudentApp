@@ -31,7 +31,6 @@ class MainActivity2 : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main2)
 
-        bnv = findViewById(R.id.bottomNavigationView)
         val scheduleFragment = ScheduleFragment()
         val subjectsFragment = SubjectsFragment()
         val notificationsFragment = NotificationsFragment()
@@ -42,8 +41,6 @@ class MainActivity2 : AppCompatActivity() {
 
         supportFragmentManager.beginTransaction().hide(subjectsFragment).commit()
         supportFragmentManager.beginTransaction().hide(notificationsFragment).commit()
-
-        //makeCurrentFragment(scheduleFragment)
 
         bottomNavigationView.setOnNavigationItemSelectedListener {
 
