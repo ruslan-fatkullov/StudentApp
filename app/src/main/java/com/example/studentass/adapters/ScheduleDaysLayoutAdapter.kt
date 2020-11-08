@@ -7,9 +7,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studentass.R
+import kotlinx.android.synthetic.main.fragment_schedule.*
 import kotlinx.android.synthetic.main.schedule_days_layout_item.view.*
 
-class ScheduleDaysLayoutAdapter (context : Context, scheduleDaysLayoutItems: ArrayList<ScheduleDaysLayoutItem>) : RecyclerView.Adapter<ScheduleDaysLayoutAdapter.ViewHolder>() {
+class ScheduleDaysLayoutAdapter (val context : Context, val scheduleDaysLayoutItems: ArrayList<ScheduleDaysLayoutItem>) : RecyclerView.Adapter<ScheduleDaysLayoutAdapter.ViewHolder>() {
     class ViewHolder(var view : View) : RecyclerView.ViewHolder(view) {
         val dayOfWeekTextView = view.dayOfWeekTextView
         val dayTextView = view.dayTextView
@@ -24,23 +25,20 @@ class ScheduleDaysLayoutAdapter (context : Context, scheduleDaysLayoutItems: Arr
         }
     }
 
-    var daysItems = scheduleDaysLayoutItems
-    var contextR = context
-
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): ScheduleDaysLayoutAdapter.ViewHolder {
-        val inflater = LayoutInflater.from(contextR)
+        val inflater = LayoutInflater.from(context)
         return  ViewHolder(inflater.inflate(R.layout.schedule_days_layout_item, parent, false))
     }
 
     override fun getItemCount(): Int {
-        return daysItems.size
+        return scheduleDaysLayoutItems.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        var daysItem = daysItems.get(position)
-        holder.bind(daysItem, contextR)
+        var daysItem = scheduleDaysLayoutItems.get(position)
+        holder.bind(daysItem, context)
     }
 }

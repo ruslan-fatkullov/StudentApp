@@ -56,6 +56,7 @@ class ScheduleFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        var defaultItemFocusId = 3
         var days = ArrayList<ScheduleDaysLayoutItem>()
         days.add(ScheduleDaysLayoutItem("ПН", "0"))
         days.add(ScheduleDaysLayoutItem("ВТ", "0"))
@@ -67,6 +68,12 @@ class ScheduleFragment : Fragment() {
         scheduleDaysLayout.hasFixedSize()
         scheduleDaysLayout.layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.HORIZONTAL, false)
         scheduleDaysLayout.adapter = ScheduleDaysLayoutAdapter(context!!, days)
+        scheduleDaysLayout.viewTreeObserver.addOnGlobalLayoutListener {
+            val view = scheduleDaysLayout.getChildAt(defaultItemFocusId)
+            val viewHolder = scheduleDaysLayout.findContainingViewHolder(view)
+            viewHolder?.itemView?.requestFocus()
+        }
+
 
         // Получение расписания из сервиса
         thread {
