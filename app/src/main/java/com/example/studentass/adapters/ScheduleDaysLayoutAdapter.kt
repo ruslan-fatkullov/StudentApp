@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studentass.R
-import kotlinx.android.synthetic.main.fragment_schedule.*
 import kotlinx.android.synthetic.main.schedule_days_layout_item.view.*
 
 class ScheduleDaysLayoutAdapter (val context : Context, val scheduleDaysLayoutItems: ArrayList<ScheduleDaysLayoutItem>) : RecyclerView.Adapter<ScheduleDaysLayoutAdapter.ViewHolder>() {

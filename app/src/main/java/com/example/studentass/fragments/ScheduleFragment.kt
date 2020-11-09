@@ -1,25 +1,21 @@
 package com.example.studentass.fragments
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.studentass.MainActivity
-import com.example.studentass.MainActivity2
 import com.example.studentass.R
 import com.example.studentass.adapters.ScheduleDaysLayoutAdapter
 import com.example.studentass.adapters.ScheduleDaysLayoutItem
+import com.example.studentass.adapters.SchedulePairsRvAdapter
+import com.example.studentass.adapters.SchedulePairsRvItem
 import com.example.studentass.models.Schedule
 import com.google.gson.GsonBuilder
-import kotlinx.android.synthetic.main.fragment_notifications.*
 import kotlinx.android.synthetic.main.fragment_schedule.*
-import kotlinx.android.synthetic.main.fragment_subjects.*
 import kotlin.concurrent.thread
 
 // TODO: Rename parameter arguments, choose names that match
@@ -36,6 +32,8 @@ class ScheduleFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+
+    private var schedule: Schedule? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,14 +63,20 @@ class ScheduleFragment : Fragment() {
         days.add(ScheduleDaysLayoutItem("ПТ", "0"))
         days.add(ScheduleDaysLayoutItem("СБ", "0"))
         days.add(ScheduleDaysLayoutItem("ВС", "0"))
-        scheduleDaysLayout.hasFixedSize()
-        scheduleDaysLayout.layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.HORIZONTAL, false)
-        scheduleDaysLayout.adapter = ScheduleDaysLayoutAdapter(context!!, days)
-        scheduleDaysLayout.viewTreeObserver.addOnGlobalLayoutListener {
-            val view = scheduleDaysLayout.getChildAt(defaultItemFocusId)
-            val viewHolder = scheduleDaysLayout.findContainingViewHolder(view)
+        scheduleDaysRv.hasFixedSize()
+        scheduleDaysRv.layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.HORIZONTAL, false)
+        scheduleDaysRv.adapter = ScheduleDaysLayoutAdapter(context!!, days)
+        scheduleDaysRv.viewTreeObserver.addOnGlobalLayoutListener {
+            val view = scheduleDaysRv.getChildAt(defaultItemFocusId)
+            val viewHolder = scheduleDaysRv.findContainingViewHolder(view)
             viewHolder?.itemView?.requestFocus()
         }
+
+        var pairs = ArrayList<SchedulePairsRvItem>()
+        pairs.add(SchedulePairsRvItem("Основы автоматики", "19:34-21:04", "3-312","Игонин А.Г.", "Лекция", "блаблабла"))
+        schedulePairsRv.hasFixedSize()
+        schedulePairsRv.layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
+        schedulePairsRv.adapter = SchedulePairsRvAdapter(context!!, pairs)
 
 
         // Получение расписания из сервиса
@@ -80,12 +84,13 @@ class ScheduleFragment : Fragment() {
             var text : String
             try {
                 val scheduleJsonString = MainActivity.sendGet("https://my-json-server.typicode.com/AntonScript/schedule-service/GroupStudent")
-                val schedule = GsonBuilder().create().fromJson(scheduleJsonString, Schedule::class.java)
-                text = GsonBuilder().create().toJson(schedule)
+                val scheduleObject = GsonBuilder().create().fromJson(scheduleJsonString, Schedule::class.java)
+                schedule = scheduleObject
             } catch (e : Exception) {
-                text = e.toString()
+                Toast.makeText(context, "Schedule init error: $e", Toast.LENGTH_LONG).show()
             }
             MainActivity.mHandler.post {
+
                 //scheduleTestTV?.text = text
             }
         }
