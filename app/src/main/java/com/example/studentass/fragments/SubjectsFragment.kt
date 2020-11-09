@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import com.example.studentass.MainActivity
 import com.example.studentass.MainActivity2
 import com.example.studentass.R
+import com.example.studentass.models.Schedule
 import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.fragment_notifications.*
 import kotlinx.android.synthetic.main.fragment_schedule.*
@@ -52,7 +53,22 @@ class SubjectsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
+        // Получение расписания из сервиса
+        thread {
+            var text : String
+            try {
+                val scheduleJsonString = MainActivity.sendGet("https://my-json-server.typicode.com/AntonScript/schedule-service/GroupStudent")
+                val scheduleObject = GsonBuilder().create().fromJson(scheduleJsonString, Schedule::class.java)
+                //schedule = scheduleObject
+                text = GsonBuilder().create().toJson(scheduleObject)
+            } catch (e : Exception) {
+                //Toast.makeText(context, "Schedule init error: $e", Toast.LENGTH_LONG).show()
+                text = e.toString()
+            }
+            MainActivity.mHandler.post {
+                subjectsTestTV?.text = text
+            }
+        }
     }
 
     companion object {
