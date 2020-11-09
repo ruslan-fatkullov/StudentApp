@@ -19,8 +19,10 @@ class ScheduleDaysLayoutAdapter (val context : Context, val scheduleDaysLayoutIt
             dayOfWeekTextView.text = daysItem.dayOfWeek
             dayTextView.text = daysItem.day
 
-            itemView.setOnClickListener{
-                Toast.makeText(context, "Pressed ${dayOfWeekTextView.text}", Toast.LENGTH_SHORT).show()
+            itemView.onFocusChangeListener = View.OnFocusChangeListener { view, b ->
+                run {
+                    Toast.makeText(context, "Pressed ${dayOfWeekTextView.text}", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
