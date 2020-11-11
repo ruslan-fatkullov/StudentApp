@@ -1,20 +1,14 @@
 package com.example.studentass.fragments
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.os.Message
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.studentass.MainActivity
-import com.example.studentass.MainActivity2
+import com.example.studentass.AuthActivity
 import com.example.studentass.R
 import com.example.studentass.models.Schedule
 import com.google.gson.GsonBuilder
-import kotlinx.android.synthetic.main.fragment_notifications.*
-import kotlinx.android.synthetic.main.fragment_schedule.*
 import kotlinx.android.synthetic.main.fragment_subjects.*
 import kotlin.concurrent.thread
 
@@ -57,7 +51,7 @@ class SubjectsFragment : Fragment() {
         thread {
             var text : String
             try {
-                val scheduleJsonString = MainActivity.sendGet("https://my-json-server.typicode.com/AntonScript/schedule-service/GroupStudent")
+                val scheduleJsonString = AuthActivity.sendGet("https://my-json-server.typicode.com/AntonScript/schedule-service/GroupStudent")
                 val scheduleObject = GsonBuilder().create().fromJson(scheduleJsonString, Schedule::class.java)
                 //schedule = scheduleObject
                 text = GsonBuilder().create().toJson(scheduleObject)
@@ -65,7 +59,7 @@ class SubjectsFragment : Fragment() {
                 //Toast.makeText(context, "Schedule init error: $e", Toast.LENGTH_LONG).show()
                 text = e.toString()
             }
-            MainActivity.mHandler.post {
+            AuthActivity.mHandler.post {
                 subjectsTestTV?.text = text
             }
         }

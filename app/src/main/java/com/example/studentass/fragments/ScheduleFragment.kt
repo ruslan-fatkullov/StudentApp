@@ -5,19 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.studentass.MainActivity
 import com.example.studentass.R
 import com.example.studentass.adapters.ScheduleDaysLayoutAdapter
 import com.example.studentass.adapters.ScheduleDaysLayoutItem
 import com.example.studentass.adapters.SchedulePairsRvAdapter
 import com.example.studentass.adapters.SchedulePairsRvItem
 import com.example.studentass.models.Schedule
-import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.fragment_schedule.*
-import kotlinx.android.synthetic.main.fragment_subjects.*
-import kotlin.concurrent.thread
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

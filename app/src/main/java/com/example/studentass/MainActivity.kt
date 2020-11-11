@@ -2,63 +2,77 @@ package com.example.studentass
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.View
-import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.gson.GsonBuilder
-import java.net.HttpURLConnection
-import java.net.URL
+import androidx.fragment.app.Fragment
+import com.example.studentass.fragments.NotificationsFragment
+import com.example.studentass.fragments.ScheduleFragment
+import com.example.studentass.fragments.SubjectsFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.android.synthetic.main.activity_main2.*
+
 
 class MainActivity : AppCompatActivity() {
+    var bnv : BottomNavigationView? = null
+    val scheduleFragment : ScheduleFragment? = null
+    val subjectsFragment : ScheduleFragment? = null
+    val notificationsFragment : ScheduleFragment? = null
+
     companion object {
-        val mHandler : Handler = Handler(Looper.getMainLooper())
-
-        fun sendGet(url : String) : String {
-            val url = URL(url)
-            var responseStr : String;
-            with(url.openConnection() as HttpURLConnection) {
-                requestMethod = "GET"  // optional default is GET
-                responseStr = inputStream.use { it.reader().use { reader -> reader.readText() } }
-            }
-            return responseStr;
-        }
+        const val MESSAGE = "message"
     }
-
-    private var editTextEmail : EditText? = null
-    private var editTextPassword : EditText? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_main2)
+
+        val scheduleFragment = ScheduleFragment()
+        val subjectsFragment = SubjectsFragment()
+        val notificationsFragment = NotificationsFragment()
+
+        supportFragmentManager.beginTransaction().add(fragment_container.id, scheduleFragment).commit()
+        supportFragmentManager.beginTransaction().add(fragment_container.id, subjectsFragment).commit()
+        supportFragmentManager.beginTransaction().add(fragment_container.id, notificationsFragment).commit()
+
+        supportFragmentManager.beginTransaction().hide(subjectsFragment).commit()
+        supportFragmentManager.beginTransaction().hide(notificationsFragment).commit()
+
+        bottomNavigationView.setOnNavigationItemSelectedListener {
+
+            when (it.itemId) {
+                R.id.bnv_schedule -> {
+                    //makeCurrentFragment(scheduleFragment)
+                    supportFragmentManager.beginTransaction().show(scheduleFragment).commit()
+                    supportFragmentManager.beginTransaction().hide(subjectsFragment).commit()
+                    supportFragmentManager.beginTransaction().hide(notificationsFragment).commit()
+                }
+                R.id.bnv_subjects -> {
+                    //makeCurrentFragment(subjectsFragment)
+                    supportFragmentManager.beginTransaction().hide(scheduleFragment).commit()
+                    supportFragmentManager.beginTransaction().show(subjectsFragment).commit()
+                    supportFragmentManager.beginTransaction().hide(notificationsFragment).commit()
+                }
+                R.id.bnv_notifications -> {
+                    //makeCurrentFragment(notificationsFragment)
+                    supportFragmentManager.beginTransaction().hide(scheduleFragment).commit()
+                    supportFragmentManager.beginTransaction().hide(subjectsFragment).commit()
+                    supportFragmentManager.beginTransaction().show(notificationsFragment).commit()
+                }
+            }
+            true
+        }
+
+        //val message = intent.getStringExtra(MESSAGE)
     }
 
-    fun onButtonLoginClick(view: View) {
-        try {
-            var email : String = editTextEmail?.text.toString()
-            var password : String = editTextPassword?.text.toString()
-
-            if (email.length < 1)
-                throw Exception("Не указан адрес эл. почты")
-            if (email.indexOf(' ', 0, true) != -1)
-                throw Exception("Адрес эл. почты содержит недопустимые символы")
-            if (password.length < 1)
-                throw Exception("Не указан пароль")
-
-            var message : String = "Почта: " + email + "    Пароль: " + password
-            //Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-
-            val intentActivity = Intent(this, MainActivity2::class.java)
-            intentActivity.putExtra(MainActivity2.MESSAGE, message)
-            startActivity(intentActivity)
-        }
-        catch (e: Exception) {
-            var errorMessage : String = "Ошибка: " + e.message
-            Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
-        }
+    fun onButtonBackClick(view: View) {
+        val intentActivity = Intent(this, AuthActivity::class.java)
+        startActivity(intentActivity)
     }
 
-
+    private fun makeCurrentFragment(fragment: Fragment) =
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.fragment_container, fragment)
+            commit()
+        }
 }
