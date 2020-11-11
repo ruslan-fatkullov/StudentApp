@@ -11,7 +11,7 @@ import com.example.studentass.R
 import com.example.studentass.models.ScheduleDayCouple
 import kotlinx.android.synthetic.main.schedule_pair_rv_item.view.*
 
-class SchedulePairsRvAdapter (private val context : Context, private val schedulePairsRvItems: List<ScheduleDayCouple>) : RecyclerView.Adapter<SchedulePairsRvAdapter.ViewHolder>(){
+class SchedulePairsRvAdapter (private val context : Context) : RecyclerView.Adapter<SchedulePairsRvAdapter.ViewHolder>(){
     class ViewHolder(view : View) : RecyclerView.ViewHolder(view) {
         private val pairNameTv: TextView? = view.pairNameTv
         private val timeTv: TextView? = view.timeTv
@@ -54,6 +54,8 @@ class SchedulePairsRvAdapter (private val context : Context, private val schedul
             }
         }
     }
+    var dataList = ArrayList<ScheduleDayCouple>()
+
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -64,11 +66,11 @@ class SchedulePairsRvAdapter (private val context : Context, private val schedul
     }
 
     override fun getItemCount(): Int {
-        return schedulePairsRvItems.size
+        return dataList.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val pairItem = schedulePairsRvItems[position]
+        val pairItem = dataList[position]
         holder.bind(pairItem, context)
     }
 }

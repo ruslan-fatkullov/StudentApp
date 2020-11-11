@@ -11,10 +11,12 @@ import com.example.studentass.AuthActivity
 import com.example.studentass.R
 import com.example.studentass.adapters.SchedulePairsRvAdapter
 import com.example.studentass.models.Schedule
+import com.example.studentass.models.ScheduleDayCouple
 import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import kotlinx.android.synthetic.main.schedule_days_layout_item.view.*
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.concurrent.thread
 
 // TODO: Rename parameter arguments, choose names that match
@@ -100,6 +102,7 @@ class ScheduleFragment : Fragment() {
         updateDaysOfMonth()
 
         schedulePairsRv.layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
+        schedulePairsRv.adapter = SchedulePairsRvAdapter(context!!)
         //setPairsList(0, 0)
 
 
@@ -143,13 +146,15 @@ class ScheduleFragment : Fragment() {
             throw Exception("Schedule is null")
         }
 
+        val adapter = schedulePairsRv.adapter as SchedulePairsRvAdapter
         val scheduleDay = schedule?.days?.firstOrNull { d -> d.number_day == day && d.numberWeek == week }
         if (scheduleDay == null || scheduleDay.coupels.isEmpty()) {
-            schedulePairsRv.adapter = null
-            return
+            adapter.dataList.clear()
         }
-
-        schedulePairsRv.adapter = SchedulePairsRvAdapter(context!!, scheduleDay.coupels)
+        else {
+            adapter.dataList = scheduleDay.coupels.toMutableList() as ArrayList<ScheduleDayCouple>
+        }
+        schedulePairsRv?.adapter?.notifyDataSetChanged()
     }
 
     private fun updateWeek() {
