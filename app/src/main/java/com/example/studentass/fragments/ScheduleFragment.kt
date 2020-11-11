@@ -10,12 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.studentass.AuthActivity
 import com.example.studentass.R
 import com.example.studentass.adapters.SchedulePairsRvAdapter
-import com.example.studentass.adapters.SchedulePairsRvItem
 import com.example.studentass.models.Schedule
-import com.example.studentass.models.ScheduleDay
 import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.fragment_schedule.*
-import kotlinx.android.synthetic.main.fragment_subjects.*
 import kotlinx.android.synthetic.main.schedule_days_layout_item.view.*
 import kotlin.concurrent.thread
 
@@ -150,7 +147,7 @@ class ScheduleFragment : Fragment() {
         weekTv.text = text
     }
 
-    fun setPairsList(week: Int, day: Int){
+    private fun setPairsList(week: Int, day: Int) {
         if (week !in 1..2) {
             throw Exception("Invalid week index")
         }
@@ -167,14 +164,14 @@ class ScheduleFragment : Fragment() {
             return
         }
 
-        schedulePairsRv.adapter = SchedulePairsRvAdapter(context!!, scheduleDay!!.coupels)
+        schedulePairsRv.adapter = SchedulePairsRvAdapter(context!!, scheduleDay.coupels)
     }
 
-    fun onPreviousWeekBnClick(view: View){
+    private fun onPreviousWeekBnClick(view: View){
         switchWeek()
 
     }
-    fun onNextWeekBnClick(view: View){
+    private fun onNextWeekBnClick(view: View){
         switchWeek()
 
     }
