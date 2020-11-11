@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studentass.R
 import com.example.studentass.models.ScheduleDayCouple
@@ -17,7 +19,7 @@ class SchedulePairsRvAdapter (private val context : Context) : RecyclerView.Adap
         private val timeTv: TextView? = view.timeTv
         private val locationTv: TextView? = view.locationTv
         private val teacherNameTv: TextView? = view.teacherNameTv
-        //private val pairLayout: ConstraintLayout? = view.pairLayout
+        private val pairLayout: ConstraintLayout? = view.pairLayout
         private val pairTypeTv: TextView? = view.pairTypeTv
 
         fun bind(pair: ScheduleDayCouple, context: Context){
@@ -39,6 +41,13 @@ class SchedulePairsRvAdapter (private val context : Context) : RecyclerView.Adap
             locationTv?.text = pair.place
 
             teacherNameTv?.text = pair.teacher
+
+            pairLayout?.background = when (pair.typeSubject) {
+                1 -> ContextCompat.getDrawable(context, R.drawable.ic_im_schedule_pair_background_practice)
+                2 -> ContextCompat.getDrawable(context, R.drawable.ic_im_schedule_pair_background_lection)
+                3 -> ContextCompat.getDrawable(context, R.drawable.ic_im_schedule_pair_background_lab)
+                else -> null
+            }
 
             pairTypeTv?.text = when (pair.typeSubject) {
                 1 -> "Практика"

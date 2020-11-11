@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.studentass.AuthActivity
+import com.example.studentass.MainActivity
 import com.example.studentass.R
 import com.example.studentass.models.Schedule
 import com.google.gson.GsonBuilder

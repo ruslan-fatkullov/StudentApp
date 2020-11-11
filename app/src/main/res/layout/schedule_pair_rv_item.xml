@@ -9,8 +9,11 @@
     android:layout_marginTop="5dp"
     android:layout_marginRight="16dp"
     android:layout_marginBottom="5dp"
-    android:background="@android:color/holo_blue_light"
-    android:padding="16dp">
+    android:background="@color/design_default_color_error"
+    android:paddingLeft="32dp"
+    android:paddingTop="16dp"
+    android:paddingRight="16dp"
+    android:paddingBottom="16dp">
 
     <TextView
         android:id="@+id/pairNameTv"

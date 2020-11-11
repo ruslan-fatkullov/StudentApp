@@ -7,13 +7,13 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="114.1488mm"
-   height="168.57738mm"
-   viewBox="0 0 114.1488 168.57738"
+   width="194.07408mm"
+   height="83.673553mm"
+   viewBox="0 0 194.07408 83.673553"
    version="1.1"
    id="svg8"
    inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
-   sodipodi:docname="ic_schedule_days_background_normal.svg">
+   sodipodi:docname="im_schedule_pair_background_lection.svg">
   <defs
      id="defs2" />
   <sodipodi:namedview
@@ -23,22 +23,22 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.35"
-     inkscape:cx="-270.00001"
-     inkscape:cy="340.00002"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="570.65966"
+     inkscape:cy="166.74609"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
      showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
      inkscape:window-width="2560"
      inkscape:window-height="1017"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
-     inkscape:window-maximized="1"
-     fit-margin-top="0"
-     fit-margin-left="0"
-     fit-margin-right="0"
-     fit-margin-bottom="0" />
+     inkscape:window-maximized="1" />
   <metadata
      id="metadata5">
     <rdf:RDF>
@@ -47,7 +47,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -55,14 +55,15 @@
      inkscape:label="Слой 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-48.380955,-58.208328)">
-    <rect
-       style="fill:#ffffff;fill-rule:evenodd;stroke-width:0.259674"
+     transform="translate(-3.7797623,-76.351189)">
+    <path
        id="rect10"
-       width="114.1488"
-       height="168.57738"
-       x="48.380955"
-       y="58.208328"
-       ry="57.182632" />
+       style="fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
+       d="M 13.59141,76.351189 H 188.0422 c 5.43565,0 9.81164,4.375994 9.81164,9.811647 v 64.050254 c 0,5.43566 -4.37599,9.81165 -9.81164,9.81165 H 13.59141 c -5.435653,0 -9.8116477,-4.37599 -9.8116477,-9.81165 V 86.162836 c 0,-5.435653 4.3759947,-9.811647 9.8116477,-9.811647 z" />
+    <path
+       id="path29"
+       style="fill:#80e5ff;fill-opacity:1;stroke-width:0.264583"
+       d="m 13.59141,76.351189 c 0,83.673551 0,0 0,83.673551 -5.435653,0 -9.8116477,-4.37599 -9.8116477,-9.81165 V 86.162836 c 0,-5.435653 4.3759947,-9.811647 9.8116477,-9.811647 z"
+       sodipodi:nodetypes="ccssc" />
   </g>
 </svg>

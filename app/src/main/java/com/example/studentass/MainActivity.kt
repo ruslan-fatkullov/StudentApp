@@ -34,9 +34,10 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction().add(fragment_container.id, subjectsFragment).commit()
         supportFragmentManager.beginTransaction().add(fragment_container.id, notificationsFragment).commit()
 
+        title = "Расписание"
         supportFragmentManager.beginTransaction().hide(subjectsFragment).commit()
         supportFragmentManager.beginTransaction().hide(notificationsFragment).commit()
-
+        
         bottomNavigationView.setOnNavigationItemSelectedListener {
 
             when (it.itemId) {
@@ -45,18 +46,21 @@ class MainActivity : AppCompatActivity() {
                     supportFragmentManager.beginTransaction().show(scheduleFragment).commit()
                     supportFragmentManager.beginTransaction().hide(subjectsFragment).commit()
                     supportFragmentManager.beginTransaction().hide(notificationsFragment).commit()
+                    title = "Расписание"
                 }
                 R.id.bnv_subjects -> {
                     //makeCurrentFragment(subjectsFragment)
                     supportFragmentManager.beginTransaction().hide(scheduleFragment).commit()
                     supportFragmentManager.beginTransaction().show(subjectsFragment).commit()
                     supportFragmentManager.beginTransaction().hide(notificationsFragment).commit()
+                    title = "Предметы"
                 }
                 R.id.bnv_notifications -> {
                     //makeCurrentFragment(notificationsFragment)
                     supportFragmentManager.beginTransaction().hide(scheduleFragment).commit()
                     supportFragmentManager.beginTransaction().hide(subjectsFragment).commit()
                     supportFragmentManager.beginTransaction().show(notificationsFragment).commit()
+                    title = "Уведомления"
                 }
             }
             true
