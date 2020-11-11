@@ -96,8 +96,8 @@ class ScheduleFragment : Fragment() {
             daysIn!![x].setOnFocusChangeListener { _, _ -> onDayFocus(x)}
         }
         daysIn!![dayNum].requestFocus()
-        weekTv.text = "Неделя ${weekNum + 1}"
-        updateDate()
+        updateWeek()
+        updateDaysOfMonth()
 
         schedulePairsRv.layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
         //setPairsList(0, 0)
@@ -152,16 +152,21 @@ class ScheduleFragment : Fragment() {
         schedulePairsRv.adapter = SchedulePairsRvAdapter(context!!, scheduleDay.coupels)
     }
 
-    private fun updateDate() {
-        weekTv.text = "Неделя ${weekNum + 1}"
+    private fun updateWeek() {
+        val text = "Неделя ${weekNum + 1}"
+        weekTv.text = text
+    }
 
-        var tempCalendar = calendar.clone() as Calendar
+    private fun updateDaysOfMonth() {
+        val tempCalendar = calendar.clone() as Calendar
         tempCalendar.add(Calendar.DAY_OF_WEEK, -dayNum)
         for (i in 0..6) {
             daysIn!![i].dayTextView.text = tempCalendar.get(Calendar.DAY_OF_MONTH).toString()
             tempCalendar.add(Calendar.DAY_OF_WEEK, 1)
         }
+    }
 
+    private fun updateMonthAndYear() {
         val text = "${when (calendar.get(Calendar.MONTH)) {
             Calendar.JANUARY -> "Январь"
             Calendar.FEBRUARY -> "Февраль"
@@ -181,10 +186,11 @@ class ScheduleFragment : Fragment() {
     }
 
     private fun onWeekBnClick(dir: Int){
-        if (weekNum == 0) weekNum = 1
-        else weekNum = 0
+        weekNum = if (weekNum == 0) 1 else 0
         calendar.add(Calendar.DAY_OF_WEEK, 7 * dir)
-        updateDate()
+        updateWeek()
+        updateMonthAndYear()
+        updateDaysOfMonth()
 
         if (schedule != null) {
             try {
@@ -200,7 +206,7 @@ class ScheduleFragment : Fragment() {
         calendar.add(Calendar.DAY_OF_WEEK, -dayNum)
         dayNum = dayOfWeek
         calendar.add(Calendar.DAY_OF_WEEK, dayNum)
-        updateDate()
+        updateMonthAndYear()
 
         if (schedule != null) {
             try {
