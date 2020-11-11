@@ -162,11 +162,11 @@ class ScheduleFragment : Fragment() {
         }
 
         val scheduleDay = schedule?.days?.firstOrNull { d -> d.number_day == day && d.numberWeek == week }
-        if (scheduleDay == null && scheduleDay!!.coupels.size == 0) {
+        if (scheduleDay == null || scheduleDay.coupels.isEmpty()) {
             schedulePairsRv.adapter = null
             return
         }
-        var pairs = ArrayList<SchedulePairsRvItem>()
+
         schedulePairsRv.adapter = SchedulePairsRvAdapter(context!!, scheduleDay!!.coupels)
     }
 
