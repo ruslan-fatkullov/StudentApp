@@ -11,11 +11,28 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studentass.R
+import com.example.studentass.models.ScheduleDayCouple
 import kotlinx.android.synthetic.main.schedule_days_layout_item.view.*
 import kotlinx.android.synthetic.main.schedule_pair_rv_item.view.*
 
-class SchedulePairsRvAdapter (val context : Context, val schedulePairsRvItems: ArrayList<SchedulePairsRvItem>) : RecyclerView.Adapter<SchedulePairsRvAdapter.ViewHolder>(){
+class SchedulePairsRvAdapter (val context : Context, val schedulePairsRvItems: List<ScheduleDayCouple>) : RecyclerView.Adapter<SchedulePairsRvAdapter.ViewHolder>(){
     class ViewHolder(var view : View) : RecyclerView.ViewHolder(view) {
+        private val scheduleTimes = listOf<String>(
+            "08:00 - 09:30",
+            "09:40 - 11:10",
+            "11:30 - 13:00",
+            "13:10 - 14:40",
+            "14:50 - 16:20",
+            "16:30 - 18:00",
+            "18:10 - 19:40",
+            "19:50 - 21:20"
+        )
+        private val pairTypes = listOf<String>(
+            "Практика",
+            "Лекция",
+            "Лабораторная работа"
+        )
+
         //val dayOfWeekTextView = view.dayOfWeekTextView
         //val dayTextView = view.dayTextView
         val pairNameTv: TextView? = view.pairNameTv
@@ -25,18 +42,15 @@ class SchedulePairsRvAdapter (val context : Context, val schedulePairsRvItems: A
         val pairLayout: ConstraintLayout? = view.pairLayout
         val pairTypeTv: TextView? = view.pairTypeTv
 
-        fun bind(pairsRvItem: SchedulePairsRvItem, context: Context){
-            //dayOfWeekTextView.text = daysItem.dayOfWeek
-            //dayTextView.text = daysItem.day
-            pairNameTv?.text = pairsRvItem.pairName
-            timeTv?.text = pairsRvItem.time
-            locationTv?.text = pairsRvItem.location
-            teacherNameTv?.text = pairsRvItem.teacherName
-            pairTypeTv?.text = pairsRvItem.pairType
-            //pairLayout?.background = pairsRvItem.backgroundDrawable
+        fun bind(pair: ScheduleDayCouple, context: Context){
+            pairNameTv?.text = "${pair.subject} ${if (pair.subgroup != 0) (", ${pair.subgroup} пг") else ("")}"
+            timeTv?.text = scheduleTimes[pair.pair_number - 1]
+            locationTv?.text = pair.place
+            teacherNameTv?.text = pair.teacher
+            pairTypeTv?.text = pairTypes[pair.typeSubject - 1]
             itemView.setOnClickListener(View.OnClickListener { v: View? ->
                 run {
-                    Toast.makeText(context, pairsRvItem.fullInfo, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, pair.info, Toast.LENGTH_SHORT).show()
                 }
             })
         }

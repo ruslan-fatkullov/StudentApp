@@ -55,22 +55,6 @@ class ScheduleFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
-    private val scheduleTimes = listOf<String>(
-        "08:00 - 09:30",
-        "09:40 - 11:10",
-        "11:30 - 13:00",
-        "13:10 - 14:40",
-        "14:50 - 16:20",
-        "16:30 - 18:00",
-        "18:10 - 19:40",
-        "19:50 - 21:20"
-    )
-    private val pairTypes = listOf<String>(
-        "Практика",
-        "Лекция",
-        "Лабораторная работа"
-    )
-
     private var schedule: Schedule? = null
     private var weekNum: Int? = null
     private var dayNum: Int? = null
@@ -150,7 +134,7 @@ class ScheduleFragment : Fragment() {
                 text = e.toString()
             }
             AuthActivity.mHandler.post {
-                setPairsList(1, 7)
+                setPairsList(1, 2)
             }
         }
     }
@@ -178,23 +162,12 @@ class ScheduleFragment : Fragment() {
         }
 
         val scheduleDay = schedule?.days?.firstOrNull { d -> d.number_day == day && d.numberWeek == week }
-        if (scheduleDay != null) {
-            var pairs = ArrayList<SchedulePairsRvItem>()
-            for (pair in scheduleDay!!.coupels) {
-                pairs.add(SchedulePairsRvItem(
-                    pair.subject + (if (pair.subgroup != 0) (", ${pair.subgroup} пг") else ("")),
-                    scheduleTimes[pair.pair_number - 1],
-                    pair.place,
-                    pair.teacher,
-                    pairTypes[pair.typeSubject - 1],
-                    pair.info
-                ))
-            }
-            /*pairs.add(SchedulePairsRvItem("Основы автоматики", "08:00 - 09:30", "3-312","Игонин А.Г.", "Лекция", "пуцщлпшоцшщуогшпорцшугцпу"))
-            pairs.add(SchedulePairsRvItem("Основы автоматики", "09:40 - 11:10", "3-312","Игонин А.Г.", "Лекция", "пшоукшпошщуаопшоаошпаошща"))
-            pairs.add(SchedulePairsRvItem("Организация ЭВМ и систем", "11:30 - 13:00", "3-308","Лылова А.В.", "Лабораторная работа", "уалщцлуцщаошцщуаогшщрагшуарцшцу"))*/
-            schedulePairsRv.adapter = SchedulePairsRvAdapter(context!!, pairs)
+        if (scheduleDay == null && scheduleDay!!.coupels.size == 0) {
+            schedulePairsRv.adapter = null
+            return
         }
+        var pairs = ArrayList<SchedulePairsRvItem>()
+        schedulePairsRv.adapter = SchedulePairsRvAdapter(context!!, scheduleDay!!.coupels)
     }
 
     fun onPreviousWeekBnClick(view: View){
