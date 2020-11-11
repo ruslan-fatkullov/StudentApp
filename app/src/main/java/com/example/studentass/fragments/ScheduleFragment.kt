@@ -5,14 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.studentass.R
-import com.example.studentass.adapters.ScheduleDaysLayoutAdapter
-import com.example.studentass.adapters.ScheduleDaysLayoutItem
 import com.example.studentass.adapters.SchedulePairsRvAdapter
 import com.example.studentass.adapters.SchedulePairsRvItem
 import com.example.studentass.models.Schedule
 import kotlinx.android.synthetic.main.fragment_schedule.*
+import kotlinx.android.synthetic.main.schedule_days_layout_item.view.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -52,6 +52,7 @@ class ScheduleFragment : Fragment() {
 
     private var schedule: Schedule? = null
     private var weekNum: Int? = null
+    private var dayNum: Int? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,7 +77,21 @@ class ScheduleFragment : Fragment() {
         previousWeekBn.setOnClickListener { onPreviousWeekBnClick(view) }
         nextWeekBn.setOnClickListener { onNextWeekBnClick(view) }
 
-        var defaultItemFocusId = 3
+        dayIn1.dayOfWeekTextView.text = "ПН"
+        dayIn2.dayOfWeekTextView.text = "ВТ"
+        dayIn3.dayOfWeekTextView.text = "СР"
+        dayIn4.dayOfWeekTextView.text = "ЧТ"
+        dayIn5.dayOfWeekTextView.text = "ПТ"
+        dayIn6.dayOfWeekTextView.text = "СБ"
+        dayIn7.dayOfWeekTextView.text = "ВС"
+        val daysIn = listOf<View>(dayIn1, dayIn2, dayIn3, dayIn4, dayIn5, dayIn6, dayIn7)
+        for (x in 0..6) {
+            daysIn[x].setOnFocusChangeListener {_, _ -> OnDayFocus(x)}
+        }
+        dayNum = 6
+        daysIn[dayNum!!].requestFocus()
+
+        /*var defaultItemFocusId = 3
         var days = ArrayList<ScheduleDaysLayoutItem>()
         days.add(ScheduleDaysLayoutItem("ПН", "0"))
         days.add(ScheduleDaysLayoutItem("ВТ", "0"))
@@ -84,15 +99,15 @@ class ScheduleFragment : Fragment() {
         days.add(ScheduleDaysLayoutItem("ЧТ", "0"))
         days.add(ScheduleDaysLayoutItem("ПТ", "0"))
         days.add(ScheduleDaysLayoutItem("СБ", "0"))
-        days.add(ScheduleDaysLayoutItem("ВС", "0"))
-        scheduleDaysRv.hasFixedSize()
+        days.add(ScheduleDaysLayoutItem("ВС", "0"))*/
+        /*scheduleDaysRv.hasFixedSize()
         scheduleDaysRv.layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.HORIZONTAL, false)
         scheduleDaysRv.adapter = ScheduleDaysLayoutAdapter(context!!, days)
         scheduleDaysRv.viewTreeObserver.addOnGlobalLayoutListener {
             val view = scheduleDaysRv.getChildAt(defaultItemFocusId)
             val viewHolder = scheduleDaysRv.findContainingViewHolder(view)
             viewHolder?.itemView?.requestFocus()
-        }
+        }*/
 
         weekNum = 1
         weekTv.text = "Неделя $weekNum"
@@ -109,12 +124,17 @@ class ScheduleFragment : Fragment() {
 
     }
 
+    fun OnDayFocus(dayOfWeek: Int){
+        Toast.makeText(context, "Day: $dayOfWeek", Toast.LENGTH_SHORT).show()
+    }
+
     fun switchWeek() {
         if (weekNum == 1) weekNum = 2
         else weekNum = 1
         var text = "Неделя $weekNum"
         weekTv.text = text
     }
+
 
 
     fun onPreviousWeekBnClick(view: View){

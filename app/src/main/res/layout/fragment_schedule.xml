@@ -71,30 +71,96 @@
         app:layout_constraintStart_toEndOf="@+id/dateTv"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/scheduleDaysRv"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/daysLl"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginTop="60dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:foregroundGravity="fill"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:itemCount="7" />
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <include
+            android:id="@+id/dayIn1"
+            layout="@layout/schedule_days_layout_item" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <include
+            android:id="@+id/dayIn2"
+            layout="@layout/schedule_days_layout_item" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <include
+            android:id="@+id/dayIn3"
+            layout="@layout/schedule_days_layout_item" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <include
+            android:id="@+id/dayIn4"
+            layout="@layout/schedule_days_layout_item" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <include
+            android:id="@+id/dayIn5"
+            layout="@layout/schedule_days_layout_item" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <include
+            android:id="@+id/dayIn6"
+            layout="@layout/schedule_days_layout_item" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <include
+            android:id="@+id/dayIn7"
+            layout="@layout/schedule_days_layout_item" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/schedulePairsRv"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scheduleDaysRv" />
+        app:layout_constraintTop_toBottomOf="@+id/daysLl" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
