@@ -53,8 +53,8 @@ class ScheduleFragment : Fragment() {
     private var param2: String? = null
 
     private var schedule: Schedule? = null
-    private var weekNum: Int? = null
-    private var dayNum: Int? = null
+    private var weekNum: Int = 0
+    private var dayNum: Int = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -79,6 +79,8 @@ class ScheduleFragment : Fragment() {
         previousWeekBn.setOnClickListener { onPreviousWeekBnClick(view) }
         nextWeekBn.setOnClickListener { onNextWeekBnClick(view) }
 
+        dayNum = 0
+        weekNum = 0
         dayIn1.dayOfWeekTextView.text = "ПН"
         dayIn2.dayOfWeekTextView.text = "ВТ"
         dayIn3.dayOfWeekTextView.text = "СР"
@@ -90,29 +92,8 @@ class ScheduleFragment : Fragment() {
         for (x in 0..6) {
             daysIn[x].setOnFocusChangeListener {_, _ -> OnDayFocus(x)}
         }
-        dayNum = 6
-        daysIn[dayNum!!].requestFocus()
-
-        /*var defaultItemFocusId = 3
-        var days = ArrayList<ScheduleDaysLayoutItem>()
-        days.add(ScheduleDaysLayoutItem("ПН", "0"))
-        days.add(ScheduleDaysLayoutItem("ВТ", "0"))
-        days.add(ScheduleDaysLayoutItem("СР", "0"))
-        days.add(ScheduleDaysLayoutItem("ЧТ", "0"))
-        days.add(ScheduleDaysLayoutItem("ПТ", "0"))
-        days.add(ScheduleDaysLayoutItem("СБ", "0"))
-        days.add(ScheduleDaysLayoutItem("ВС", "0"))*/
-        /*scheduleDaysRv.hasFixedSize()
-        scheduleDaysRv.layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.HORIZONTAL, false)
-        scheduleDaysRv.adapter = ScheduleDaysLayoutAdapter(context!!, days)
-        scheduleDaysRv.viewTreeObserver.addOnGlobalLayoutListener {
-            val view = scheduleDaysRv.getChildAt(defaultItemFocusId)
-            val viewHolder = scheduleDaysRv.findContainingViewHolder(view)
-            viewHolder?.itemView?.requestFocus()
-        }*/
-
-        weekNum = 1
-        weekTv.text = "Неделя $weekNum"
+        daysIn[dayNum].requestFocus()
+        weekTv.text = "Неделя ${weekNum + 1}"
 
         schedulePairsRv.layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
         //setPairsList(0, 0)
@@ -120,34 +101,56 @@ class ScheduleFragment : Fragment() {
 
         // Получение расписания из сервиса
         thread {
-            var text : String
             try {
                 val scheduleJsonString = AuthActivity.sendGet("https://my-json-server.typicode.com/AntonScript/schedule-service/GroupStudent")
                 val scheduleObject = GsonBuilder().create().fromJson(scheduleJsonString, Schedule::class.java)
                 schedule = scheduleObject
-                text = GsonBuilder().create().toJson(scheduleObject)
             } catch (e : Exception) {
-                //Toast.makeText(context, "Schedule init error: $e", Toast.LENGTH_LONG).show()
-                text = e.toString()
+                Toast.makeText(context, "Schedule init error: $e", Toast.LENGTH_LONG).show()
             }
             AuthActivity.mHandler.post {
-                setPairsList(1, 2)
+                try {
+                    updatePairsList()
+                }
+                catch (e: Exception) {
+                    Toast.makeText(context, "Schedule update error: $e", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
 
     fun OnDayFocus(dayOfWeek: Int){
-        Toast.makeText(context, "Day: $dayOfWeek", Toast.LENGTH_SHORT).show()
+        dayNum = dayOfWeek
+
+        if (schedule != null) {
+            try {
+                updatePairsList()
+            }
+            catch (e: Exception) {
+                Toast.makeText(context, "Schedule update error: $e", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     fun switchWeek() {
-        if (weekNum == 1) weekNum = 2
-        else weekNum = 1
-        var text = "Неделя $weekNum"
-        weekTv.text = text
+        if (weekNum == 0) weekNum = 1
+        else weekNum = 0
+        weekTv.text = "Неделя ${weekNum + 1}"
+
+        if (schedule != null) {
+            try {
+                updatePairsList()
+            }
+            catch (e: Exception) {
+                Toast.makeText(context, "Schedule update error: $e", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
-    private fun setPairsList(week: Int, day: Int) {
+    private fun updatePairsList() {
+        val day = dayNum + 1
+        val week = weekNum + 1
+
         if (week !in 1..2) {
             throw Exception("Invalid week index")
         }
