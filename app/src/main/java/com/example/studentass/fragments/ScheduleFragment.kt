@@ -14,6 +14,7 @@ import com.example.studentass.models.Schedule
 import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import kotlinx.android.synthetic.main.schedule_days_layout_item.view.*
+import java.util.*
 import kotlin.concurrent.thread
 
 // TODO: Rename parameter arguments, choose names that match
@@ -55,6 +56,8 @@ class ScheduleFragment : Fragment() {
     private var schedule: Schedule? = null
     private var weekNum: Int = 0
     private var dayNum: Int = 0
+    private var daysIn: List<View>? = null
+    private val calendar = Calendar.getInstance()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,10 +79,11 @@ class ScheduleFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        previousWeekBn.setOnClickListener { onPreviousWeekBnClick(view) }
-        nextWeekBn.setOnClickListener { onNextWeekBnClick(view) }
+        previousWeekBn.setOnClickListener { run { onWeekBnClick(-1) } }
+        nextWeekBn.setOnClickListener { run { onWeekBnClick(1) } }
 
-        dayNum = 0
+        daysIn = listOf<View>(dayIn1, dayIn2, dayIn3, dayIn4, dayIn5, dayIn6, dayIn7)
+        dayNum = formatDayOfWeek(calendar.get(Calendar.DAY_OF_WEEK))
         weekNum = 0
         dayIn1.dayOfWeekTextView.text = "ПН"
         dayIn2.dayOfWeekTextView.text = "ВТ"
@@ -88,12 +92,12 @@ class ScheduleFragment : Fragment() {
         dayIn5.dayOfWeekTextView.text = "ПТ"
         dayIn6.dayOfWeekTextView.text = "СБ"
         dayIn7.dayOfWeekTextView.text = "ВС"
-        val daysIn = listOf<View>(dayIn1, dayIn2, dayIn3, dayIn4, dayIn5, dayIn6, dayIn7)
         for (x in 0..6) {
-            daysIn[x].setOnFocusChangeListener {_, _ -> OnDayFocus(x)}
+            daysIn!![x].setOnFocusChangeListener { _, _ -> onDayFocus(x)}
         }
-        daysIn[dayNum].requestFocus()
+        daysIn!![dayNum].requestFocus()
         weekTv.text = "Неделя ${weekNum + 1}"
+        updateDate()
 
         schedulePairsRv.layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
         //setPairsList(0, 0)
@@ -119,32 +123,10 @@ class ScheduleFragment : Fragment() {
         }
     }
 
-    fun OnDayFocus(dayOfWeek: Int){
-        dayNum = dayOfWeek
-
-        if (schedule != null) {
-            try {
-                updatePairsList()
-            }
-            catch (e: Exception) {
-                Toast.makeText(context, "Schedule update error: $e", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
-    fun switchWeek() {
-        if (weekNum == 0) weekNum = 1
-        else weekNum = 0
-        weekTv.text = "Неделя ${weekNum + 1}"
-
-        if (schedule != null) {
-            try {
-                updatePairsList()
-            }
-            catch (e: Exception) {
-                Toast.makeText(context, "Schedule update error: $e", Toast.LENGTH_SHORT).show()
-            }
-        }
+    private fun formatDayOfWeek(dayOfWeek: Int): Int {
+        var newDayOfWeek = dayOfWeek - 2
+        if (newDayOfWeek < 0) newDayOfWeek = 6
+        return newDayOfWeek
     }
 
     private fun updatePairsList() {
@@ -170,12 +152,63 @@ class ScheduleFragment : Fragment() {
         schedulePairsRv.adapter = SchedulePairsRvAdapter(context!!, scheduleDay.coupels)
     }
 
-    private fun onPreviousWeekBnClick(view: View){
-        switchWeek()
+    private fun updateDate() {
+        weekTv.text = "Неделя ${weekNum + 1}"
 
+        var tempCalendar = calendar.clone() as Calendar
+        tempCalendar.add(Calendar.DAY_OF_WEEK, -dayNum)
+        for (i in 0..6) {
+            daysIn!![i].dayTextView.text = tempCalendar.get(Calendar.DAY_OF_MONTH).toString()
+            tempCalendar.add(Calendar.DAY_OF_WEEK, 1)
+        }
+
+        val text = "${when (calendar.get(Calendar.MONTH)) {
+            Calendar.JANUARY -> "Январь"
+            Calendar.FEBRUARY -> "Февраль"
+            Calendar.MARCH -> "Март"
+            Calendar.APRIL -> "Апрель"
+            Calendar.MAY -> "Май"
+            Calendar.JUNE -> "Июнь"
+            Calendar.JULY -> "Июль"
+            Calendar.AUGUST -> "Август"
+            Calendar.SEPTEMBER -> "Сентябрь"
+            Calendar.OCTOBER -> "Октябрь"
+            Calendar.NOVEMBER -> "Ноябрь"
+            Calendar.DECEMBER -> "Декабрь"
+            else -> "Error"
+        }} ${calendar.get(Calendar.YEAR)}"
+        dateTv.text = text
     }
-    private fun onNextWeekBnClick(view: View){
-        switchWeek()
 
+    private fun onWeekBnClick(dir: Int){
+        if (weekNum == 0) weekNum = 1
+        else weekNum = 0
+        calendar.add(Calendar.DAY_OF_WEEK, 7 * dir)
+        updateDate()
+
+        if (schedule != null) {
+            try {
+                updatePairsList()
+            }
+            catch (e: Exception) {
+                Toast.makeText(context, "Schedule update error: $e", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun onDayFocus(dayOfWeek: Int) {
+        calendar.add(Calendar.DAY_OF_WEEK, -dayNum)
+        dayNum = dayOfWeek
+        calendar.add(Calendar.DAY_OF_WEEK, dayNum)
+        updateDate()
+
+        if (schedule != null) {
+            try {
+                updatePairsList()
+            }
+            catch (e: Exception) {
+                Toast.makeText(context, "Schedule update error: $e", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 }
