@@ -7,12 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.studentass.AuthActivity
 import com.example.studentass.R
 import com.example.studentass.adapters.SchedulePairsRvAdapter
 import com.example.studentass.adapters.SchedulePairsRvItem
 import com.example.studentass.models.Schedule
+import com.example.studentass.models.ScheduleDay
+import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.fragment_schedule.*
+import kotlinx.android.synthetic.main.fragment_subjects.*
 import kotlinx.android.synthetic.main.schedule_days_layout_item.view.*
+import kotlin.concurrent.thread
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -49,6 +54,22 @@ class ScheduleFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+
+    private val scheduleTimes = listOf<String>(
+        "08:00 - 09:30",
+        "09:40 - 11:10",
+        "11:30 - 13:00",
+        "13:10 - 14:40",
+        "14:50 - 16:20",
+        "16:30 - 18:00",
+        "18:10 - 19:40",
+        "19:50 - 21:20"
+    )
+    private val pairTypes = listOf<String>(
+        "Практика",
+        "Лекция",
+        "Лабораторная работа"
+    )
 
     private var schedule: Schedule? = null
     private var weekNum: Int? = null
@@ -112,16 +133,26 @@ class ScheduleFragment : Fragment() {
         weekNum = 1
         weekTv.text = "Неделя $weekNum"
 
-        var pairs = ArrayList<SchedulePairsRvItem>()
-        pairs.add(SchedulePairsRvItem("Основы автоматики", "08:00 - 09:30", "3-312","Игонин А.Г.", "Лекция", "пуцщлпшоцшщуогшпорцшугцпу"))
-        pairs.add(SchedulePairsRvItem("Основы автоматики", "09:40 - 11:10", "3-312","Игонин А.Г.", "Лекция", "пшоукшпошщуаопшоаошпаошща"))
-        pairs.add(SchedulePairsRvItem("Организация ЭВМ и систем", "11:30 - 13:00", "3-308","Лылова А.В.", "Лабораторная работа", "уалщцлуцщаошцщуаогшщрагшуарцшцу"))
-        schedulePairsRv.hasFixedSize()
         schedulePairsRv.layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
-        schedulePairsRv.adapter = SchedulePairsRvAdapter(context!!, pairs)
+        //setPairsList(0, 0)
 
 
-
+        // Получение расписания из сервиса
+        thread {
+            var text : String
+            try {
+                val scheduleJsonString = AuthActivity.sendGet("https://my-json-server.typicode.com/AntonScript/schedule-service/GroupStudent")
+                val scheduleObject = GsonBuilder().create().fromJson(scheduleJsonString, Schedule::class.java)
+                schedule = scheduleObject
+                text = GsonBuilder().create().toJson(scheduleObject)
+            } catch (e : Exception) {
+                //Toast.makeText(context, "Schedule init error: $e", Toast.LENGTH_LONG).show()
+                text = e.toString()
+            }
+            AuthActivity.mHandler.post {
+                setPairsList(1, 7)
+            }
+        }
     }
 
     fun OnDayFocus(dayOfWeek: Int){
@@ -135,7 +166,36 @@ class ScheduleFragment : Fragment() {
         weekTv.text = text
     }
 
+    fun setPairsList(week: Int, day: Int){
+        if (week !in 1..2) {
+            throw Exception("Invalid week index")
+        }
+        if (day !in 1..7) {
+            throw Exception("Invalid day index")
+        }
+        if (schedule == null) {
+            throw Exception("Schedule is null")
+        }
 
+        val scheduleDay = schedule?.days?.firstOrNull { d -> d.number_day == day && d.numberWeek == week }
+        if (scheduleDay != null) {
+            var pairs = ArrayList<SchedulePairsRvItem>()
+            for (pair in scheduleDay!!.coupels) {
+                pairs.add(SchedulePairsRvItem(
+                    pair.subject + (if (pair.subgroup != 0) (", ${pair.subgroup} пг") else ("")),
+                    scheduleTimes[pair.pair_number - 1],
+                    pair.place,
+                    pair.teacher,
+                    pairTypes[pair.typeSubject - 1],
+                    pair.info
+                ))
+            }
+            /*pairs.add(SchedulePairsRvItem("Основы автоматики", "08:00 - 09:30", "3-312","Игонин А.Г.", "Лекция", "пуцщлпшоцшщуогшпорцшугцпу"))
+            pairs.add(SchedulePairsRvItem("Основы автоматики", "09:40 - 11:10", "3-312","Игонин А.Г.", "Лекция", "пшоукшпошщуаопшоаошпаошща"))
+            pairs.add(SchedulePairsRvItem("Организация ЭВМ и систем", "11:30 - 13:00", "3-308","Лылова А.В.", "Лабораторная работа", "уалщцлуцщаошцщуаогшщрагшуарцшцу"))*/
+            schedulePairsRv.adapter = SchedulePairsRvAdapter(context!!, pairs)
+        }
+    }
 
     fun onPreviousWeekBnClick(view: View){
         switchWeek()

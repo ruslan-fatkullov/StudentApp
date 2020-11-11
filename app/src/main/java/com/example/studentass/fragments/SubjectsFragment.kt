@@ -47,22 +47,7 @@ class SubjectsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Получение расписания из сервиса
-        thread {
-            var text : String
-            try {
-                val scheduleJsonString = AuthActivity.sendGet("https://my-json-server.typicode.com/AntonScript/schedule-service/GroupStudent")
-                val scheduleObject = GsonBuilder().create().fromJson(scheduleJsonString, Schedule::class.java)
-                //schedule = scheduleObject
-                text = GsonBuilder().create().toJson(scheduleObject)
-            } catch (e : Exception) {
-                //Toast.makeText(context, "Schedule init error: $e", Toast.LENGTH_LONG).show()
-                text = e.toString()
-            }
-            AuthActivity.mHandler.post {
-                subjectsTestTV?.text = text
-            }
-        }
+
     }
 
     companion object {
