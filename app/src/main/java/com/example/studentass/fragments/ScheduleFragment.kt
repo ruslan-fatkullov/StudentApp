@@ -1,16 +1,13 @@
 package com.example.studentass.fragments
 
-import android.app.ActionBar
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.studentass.AuthActivity
-import com.example.studentass.MainActivity
 import com.example.studentass.R
 import com.example.studentass.adapters.SchedulePairsRvAdapter
 import com.example.studentass.models.Schedule
@@ -157,9 +154,11 @@ class ScheduleFragment : Fragment() {
         val scheduleDay = schedule?.days?.firstOrNull { d -> d.number_day == day && d.numberWeek == week }
         if (scheduleDay == null || scheduleDay.coupels.isEmpty()) {
             adapter.dataList.clear()
+            pairsAbsenceTv.visibility = View.VISIBLE
         }
         else {
             adapter.dataList = scheduleDay.coupels.toMutableList() as ArrayList<ScheduleDayCouple>
+            pairsAbsenceTv.visibility = View.INVISIBLE
         }
         schedulePairsRv?.adapter?.notifyDataSetChanged()
     }
