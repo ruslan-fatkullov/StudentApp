@@ -158,6 +158,8 @@ class ScheduleFragment : Fragment() {
         }
         else {
             adapter.dataList = scheduleDay.coupels.toMutableList() as ArrayList<ScheduleDayCouple>
+            adapter.dataYear = calendar.get(Calendar.YEAR)
+            adapter.dataDayOfYear = calendar.get(Calendar.DAY_OF_YEAR)
             pairsAbsenceTv.visibility = View.INVISIBLE
         }
         schedulePairsRv?.adapter?.notifyDataSetChanged()
