@@ -77,13 +77,11 @@ class AuthActivity : AppCompatActivity() {
             if (password.isEmpty())
                 throw Exception("Не указан пароль")
 
-            //login()
-            val message : String = "Почта: " + email + "    Пароль: " + password
-            //Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-
+            login()
+            /*val message : String = "Почта: " + email + "    Пароль: " + password
             val intentActivity = Intent(this, MainActivity::class.java)
             intentActivity.putExtra(MainActivity.MESSAGE, message)
-            startActivity(intentActivity)
+            startActivity(intentActivity)*/
         }
         catch (e: Exception) {
             val errorMessage : String = "Ошибка: " + e.message
