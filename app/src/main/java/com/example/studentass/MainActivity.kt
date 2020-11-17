@@ -1,24 +1,15 @@
 package com.example.studentass
 
-import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import com.example.studentass.fragments.NotificationsFragment
 import com.example.studentass.fragments.ScheduleFragment
 import com.example.studentass.fragments.SubjectsFragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main2.*
 
 
 class MainActivity : AppCompatActivity() {
-    var bnv : BottomNavigationView? = null
-    val scheduleFragment : ScheduleFragment? = null
-    val subjectsFragment : ScheduleFragment? = null
-    val notificationsFragment : ScheduleFragment? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main2)
@@ -68,15 +59,4 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(applicationContext, "This app is only for students, and you're ${AuthActivity.loginRole}", Toast.LENGTH_LONG).show()
         }
     }
-
-    fun onButtonBackClick(view: View) {
-        val intentActivity = Intent(this, AuthActivity::class.java)
-        startActivity(intentActivity)
-    }
-
-    private fun makeCurrentFragment(fragment: Fragment) =
-        supportFragmentManager.beginTransaction().apply {
-            replace(R.id.fragment_container, fragment)
-            commit()
-        }
 }
