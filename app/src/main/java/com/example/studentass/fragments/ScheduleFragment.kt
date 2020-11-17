@@ -15,9 +15,10 @@ import com.example.studentass.models.ScheduleDayCouple
 import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import kotlinx.android.synthetic.main.schedule_days_layout_item.view.*
+import okhttp3.*
+import java.io.IOException
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.concurrent.thread
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -105,25 +106,31 @@ class ScheduleFragment : Fragment() {
         schedulePairsRv.adapter = SchedulePairsRvAdapter(context!!)
         //setPairsList(0, 0)
 
+        getSchedule()
+    }
 
-        // Получение расписания из сервиса
-        thread {
-            try {
-                val scheduleJsonString = AuthActivity.sendGet("https://my-json-server.typicode.com/AntonScript/schedule-service/GroupStudent")
-                val scheduleObject = GsonBuilder().create().fromJson(scheduleJsonString, Schedule::class.java)
-                schedule = scheduleObject
-            } catch (e : Exception) {
-                Toast.makeText(context, "Schedule init error: $e", Toast.LENGTH_LONG).show()
-            }
-            AuthActivity.mHandler.post {
-                try {
-                    updatePairsList()
-                }
-                catch (e: Exception) {
-                    Toast.makeText(context, "Schedule update error: $e", Toast.LENGTH_SHORT).show()
+    private fun getSchedule() {
+        val url = "https://my-json-server.typicode.com/AntonScript/schedule-service/GroupStudent"
+        val client = OkHttpClient()
+        val request = Request.Builder().url(url).build()
+        client.newCall(request).enqueue(object: Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                AuthActivity.mHandler.post {
+                    Toast.makeText(context, "Schedule request error: $e", Toast.LENGTH_LONG).show()
                 }
             }
-        }
+            override fun onResponse(call: Call, response: Response) {
+                AuthActivity.mHandler.post {
+                    try {
+                        val scheduleObject = GsonBuilder().create().fromJson(response.body!!.string(), Schedule::class.java)
+                        schedule = scheduleObject
+                        updatePairsList()
+                    } catch (e : Exception) {
+                        Toast.makeText(context, "Schedule init error: $e", Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
+        })
     }
 
     override fun onResume() {

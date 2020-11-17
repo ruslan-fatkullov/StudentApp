@@ -41,7 +41,7 @@ class NotificationsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Получение тестовых вопросов из сервиса
-        thread {
+        /*thread {
             var text : String
             try {
                 val questionsJsonString = AuthActivity.sendGet("https://my-json-server.typicode.com/fridayeveryday/testService/test")
@@ -53,7 +53,7 @@ class NotificationsFragment : Fragment() {
             AuthActivity.mHandler.post {
                 notificationsTestTV?.text = text
             }
-        }
+        }*/
     }
 
     override fun onCreateView(
