@@ -1,6 +1,6 @@
 package com.example.studentass.models
 
-class AuthLoginResponse (
+class AuthLoginTokens (
     val accessToken: String,
     val refrashToken: String
 )

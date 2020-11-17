@@ -1,6 +1,6 @@
 package com.example.studentass.models
 
-class AuthLoginQuery (
+class AuthLoginData (
     val login: String,
     val password: String
 )
