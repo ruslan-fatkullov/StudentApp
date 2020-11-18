@@ -1,5 +1,8 @@
 package com.example.studentass
 
+import android.graphics.Color
+import android.graphics.drawable.Drawable
+import android.icu.text.CaseMap
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -23,7 +26,7 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction().add(fragment_container.id, subjectsFragment).commit()
             supportFragmentManager.beginTransaction().add(fragment_container.id, notificationsFragment).commit()
 
-            title = "Расписание"
+            title = "Расписание занятий"
             supportFragmentManager.beginTransaction().hide(subjectsFragment).commit()
             supportFragmentManager.beginTransaction().hide(notificationsFragment).commit()
 
@@ -35,7 +38,8 @@ class MainActivity : AppCompatActivity() {
                         supportFragmentManager.beginTransaction().show(scheduleFragment).commit()
                         supportFragmentManager.beginTransaction().hide(subjectsFragment).commit()
                         supportFragmentManager.beginTransaction().hide(notificationsFragment).commit()
-                        title = "Расписание"
+                        title = "Расписание занятий"
+
                     }
                     R.id.bnv_subjects -> {
                         //makeCurrentFragment(subjectsFragment)

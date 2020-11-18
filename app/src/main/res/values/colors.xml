@@ -3,4 +3,12 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+
+    <color name="colorActionBar">#0D5A9CFF</color>
+
+    <color name="colorScheduleBackground">#0D5A9CFF</color>
+    <color name="colorScheduleDayDefault">#9598A8</color>
+    <color name="colorScheduleDayOnFocus">#FFFFFF</color>
+    <color name="colorScheduleDayOfWeekDefault">#333951</color>
+    <color name="colorScheduleDayOfWeekOnFocus">#FFFFFF</color>
 </resources>

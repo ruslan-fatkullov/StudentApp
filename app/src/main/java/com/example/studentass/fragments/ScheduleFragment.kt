@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.studentass.AuthActivity
 import com.example.studentass.R
@@ -54,13 +55,13 @@ class ScheduleFragment : Fragment() {
         dayIn7.dayOfWeekTextView.text = "ВС"
         for (x in 0..6) {
             daysIn!![x].setOnFocusChangeListener { newFocus, _ ->
-                newFocus.dayOfWeekTextView.setTextColor(Color.parseColor("#FFFFFF"))
-                newFocus.dayTextView.setTextColor(Color.parseColor("#FFFFFF"))
+                newFocus?.dayOfWeekTextView?.setTextColor(ContextCompat.getColor(context!!, R.color.colorScheduleDayOfWeekOnFocus))
+                newFocus?.dayTextView?.setTextColor(ContextCompat.getColor(context!!, R.color.colorScheduleDayOnFocus))
                 onDayFocus(x)
             }
             daysIn!![x].viewTreeObserver.addOnGlobalFocusChangeListener{ oldFocus, _ ->
-                oldFocus.dayOfWeekTextView.setTextColor(Color.parseColor("#333951"))
-                oldFocus.dayTextView.setTextColor(Color.parseColor("#9598A8"))
+                oldFocus?.dayOfWeekTextView?.setTextColor(ContextCompat.getColor(context!!, R.color.colorScheduleDayOfWeekDefault))
+                oldFocus?.dayTextView?.setTextColor(ContextCompat.getColor(context!!, R.color.colorScheduleDayDefault))
             }
         }
         daysIn!![dayNum].requestFocus()
