@@ -56,11 +56,13 @@ class AuthActivity : AppCompatActivity() {
                     val accessToken = loginTokens.accessToken
                     val jwt = JWT(accessToken)
                     loginRole = jwt.getClaim("role").asString()!!
+                    mHandler.post {
+                        goToMainActivity()
+                    }
                 } catch (e: Exception) {
-                    Toast.makeText(applicationContext, "Response interpretation error: $e", Toast.LENGTH_LONG).show()
-                }
-                mHandler.post {
-                    goToMainActivity()
+                    mHandler.post {
+                        Toast.makeText(applicationContext, "Response interpretation error: $e", Toast.LENGTH_LONG).show()
+                    }
                 }
             }
         })
