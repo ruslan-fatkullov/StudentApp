@@ -6,13 +6,13 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.studentass.fragments.NotificationsFragment
 import com.example.studentass.fragments.ScheduleFragment
 import com.example.studentass.fragments.SubjectsFragment
-import kotlinx.android.synthetic.main.activity_main2.*
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main2)
+        setContentView(R.layout.activity_main)
 
         if (AuthActivity.loginRole == "student") {
             val scheduleFragment = ScheduleFragment()

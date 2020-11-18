@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E7EEF3"
+    android:background="#0D5A9CFF"
     tools:context=".fragments.ScheduleFragment">
 
     <TextView
@@ -78,6 +78,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">

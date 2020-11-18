@@ -11,7 +11,7 @@ import com.auth0.android.jwt.JWT
 import com.example.studentass.models.AuthLoginData
 import com.example.studentass.models.AuthLoginTokens
 import com.google.gson.GsonBuilder
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_login.*
 import okhttp3.*
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.IOException
@@ -29,7 +29,7 @@ class AuthActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_login)
     }
 
     private fun login(login: String, password: String) {

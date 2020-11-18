@@ -1,5 +1,6 @@
 package com.example.studentass.fragments
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -52,7 +53,15 @@ class ScheduleFragment : Fragment() {
         dayIn6.dayOfWeekTextView.text = "СБ"
         dayIn7.dayOfWeekTextView.text = "ВС"
         for (x in 0..6) {
-            daysIn!![x].setOnFocusChangeListener { _, _ -> onDayFocus(x)}
+            daysIn!![x].setOnFocusChangeListener { newFocus, _ ->
+                newFocus.dayOfWeekTextView.setTextColor(Color.parseColor("#FFFFFF"))
+                newFocus.dayTextView.setTextColor(Color.parseColor("#FFFFFF"))
+                onDayFocus(x)
+            }
+            daysIn!![x].viewTreeObserver.addOnGlobalFocusChangeListener{ oldFocus, _ ->
+                oldFocus.dayOfWeekTextView.setTextColor(Color.parseColor("#333951"))
+                oldFocus.dayTextView.setTextColor(Color.parseColor("#9598A8"))
+            }
         }
         daysIn!![dayNum].requestFocus()
         updateWeek()
