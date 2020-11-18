@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_pressed="true">
+        <layer-list>
+            <item android:bottom="0dp" android:left="0dp">
+                <shape android:shape="oval">
+                    <gradient
+                        android:gradientRadius="21dp"
+                        android:type="radial"
+                        android:endColor="#00FFFFFF"
+                        android:startColor="#20BABABA" />
+                    <corners android:radius="4dp" />
+                    <padding android:bottom="4dp" android:left="4dp"
+                        android:right="4dp" android:top="4dp" />
+                </shape>
+            </item>
+            <item android:drawable="@drawable/ic_schedule_weeks_background_click" />
+        </layer-list>
+    </item>
+    <item>
+        <layer-list>
+            <item android:bottom="0dp" android:left="0dp">
+                <shape android:shape="oval">
+                    <gradient
+                        android:gradientRadius="21dp"
+                        android:type="radial"
+                        android:endColor="#00FFFFFF"
+                        android:startColor="#20BABABA" />
+                    <corners android:radius="4dp" />
+                    <padding android:bottom="4dp" android:left="4dp"
+                        android:right="4dp" android:top="4dp" />
+                </shape>
+            </item>
+            <item android:drawable="@drawable/ic_schedule_weeks_background_default" />
+        </layer-list>
+    </item> <!-- default -->
+</selector>
