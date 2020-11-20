@@ -2,6 +2,7 @@ package com.example.studentass.adapters
 
 import android.content.Context
 import android.graphics.Color
+import android.graphics.PorterDuff
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
@@ -128,7 +129,11 @@ class SchedulePairsRvAdapter (private val context : Context) : RecyclerView.Adap
                 3 -> R.color.colorSchedulePairTypeBackgroundLab
                 else -> R.color.colorPrimary
             }
-            
+
+            timeIv?.setColorFilter(pairTypeColor, PorterDuff.Mode.SRC_IN)
+            locationIv?.setColorFilter(pairTypeColor, PorterDuff.Mode.SRC_IN)
+            teacherNameIv?.setColorFilter(pairTypeColor, PorterDuff.Mode.SRC_IN)
+
             pairTypeTv?.text = pairTypeText
             pairTypeTv?.setTextColor(ContextCompat.getColor(context, pairTypeColor))
             val shapeDrawable: GradientDrawable? = pairTypeTv?.background as GradientDrawable

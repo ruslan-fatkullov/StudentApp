@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="5.000001"
+   height="19.255079"
+   viewBox="0 0 5.000001 19.255079"
+   fill="none"
+   version="1.1"
+   id="svg8"
+   sodipodi:docname="im_schedule_pair_info.svg"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)">
+  <metadata
+     id="metadata14">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs12" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="2560"
+     inkscape:window-height="1017"
+     id="namedview10"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="30.052038"
+     inkscape:cx="2.5000001"
+     inkscape:cy="10"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg8" />
+  <ellipse
+     cx="2.29228"
+     cy="-2.5000002"
+     rx="2.29228"
+     ry="2.5"
+     transform="rotate(90)"
+     fill="#d1d0d6"
+     id="ellipse2" />
+  <ellipse
+     cx="9.6275301"
+     cy="-2.5"
+     rx="2.2922699"
+     ry="2.5"
+     transform="rotate(90)"
+     fill="#d1d0d6"
+     id="ellipse4" />
+  <ellipse
+     cx="16.962799"
+     cy="-2.500001"
+     rx="2.29228"
+     ry="2.5"
+     transform="rotate(90)"
+     fill="#d1d0d6"
+     id="ellipse6" />
+</svg>
