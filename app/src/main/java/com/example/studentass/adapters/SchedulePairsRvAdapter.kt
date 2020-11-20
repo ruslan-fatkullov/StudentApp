@@ -81,22 +81,31 @@ class SchedulePairsRvAdapter (private val context : Context) : RecyclerView.Adap
     class ViewHolder(view : View) : RecyclerView.ViewHolder(view) {
         private val pairNameTv: TextView? = view.pairNameTv
         private val timeTv: TextView? = view.timeTv
-        private val timeIv: ImageView? = view.timeIv
         private val locationTv: TextView? = view.locationTv
-        private val locationIv: ImageView? = view.locationIv
         private val teacherNameTv: TextView? = view.teacherNameTv
-        private val teacherNameIv: ImageView? = view.teacherNameIv
+
         private val pairLayout: ConstraintLayout? = view.pairLayout
+        private val timeIv: ImageView? = view.timeIv
+        private val locationIv: ImageView? = view.locationIv
+        private val teacherNameIv: ImageView? = view.teacherNameIv
         private val pairTypeTv: TextView? = view.pairTypeTv
 
         fun bind(pair: ScheduleDayCouple, context: Context, dataYear: Int, dataDayOfYear: Int){
-            var pairNameTvText = "${pair.subject} ${if (pair.subgroup != 0) (", ${pair.subgroup} пг") else ("")}"
+            val currentCalendar = Calendar.getInstance()
+            val pairTime = PairTime(pair.pair_number)
+            val pairCalendar = Calendar.getInstance()
+            pairCalendar.set(Calendar.YEAR, dataYear)
+            pairCalendar.set(Calendar.DAY_OF_YEAR, dataDayOfYear)
 
-            itemView.setOnClickListener {
-                run {
-                    Toast.makeText(context, pair.info, Toast.LENGTH_SHORT).show()
-                }
-            }
+            val pairNameTvText = "${pair.subject} ${if (pair.subgroup != 0) (", ${pair.subgroup} пг") else ("")}"
+            pairNameTv?.text = pairNameTvText
+
+            val timeText = "${pair.pair_number} пара, ${pairTime.intervalString}"
+            timeTv?.text = timeText
+
+            locationTv?.text = pair.place
+
+            teacherNameTv?.text = pair.teacher
 
             val pairTypeText = when (pair.typeSubject) {
                 1 -> "Практика"
@@ -104,25 +113,18 @@ class SchedulePairsRvAdapter (private val context : Context) : RecyclerView.Adap
                 3 -> "Лабораторная работа"
                 else -> "Error"
             }
+            pairTypeTv?.text = pairTypeText
 
-            val currentCalendar = Calendar.getInstance()
-            val pairTime = PairTime(pair.pair_number)
-            val pairCalendar = Calendar.getInstance()
-            pairCalendar.set(Calendar.YEAR, dataYear)
-            pairCalendar.set(Calendar.DAY_OF_YEAR, dataDayOfYear)
+            itemView.setOnClickListener {
+                run {
+                    Toast.makeText(context, pair.info, Toast.LENGTH_SHORT).show()
+                }
+            }
 
             pairCalendar.set(Calendar.HOUR_OF_DAY, pairTime.endHour)
             pairCalendar.set(Calendar.MINUTE, pairTime.endMinute)
             if (pairCalendar > currentCalendar) {
-                pairNameTv?.setTypeface(null, Typeface.BOLD);
-                pairNameTv?.isEnabled = true
-                timeTv?.visibility = View.VISIBLE
-                timeIv?.visibility = View.VISIBLE
-                locationTv?.visibility = View.VISIBLE
-                locationIv?.visibility = View.VISIBLE
-                teacherNameTv?.visibility = View.VISIBLE
-                teacherNameIv?.visibility = View.VISIBLE
-                pairTypeTv?.visibility = View.VISIBLE
+
 
                 pairLayout?.background = when (pair.typeSubject) {
                     1 -> ContextCompat.getDrawable(context, R.drawable.ic_im_schedule_pair_background_practice)
@@ -131,15 +133,6 @@ class SchedulePairsRvAdapter (private val context : Context) : RecyclerView.Adap
                     else -> null
                 }
 
-                val timeText = "${pair.pair_number} пара, ${pairTime.intervalString}"
-                timeTv?.text = timeText
-
-                locationTv?.text = pair.place
-
-                teacherNameTv?.text = pair.teacher
-
-                pairTypeTv?.text = pairTypeText
-
                 pairCalendar.set(Calendar.HOUR_OF_DAY, pairTime.beginHour)
                 pairCalendar.set(Calendar.MINUTE, pairTime.beginHour)
                 if (pairCalendar < currentCalendar) {
@@ -147,22 +140,8 @@ class SchedulePairsRvAdapter (private val context : Context) : RecyclerView.Adap
                 }
             }
             else {
-                pairNameTv?.setTypeface(null, Typeface.BOLD_ITALIC);
-                pairNameTv?.isEnabled = false
-                timeTv?.visibility = View.GONE
-                timeIv?.visibility = View.GONE
-                locationTv?.visibility = View.GONE
-                locationIv?.visibility = View.GONE
-                teacherNameTv?.visibility = View.GONE
-                teacherNameIv?.visibility = View.GONE
-                pairTypeTv?.visibility = View.GONE
-
                 pairLayout?.background = ContextCompat.getDrawable(context, R.drawable.ic_im_schedule_pair_background_any_done)
-
-                pairNameTvText = "$pairNameTvText ($pairTypeText)"
             }
-
-            pairNameTv?.text = pairNameTvText
         }
     }
     var dataList = ArrayList<ScheduleDayCouple>()

@@ -7,40 +7,16 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="194.07408mm"
-   height="83.673553mm"
-   viewBox="0 0 194.07408 83.673553"
+   width="311"
+   height="139"
+   viewBox="0 0 311 139"
+   fill="none"
    version="1.1"
-   id="svg8"
-   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
-   sodipodi:docname="im_schedule_pair_background_lab.svg">
-  <defs
-     id="defs2" />
-  <sodipodi:namedview
-     id="base"
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:pageopacity="0.0"
-     inkscape:pageshadow="2"
-     inkscape:zoom="0.98994949"
-     inkscape:cx="570.65966"
-     inkscape:cy="166.74609"
-     inkscape:document-units="mm"
-     inkscape:current-layer="layer1"
-     inkscape:document-rotation="0"
-     showgrid="false"
-     fit-margin-top="0"
-     fit-margin-left="0"
-     fit-margin-right="0"
-     fit-margin-bottom="0"
-     inkscape:window-width="2560"
-     inkscape:window-height="1017"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
-     inkscape:window-maximized="1" />
+   id="svg30"
+   sodipodi:docname="im_schedule_pair_background_lab.svg"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)">
   <metadata
-     id="metadata5">
+     id="metadata34">
     <rdf:RDF>
       <cc:Work
          rdf:about="">
@@ -51,19 +27,116 @@
       </cc:Work>
     </rdf:RDF>
   </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="2560"
+     inkscape:window-height="1017"
+     id="namedview32"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="3.8952096"
+     inkscape:cx="164.26657"
+     inkscape:cy="78.266568"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg30"
+     inkscape:document-rotation="0" />
   <g
-     inkscape:label="Слой 1"
-     inkscape:groupmode="layer"
-     id="layer1"
-     transform="translate(-3.7797623,-76.351189)">
-    <path
-       id="rect10"
-       style="fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
-       d="M 13.59141,76.351189 H 188.0422 c 5.43565,0 9.81164,4.375994 9.81164,9.811647 v 64.050254 c 0,5.43566 -4.37599,9.81165 -9.81164,9.81165 H 13.59141 c -5.435653,0 -9.8116477,-4.37599 -9.8116477,-9.81165 V 86.162836 c 0,-5.435653 4.3759947,-9.811647 9.8116477,-9.811647 z" />
-    <path
-       id="path29"
-       style="fill:#afe9af;fill-opacity:1;stroke-width:0.264583"
-       d="m 13.59141,76.351189 c 0,83.673551 0,0 0,83.673551 -5.435653,0 -9.8116477,-4.37599 -9.8116477,-9.81165 V 86.162836 c 0,-5.435653 4.3759947,-9.811647 9.8116477,-9.811647 z"
-       sodipodi:nodetypes="ccssc" />
+     filter="url(#filter0_d)"
+     id="g4"
+     transform="translate(-11.5,-6.5)">
+    <rect
+       x="12"
+       y="7"
+       width="310"
+       height="138"
+       rx="11"
+       fill="#ffffff"
+       id="rect2"
+       style="stroke:#fcfcfc;stroke-opacity:1" />
   </g>
+  <mask
+     id="mask0"
+     mask-type="alpha"
+     maskUnits="userSpaceOnUse"
+     x="12"
+     y="7"
+     width="310"
+     height="138">
+    <rect
+       x="12"
+       y="7"
+       width="310"
+       height="138"
+       rx="11"
+       fill="#ffffff"
+       id="rect6" />
+  </mask>
+  <g
+     mask="url(#mask0)"
+     id="g11"
+     transform="translate(-11.5,-6.5)">
+    <rect
+       x="12"
+       y="7"
+       width="10.659"
+       height="138"
+       fill="#d1d0d6"
+       id="rect9"
+       ry="0"
+       style="fill:#25ced1;fill-opacity:1" />
+  </g>
+  <defs
+     id="defs28">
+    <filter
+       id="filter0_d"
+       x="0"
+       y="0"
+       width="334"
+       height="162"
+       filterUnits="userSpaceOnUse"
+       color-interpolation-filters="sRGB">
+      <feFlood
+         flood-opacity="0"
+         result="BackgroundImageFix"
+         id="feFlood13" />
+      <feColorMatrix
+         in="SourceAlpha"
+         type="matrix"
+         values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+         id="feColorMatrix15" />
+      <feOffset
+         dy="5"
+         id="feOffset17" />
+      <feGaussianBlur
+         stdDeviation="6"
+         id="feGaussianBlur19" />
+      <feColorMatrix
+         type="matrix"
+         values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.0371503 0"
+         id="feColorMatrix21" />
+      <feBlend
+         mode="normal"
+         in2="BackgroundImageFix"
+         result="effect1_dropShadow"
+         id="feBlend23" />
+      <feBlend
+         mode="normal"
+         in="SourceGraphic"
+         in2="effect1_dropShadow"
+         result="shape"
+         id="feBlend25" />
+    </filter>
+  </defs>
 </svg>
