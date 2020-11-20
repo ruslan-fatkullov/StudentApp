@@ -11,4 +11,10 @@
     <color name="colorScheduleDayOnFocus">#FFFFFF</color>
     <color name="colorScheduleDayOfWeekDefault">#333951</color>
     <color name="colorScheduleDayOfWeekOnFocus">#FFFFFF</color>
+    <color name="colorSchedulePairTypeLab">#62DCDE</color>
+    <color name="colorSchedulePairTypeBackgroundLab">#1A62DCDE</color>
+    <color name="colorSchedulePairTypeLection">#5A9CFF</color>
+    <color name="colorSchedulePairTypeBackgroundLection">#1A5A9CFF</color>
+    <color name="colorSchedulePairTypePractice">#FFA45A</color>
+    <color name="colorSchedulePairTypeBackgroundPractice">#1AFFA45A</color>
 </resources>

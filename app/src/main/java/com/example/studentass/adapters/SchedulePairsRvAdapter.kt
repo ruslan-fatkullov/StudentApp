@@ -3,6 +3,9 @@ package com.example.studentass.adapters
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Typeface
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.ShapeDrawable
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
@@ -110,10 +113,26 @@ class SchedulePairsRvAdapter (private val context : Context) : RecyclerView.Adap
             val pairTypeText = when (pair.typeSubject) {
                 1 -> "Практика"
                 2 -> "Лекция"
-                3 -> "Лабораторная работа"
+                3 -> "Лаб"
                 else -> "Error"
             }
+            val pairTypeColor = when (pair.typeSubject) {
+                1 -> R.color.colorSchedulePairTypePractice
+                2 -> R.color.colorSchedulePairTypeLection
+                3 -> R.color.colorSchedulePairTypeLab
+                else -> R.color.colorPrimary
+            }
+            val pairTypeBackgroundColor = when (pair.typeSubject) {
+                1 -> R.color.colorSchedulePairTypeBackgroundPractice
+                2 -> R.color.colorSchedulePairTypeBackgroundLection
+                3 -> R.color.colorSchedulePairTypeBackgroundLab
+                else -> R.color.colorPrimary
+            }
+            
             pairTypeTv?.text = pairTypeText
+            pairTypeTv?.setTextColor(ContextCompat.getColor(context, pairTypeColor))
+            val shapeDrawable: GradientDrawable? = pairTypeTv?.background as GradientDrawable
+            shapeDrawable?.setColor(ContextCompat.getColor(context, pairTypeBackgroundColor))
 
             itemView.setOnClickListener {
                 run {
