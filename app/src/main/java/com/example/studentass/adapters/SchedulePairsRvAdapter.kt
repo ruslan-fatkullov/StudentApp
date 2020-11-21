@@ -96,7 +96,6 @@ class SchedulePairsRvAdapter (private val context : Context) : RecyclerView.Adap
         private val teacherNameIv: ImageView? = view.teacherNameIv
         private val pairTypeTv: TextView? = view.pairTypeTv
 
-        @RequiresApi(Build.VERSION_CODES.Q)
         fun bind(pair: ScheduleDayCouple, context: Context, dataYear: Int, dataDayOfYear: Int){
             val currentCalendar = Calendar.getInstance()
             val pairTime = PairTime(pair.pair_number)
@@ -132,10 +131,6 @@ class SchedulePairsRvAdapter (private val context : Context) : RecyclerView.Adap
                 3 -> R.color.colorSchedulePairTypeBackgroundLab
                 else -> R.color.colorPrimary
             }
-            
-            DrawableCompat.setTint(timeIv!!.drawable, ContextCompat.getColor(context, pairTypeColor));
-            DrawableCompat.setTint(locationIv!!.drawable, ContextCompat.getColor(context, pairTypeColor));
-            DrawableCompat.setTint(teacherNameIv!!.drawable, ContextCompat.getColor(context, pairTypeColor));
 
             pairTypeTv?.text = pairTypeText
             pairTypeTv?.setTextColor(ContextCompat.getColor(context, pairTypeColor))
@@ -151,23 +146,33 @@ class SchedulePairsRvAdapter (private val context : Context) : RecyclerView.Adap
             pairCalendar.set(Calendar.HOUR_OF_DAY, pairTime.endHour)
             pairCalendar.set(Calendar.MINUTE, pairTime.endMinute)
             if (pairCalendar > currentCalendar) {
-
-
                 pairLayout?.background = when (pair.typeSubject) {
                     1 -> ContextCompat.getDrawable(context, R.drawable.ic_im_schedule_pair_background_practice)
                     2 -> ContextCompat.getDrawable(context, R.drawable.ic_im_schedule_pair_background_lection)
                     3 -> ContextCompat.getDrawable(context, R.drawable.ic_im_schedule_pair_background_lab)
                     else -> null
                 }
+                timeIv?.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_im_schedule_pair_ico_time))
+                locationIv?.setColorFilter(ContextCompat.getColor(context, pairTypeColor))
+                teacherNameIv?.setColorFilter(ContextCompat.getColor(context, pairTypeColor))
+
 
                 pairCalendar.set(Calendar.HOUR_OF_DAY, pairTime.beginHour)
                 pairCalendar.set(Calendar.MINUTE, pairTime.beginHour)
                 if (pairCalendar < currentCalendar) {
-
+                    timeIv?.setColorFilter(ContextCompat.getColor(context, pairTypeColor))
+                }
+                else {
+                    timeIv?.setColorFilter(ContextCompat.getColor(context, R.color.colorSchedulePairTypeAnyDone))
                 }
             }
             else {
                 pairLayout?.background = ContextCompat.getDrawable(context, R.drawable.ic_im_schedule_pair_background_any_done)
+
+                timeIv?.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_im_schedule_pair_ico_time_done))
+                timeIv?.setColorFilter(ContextCompat.getColor(context, pairTypeColor))
+                locationIv?.setColorFilter(ContextCompat.getColor(context, R.color.colorSchedulePairTypeAnyDone))
+                teacherNameIv?.setColorFilter(ContextCompat.getColor(context, R.color.colorSchedulePairTypeAnyDone))
             }
         }
     }

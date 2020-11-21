@@ -14,6 +14,7 @@
     <color name="colorSchedulePairTypeLab">#62DCDE</color>
     <color name="colorSchedulePairTypeBackgroundLab">#1A62DCDE</color>
     <color name="colorSchedulePairTypeLection">#5A9CFF</color>
+    <color name="colorSchedulePairTypeAnyDone">#D1D0D6</color>
     <color name="colorSchedulePairTypeBackgroundLection">#1A5A9CFF</color>
     <color name="colorSchedulePairTypePractice">#FFA45A</color>
     <color name="colorSchedulePairTypeBackgroundPractice">#1AFFA45A</color>
