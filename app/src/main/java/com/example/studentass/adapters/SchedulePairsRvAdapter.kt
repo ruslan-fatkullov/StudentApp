@@ -1,12 +1,11 @@
 package com.example.studentass.adapters
 
 import android.content.Context
-import android.graphics.Color
+import android.graphics.BlendMode
+import android.graphics.BlendModeColorFilter
+import android.graphics.ColorFilter
 import android.graphics.PorterDuff
-import android.graphics.Typeface
-import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
-import android.graphics.drawable.ShapeDrawable
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +16,9 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.BlendModeColorFilterCompat
+import androidx.core.graphics.BlendModeCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studentass.R
 import com.example.studentass.models.ScheduleDayCouple
@@ -94,6 +96,7 @@ class SchedulePairsRvAdapter (private val context : Context) : RecyclerView.Adap
         private val teacherNameIv: ImageView? = view.teacherNameIv
         private val pairTypeTv: TextView? = view.pairTypeTv
 
+        @RequiresApi(Build.VERSION_CODES.Q)
         fun bind(pair: ScheduleDayCouple, context: Context, dataYear: Int, dataDayOfYear: Int){
             val currentCalendar = Calendar.getInstance()
             val pairTime = PairTime(pair.pair_number)
@@ -129,10 +132,10 @@ class SchedulePairsRvAdapter (private val context : Context) : RecyclerView.Adap
                 3 -> R.color.colorSchedulePairTypeBackgroundLab
                 else -> R.color.colorPrimary
             }
-
-            timeIv?.setColorFilter(pairTypeColor, PorterDuff.Mode.SRC_IN)
-            locationIv?.setColorFilter(pairTypeColor, PorterDuff.Mode.SRC_IN)
-            teacherNameIv?.setColorFilter(pairTypeColor, PorterDuff.Mode.SRC_IN)
+            
+            DrawableCompat.setTint(timeIv!!.drawable, ContextCompat.getColor(context, pairTypeColor));
+            DrawableCompat.setTint(locationIv!!.drawable, ContextCompat.getColor(context, pairTypeColor));
+            DrawableCompat.setTint(teacherNameIv!!.drawable, ContextCompat.getColor(context, pairTypeColor));
 
             pairTypeTv?.text = pairTypeText
             pairTypeTv?.setTextColor(ContextCompat.getColor(context, pairTypeColor))
