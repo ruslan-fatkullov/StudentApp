@@ -75,7 +75,7 @@ class AuthActivity : AppCompatActivity() {
 
     fun onButtonLoginClick(@Suppress("UNUSED_PARAMETER")view: View) {
         try {
-            val loginText : String = editTextLogin?.text.toString()
+            /*val loginText : String = editTextLogin?.text.toString()
             val passwordText : String = editTextPassword?.text.toString()
 
             if (loginText.isEmpty())
@@ -84,7 +84,7 @@ class AuthActivity : AppCompatActivity() {
                 throw Exception("Адрес эл. почты содержит недопустимые символы")
             if (passwordText.isEmpty())
                 throw Exception("Не указан пароль")
-            login(loginText, passwordText)
+            login(loginText, passwordText)*/
         }
         catch (e: Exception) {
             val errorMessage : String = "Ошибка: " + e.message

@@ -4,6 +4,9 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
 
+    <color name="colorAuthField">#5A9CFF</color>
+    <color name="colorAuthFieldBackground">#1A5A9CFF</color>
+
     <color name="colorActionBar">#0D5A9CFF</color>
 
     <color name="colorScheduleBackground">#0D5A9CFF</color>
