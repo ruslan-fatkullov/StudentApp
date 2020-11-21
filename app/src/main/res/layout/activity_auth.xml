@@ -34,7 +34,7 @@
         android:id="@+id/usernameLl"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="50dp"
         android:background="@drawable/auth_field_background"
         android:gravity="center"
         android:orientation="horizontal"
@@ -45,16 +45,16 @@
         app:layout_constraintTop_toBottomOf="@+id/textView">
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/mailIv"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_weight="0"
             app:srcCompat="@drawable/ic_auth_ico_mail" />
 
         <EditText
-            android:id="@+id/editTextTextEmailAddress"
+            android:id="@+id/emailTv"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginEnd="10dp"
@@ -62,15 +62,16 @@
             android:layout_weight="1"
             android:background="#00FFFFFF"
             android:ems="10"
+            android:hint="Введите адрес эл. почты"
             android:inputType="textEmailAddress" />
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/mailOkIv"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_weight="0"
-            app:tint="@color/colorAuthField"
-            app:srcCompat="@drawable/ic_auth_ico_confirmed" />
+            app:srcCompat="@drawable/ic_auth_ico_confirmed"
+            app:tint="@color/colorAuthField" />
     </LinearLayout>
 
     <LinearLayout
@@ -88,16 +89,16 @@
         app:layout_constraintTop_toBottomOf="@+id/usernameLl">
 
         <ImageView
-            android:id="@+id/imageView6"
+            android:id="@+id/passwordIv"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_weight="0"
             app:srcCompat="@drawable/ic_auth_ico_password" />
 
         <EditText
-            android:id="@+id/editTextTextPassword"
+            android:id="@+id/passwordTv"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginEnd="10dp"
@@ -105,10 +106,11 @@
             android:layout_weight="1"
             android:background="#00FFFFFF"
             android:ems="10"
+            android:hint="Введите пароль"
             android:inputType="textPassword" />
 
         <ImageView
-            android:id="@+id/imageView8"
+            android:id="@+id/passwordModeIv"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginEnd="10dp"
@@ -117,7 +119,7 @@
             app:srcCompat="@drawable/ic_auth_ico_password_hidden" />
 
         <ImageView
-            android:id="@+id/imageView7"
+            android:id="@+id/passwordOkIv"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_weight="0"
@@ -125,19 +127,35 @@
             app:tint="@color/colorAuthField" />
     </LinearLayout>
 
-    <Button
+    <!--<Button
         android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="70dp"
         android:background="@drawable/auth_login_button_background"
+        android:onClick="onButtonLoginClick"
         android:text="Войти"
         android:textAllCaps="false"
         android:textColor="@color/design_default_color_background"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordLl" />
+        app:layout_constraintTop_toBottomOf="@+id/passwordLl" />-->
+    <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
+        android:id="@+id/loginBn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:onClick="onButtonLoginClick"
+        android:text="Войти"
+        android:textAllCaps="false"
+        android:textColor="@color/design_default_color_background"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordLl"
+        app:spinning_bar_color="@color/colorAuthFieldBackground"
+        android:background="@drawable/auth_login_button_background" />
 
     <LinearLayout
         android:id="@+id/newAccLl"
@@ -147,7 +165,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button">
+        app:layout_constraintTop_toBottomOf="@+id/loginBn">
 
         <TextView
             android:id="@+id/textView2"

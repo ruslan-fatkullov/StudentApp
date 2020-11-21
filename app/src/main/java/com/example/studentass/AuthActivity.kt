@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.auth0.android.jwt.JWT
@@ -30,8 +32,6 @@ class AuthActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_auth)
-
-        actionBar
     }
 
     private fun login(login: String, password: String) {
@@ -51,7 +51,10 @@ class AuthActivity : AppCompatActivity() {
             }
             override fun onResponse(call: Call, response: Response) {
                 try {
-                    val loginTokensObject = GsonBuilder().create().fromJson(response.body!!.string(), AuthLoginTokens::class.java)
+                    val loginTokensObject = GsonBuilder().create().fromJson(
+                        response.body!!.string(),
+                        AuthLoginTokens::class.java
+                    )
                     loginTokens = loginTokensObject
                     val accessToken = loginTokens.accessToken
                     val jwt = JWT(accessToken)
@@ -73,20 +76,25 @@ class AuthActivity : AppCompatActivity() {
         startActivity(intentActivity)
     }
 
-    fun onButtonLoginClick(@Suppress("UNUSED_PARAMETER")view: View) {
+    fun onButtonLoginClick(@Suppress("UNUSED_PARAMETER") view: View) {
         try {
-            /*val loginText : String = editTextLogin?.text.toString()
-            val passwordText : String = editTextPassword?.text.toString()
+            val emailText : String = emailTv?.text.toString()
+            val passwordText : String = passwordTv?.text.toString()
 
-            if (loginText.isEmpty())
+            if (emailText.isEmpty())
                 throw Exception("Не указан адрес эл. почты")
-            if (loginText.indexOf(' ', 0, true) != -1)
-                throw Exception("Адрес эл. почты содержит недопустимые символы")
             if (passwordText.isEmpty())
                 throw Exception("Не указан пароль")
-            login(loginText, passwordText)*/
+
+            loginBn.startAnimation()
+            //login(emailText, passwordText)
+            loginRole = "student"
+            goToMainActivity()
         }
         catch (e: Exception) {
+            val shake: Animation = AnimationUtils.loadAnimation(this, R.anim.anim_shake)
+            view.startAnimation(shake)
+
             val errorMessage : String = "Ошибка: " + e.message
             Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
         }
