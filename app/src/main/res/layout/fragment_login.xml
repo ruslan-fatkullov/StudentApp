@@ -146,7 +146,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="70dp"
-        android:onClick="onButtonLoginClick"
+        android:background="@drawable/auth_login_button_background"
         android:text="Войти"
         android:textAllCaps="false"
         android:textColor="@color/design_default_color_background"
@@ -154,8 +154,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwordLl"
-        app:spinning_bar_color="@color/colorAuthFieldBackground"
-        android:background="@drawable/auth_login_button_background" />
+        app:spinning_bar_color="@color/colorAuthFieldBackground" />
 
     <LinearLayout
         android:id="@+id/newAccLl"

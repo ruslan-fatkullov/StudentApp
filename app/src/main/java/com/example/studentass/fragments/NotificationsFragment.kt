@@ -5,14 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
-import com.example.studentass.AuthActivity
-import com.example.studentass.MainActivity
 import com.example.studentass.R
-import com.example.studentass.models.Test
-import com.google.gson.GsonBuilder
-import kotlinx.android.synthetic.main.fragment_notifications.*
-import kotlin.concurrent.thread
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

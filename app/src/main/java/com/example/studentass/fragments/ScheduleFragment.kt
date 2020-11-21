@@ -1,6 +1,5 @@
 package com.example.studentass.fragments
 
-import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.studentass.AuthActivity
+import com.example.studentass.MainActivity
 import com.example.studentass.R
 import com.example.studentass.adapters.SchedulePairsRvAdapter
 import com.example.studentass.models.Schedule
@@ -81,7 +80,7 @@ class ScheduleFragment : Fragment() {
         val request = Request.Builder().url(url).build()
         client.newCall(request).enqueue(object: Callback {
             override fun onFailure(call: Call, e: IOException) {
-                AuthActivity.mHandler.post {
+                MainActivity.mHandler.post {
                     Toast.makeText(context, "Schedule request error: $e", Toast.LENGTH_LONG).show()
                 }
             }
@@ -92,7 +91,7 @@ class ScheduleFragment : Fragment() {
                 } catch (e : Exception) {
                     Toast.makeText(context, "Schedule interpretation error: $e", Toast.LENGTH_LONG).show()
                 }
-                AuthActivity.mHandler.post {
+                MainActivity.mHandler.post {
                     try {
                         updatePairsList()
                         pairsPb.visibility = View.GONE
