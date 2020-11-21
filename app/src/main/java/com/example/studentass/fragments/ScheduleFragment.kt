@@ -63,15 +63,22 @@ class ScheduleFragment : Fragment() {
                 oldFocus?.dayTextView?.setTextColor(ContextCompat.getColor(context!!, R.color.colorScheduleDayDefault))
             }
         }
-        daysIn!![dayNum].requestFocus()
-        updateWeek()
-        updateDaysOfMonth()
 
         schedulePairsRv.layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
         schedulePairsRv.adapter = SchedulePairsRvAdapter(context!!)
         //setPairsList(0, 0)
 
         getSchedule()
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+
+        if (!hidden) {
+            daysIn!![dayNum].requestFocus()
+            updateWeek()
+            updateDaysOfMonth()
+        }
     }
 
     private fun getSchedule() {

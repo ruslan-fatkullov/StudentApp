@@ -1,9 +1,6 @@
 package com.example.studentass.fragments
 
-import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -46,7 +43,8 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        loginBn.setOnClickListener { _ -> onButtonLoginClick() }
+        loginBn.setOnClickListener { _ -> onLoginButtonClick() }
+        registrationTv.setOnClickListener { _ ->  onRegistrationTextViewClick()}
     }
 
     private fun login(login: String, password: String) {
@@ -91,10 +89,10 @@ class LoginFragment : Fragment() {
         startActivity(intentActivity)
     }*/
 
-    private fun onButtonLoginClick() {
+    private fun onLoginButtonClick() {
         try {
-            val emailText : String = emailTv?.text.toString()
-            val passwordText : String = passwordTv?.text.toString()
+            val emailText : String = emailEt?.text.toString()
+            val passwordText : String = passwordEt?.text.toString()
 
             if (emailText.isEmpty())
                 throw Exception("Не указан адрес эл. почты")
@@ -113,5 +111,9 @@ class LoginFragment : Fragment() {
             val errorMessage : String = "Ошибка: " + e.message
             Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun onRegistrationTextViewClick() {
+        MainActivity.switchFragment(this, MainActivity.registrationFragment)
     }
 }

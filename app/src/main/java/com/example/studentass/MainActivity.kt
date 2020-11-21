@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
         lateinit var sfm: FragmentManager
 
         val loginFragment = LoginFragment()
+        val registrationFragment = RegistrationFragment()
         val mainFragment = MainFragment()
 
         fun switchFragment(from: Fragment, to: Fragment) {
@@ -36,6 +37,10 @@ class MainActivity : AppCompatActivity() {
         sfm = supportFragmentManager
 
         sfm.beginTransaction().add(main_fragment_container.id, loginFragment).commit()
+
+        sfm.beginTransaction().add(main_fragment_container.id, registrationFragment).commit()
+        sfm.beginTransaction().hide(registrationFragment).commit()
+
         sfm.beginTransaction().add(main_fragment_container.id, mainFragment).commit()
         sfm.beginTransaction().hide(mainFragment).commit()
     }

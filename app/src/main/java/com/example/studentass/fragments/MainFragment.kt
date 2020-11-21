@@ -11,6 +11,8 @@ import com.example.studentass.R
 import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainFragment : Fragment() {
+    lateinit var currentFragment: Fragment
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -20,39 +22,27 @@ class MainFragment : Fragment() {
             val notificationsFragment = NotificationsFragment()
 
             MainActivity.sfm.beginTransaction().add(fragment_container.id, scheduleFragment).commit()
-            MainActivity.sfm.beginTransaction().add(fragment_container.id, subjectsFragment).commit()
-            MainActivity.sfm.beginTransaction().add(fragment_container.id, notificationsFragment).commit()
+            MainActivity.sfm.beginTransaction().hide(scheduleFragment).commit()
 
-            //thisActivity.title = "Расписание занятий"
+            MainActivity.sfm.beginTransaction().add(fragment_container.id, subjectsFragment).commit()
             MainActivity.sfm.beginTransaction().hide(subjectsFragment).commit()
+
+            MainActivity.sfm.beginTransaction().add(fragment_container.id, notificationsFragment).commit()
             MainActivity.sfm.beginTransaction().hide(notificationsFragment).commit()
 
+            //thisActivity.title = "Расписание занятий"
+
+            currentFragment = scheduleFragment
+
             bottomNavigationView.setOnNavigationItemSelectedListener {
-
-                when (it.itemId) {
-                    R.id.bnv_schedule -> {
-                        //makeCurrentFragment(scheduleFragment)
-                        MainActivity.sfm.beginTransaction().show(scheduleFragment).commit()
-                        MainActivity.sfm.beginTransaction().hide(subjectsFragment).commit()
-                        MainActivity.sfm.beginTransaction().hide(notificationsFragment).commit()
-                        //thisActivity.title = "Расписание занятий"
-
-                    }
-                    R.id.bnv_subjects -> {
-                        //makeCurrentFragment(subjectsFragment)
-                        MainActivity.sfm.beginTransaction().hide(scheduleFragment).commit()
-                        MainActivity.sfm.beginTransaction().show(subjectsFragment).commit()
-                        MainActivity.sfm.beginTransaction().hide(notificationsFragment).commit()
-                        //thisActivity.title = "Предметы"
-                    }
-                    R.id.bnv_notifications -> {
-                        //makeCurrentFragment(notificationsFragment)
-                        MainActivity.sfm.beginTransaction().hide(scheduleFragment).commit()
-                        MainActivity.sfm.beginTransaction().hide(subjectsFragment).commit()
-                        MainActivity.sfm.beginTransaction().show(notificationsFragment).commit()
-                        //thisActivity.title = "Уведомления"
-                    }
+                MainActivity.sfm.beginTransaction().hide(currentFragment).commit()
+                currentFragment = when (it.itemId) {
+                    R.id.bnv_schedule -> scheduleFragment
+                    R.id.bnv_subjects -> subjectsFragment
+                    R.id.bnv_notifications -> notificationsFragment
+                    else -> currentFragment
                 }
+                MainActivity.sfm.beginTransaction().show(currentFragment).commit()
                 true
             }
         }
@@ -67,5 +57,16 @@ class MainFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_main, container, false)
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+
+        if (hidden) {
+            MainActivity.sfm.beginTransaction().hide(currentFragment).commit()
+        }
+        else {
+            MainActivity.sfm.beginTransaction().show(currentFragment).commit()
+        }
     }
 }

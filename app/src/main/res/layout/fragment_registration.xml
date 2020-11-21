@@ -8,33 +8,33 @@
     android:paddingTop="32dp"
     android:paddingRight="32dp"
     android:paddingBottom="32dp"
-    tools:context=".AuthActivity">
+    tools:context=".fragments.RegistrationFragment">
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Создание аккаунта"
+        android:textColor="#000000"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageView3"
         android:layout_width="120dp"
         android:layout_height="30dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_auth_title" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:fontFamily="sans-serif-medium"
-        android:text="Авторизация"
-        android:textColor="#000000"
-        android:textSize="30sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
-
     <LinearLayout
-        android:id="@+id/emailLl"
+        android:id="@+id/nameLl"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="70dp"
         android:background="@drawable/auth_field_background"
         android:gravity="center"
         android:orientation="horizontal"
@@ -42,17 +42,103 @@
         android:paddingRight="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
+        app:layout_constraintTop_toBottomOf="@+id/textView4">
 
         <ImageView
-            android:id="@+id/emailIv"
+            android:id="@+id/nameIv"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_weight="0"
+            app:srcCompat="@drawable/ic_auth_ico_name" />
+
+        <EditText
+            android:id="@+id/nameEt"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="#00FFFFFF"
+            android:ems="10"
+            android:hint="Введите ФИО" />
+
+        <ImageView
+            android:id="@+id/nameOkIv"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_weight="0"
+            app:srcCompat="@drawable/ic_auth_ico_confirmed"
+            app:tint="@color/colorAuthField" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/groupLl"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/auth_field_background"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameLl">
+
+        <ImageView
+            android:id="@+id/groupIv"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_weight="0"
+            app:srcCompat="@drawable/ic_auth_ico_name" />
+
+        <EditText
+            android:id="@+id/groupEt"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="#00FFFFFF"
+            android:ems="10"
+            android:hint="Введите название группы" />
+
+        <ImageView
+            android:id="@+id/groupOkIv"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_weight="0"
+            app:srcCompat="@drawable/ic_auth_ico_confirmed"
+            app:tint="@color/colorAuthField" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/emailRegLl"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/auth_field_background"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/groupLl">
+
+        <ImageView
+            android:id="@+id/emailRegIv"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_weight="0"
             app:srcCompat="@drawable/ic_auth_ico_mail" />
 
         <EditText
-            android:id="@+id/emailEt"
+            android:id="@+id/emailRegEt"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="10dp"
@@ -66,7 +152,7 @@
             android:inputType="textEmailAddress" />
 
         <ImageView
-            android:id="@+id/mailOkIv"
+            android:id="@+id/emailRegOkIv"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_weight="0"
@@ -74,115 +160,58 @@
             app:tint="@color/colorAuthField" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/passwordLl"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="25dp"
-        android:background="@drawable/auth_field_background"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailLl">
-
-        <ImageView
-            android:id="@+id/passwordIv"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_weight="0"
-            app:srcCompat="@drawable/ic_auth_ico_password" />
-
-        <EditText
-            android:id="@+id/passwordEt"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1"
-            android:background="#00FFFFFF"
-            android:ems="10"
-            android:hint="Введите пароль"
-            android:inputType="textPassword" />
-
-        <ImageView
-            android:id="@+id/passwordModeIv"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_weight="0"
-            app:srcCompat="@drawable/ic_auth_ico_password_hidden" />
-
-        <ImageView
-            android:id="@+id/passwordOkIv"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_weight="0"
-            app:srcCompat="@drawable/ic_auth_ico_confirmed"
-            app:tint="@color/colorAuthField" />
-    </LinearLayout>
-
-    <!--<Button
-        android:id="@+id/button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
-        android:background="@drawable/auth_login_button_background"
-        android:onClick="onButtonLoginClick"
-        android:text="Войти"
-        android:textAllCaps="false"
-        android:textColor="@color/design_default_color_background"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordLl" />-->
     <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
-        android:id="@+id/loginBn"
+        android:id="@+id/signupBn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="70dp"
         android:background="@drawable/auth_login_button_background"
-        android:text="Войти"
+        android:text="Отправить"
         android:textAllCaps="false"
         android:textColor="@color/design_default_color_background"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.062"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordLl"
+        app:layout_constraintTop_toBottomOf="@+id/emailRegLl"
         app:spinning_bar_color="@color/colorAuthFieldBackground" />
 
     <LinearLayout
-        android:id="@+id/newAccLl"
+        android:id="@+id/loginLl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginBn">
+        app:layout_constraintTop_toBottomOf="@+id/signupBn">
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Нет аккаунта?"
+            android:text="Есть аккаунт?"
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/registrationTv"
+            android:id="@+id/loginTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:fontFamily="sans-serif-medium"
-            android:text="Создать"
+            android:text="Войти"
             android:textColor="@color/colorAuthField"
             android:textSize="18sp" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Оставьте нам свои контактные данные, и мы пришлём Вам доступ на почту"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
 </androidx.constraintlayout.widget.ConstraintLayout>
