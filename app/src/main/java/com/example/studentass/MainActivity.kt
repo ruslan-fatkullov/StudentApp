@@ -9,6 +9,7 @@ import android.os.Looper
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.example.studentass.fragments.*
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -16,19 +17,26 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
     companion object {
         val mHandler = Handler(Looper.getMainLooper())
+
+        lateinit var sfm: FragmentManager
+
+        val loginFragment = LoginFragment()
+        val mainFragment = MainFragment()
+
+        fun switchFragment(from: Fragment, to: Fragment) {
+            sfm.beginTransaction().hide(from).commit()
+            sfm.beginTransaction().show(to).commit()
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val loginFragment = LoginFragment()
-        supportFragmentManager.beginTransaction().add(main_fragment_container.id, loginFragment).commit()
-    }
+        sfm = supportFragmentManager
 
-    fun goToMainFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction().hide(fragment).commit()
-        val mainFragment = MainFragment()
-        supportFragmentManager.beginTransaction().add(main_fragment_container.id, mainFragment).commit()
+        sfm.beginTransaction().add(main_fragment_container.id, loginFragment).commit()
+        sfm.beginTransaction().add(main_fragment_container.id, mainFragment).commit()
+        sfm.beginTransaction().hide(mainFragment).commit()
     }
 }

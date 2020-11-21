@@ -104,7 +104,7 @@ class LoginFragment : Fragment() {
             loginBn.startAnimation()
             //login(emailText, passwordText)
             loginRole = "student"
-            (activity as MainActivity).goToMainFragment(this)
+            MainActivity.switchFragment(this, MainActivity.mainFragment)
         }
         catch (e: Exception) {
             val shake: Animation = AnimationUtils.loadAnimation(context, R.anim.anim_shake)

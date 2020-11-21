@@ -11,53 +11,46 @@ import com.example.studentass.R
 import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainFragment : Fragment() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val thisActivity = activity!!
-
 
         if ("student" == "student") {
             val scheduleFragment = ScheduleFragment()
             val subjectsFragment = SubjectsFragment()
             val notificationsFragment = NotificationsFragment()
 
-            thisActivity.supportFragmentManager.beginTransaction().add(fragment_container.id, scheduleFragment).commit()
-            thisActivity.supportFragmentManager.beginTransaction().add(fragment_container.id, subjectsFragment).commit()
-            thisActivity.supportFragmentManager.beginTransaction().add(fragment_container.id, notificationsFragment).commit()
+            MainActivity.sfm.beginTransaction().add(fragment_container.id, scheduleFragment).commit()
+            MainActivity.sfm.beginTransaction().add(fragment_container.id, subjectsFragment).commit()
+            MainActivity.sfm.beginTransaction().add(fragment_container.id, notificationsFragment).commit()
 
-            thisActivity.title = "Расписание занятий"
-            thisActivity.supportFragmentManager.beginTransaction().hide(subjectsFragment).commit()
-            thisActivity.supportFragmentManager.beginTransaction().hide(notificationsFragment).commit()
+            //thisActivity.title = "Расписание занятий"
+            MainActivity.sfm.beginTransaction().hide(subjectsFragment).commit()
+            MainActivity.sfm.beginTransaction().hide(notificationsFragment).commit()
 
             bottomNavigationView.setOnNavigationItemSelectedListener {
 
                 when (it.itemId) {
                     R.id.bnv_schedule -> {
                         //makeCurrentFragment(scheduleFragment)
-                        thisActivity.supportFragmentManager.beginTransaction().show(scheduleFragment).commit()
-                        thisActivity.supportFragmentManager.beginTransaction().hide(subjectsFragment).commit()
-                        thisActivity.supportFragmentManager.beginTransaction().hide(notificationsFragment).commit()
-                        thisActivity.title = "Расписание занятий"
+                        MainActivity.sfm.beginTransaction().show(scheduleFragment).commit()
+                        MainActivity.sfm.beginTransaction().hide(subjectsFragment).commit()
+                        MainActivity.sfm.beginTransaction().hide(notificationsFragment).commit()
+                        //thisActivity.title = "Расписание занятий"
 
                     }
                     R.id.bnv_subjects -> {
                         //makeCurrentFragment(subjectsFragment)
-                        thisActivity.supportFragmentManager.beginTransaction().hide(scheduleFragment).commit()
-                        thisActivity.supportFragmentManager.beginTransaction().show(subjectsFragment).commit()
-                        thisActivity.supportFragmentManager.beginTransaction().hide(notificationsFragment).commit()
-                        thisActivity.title = "Предметы"
+                        MainActivity.sfm.beginTransaction().hide(scheduleFragment).commit()
+                        MainActivity.sfm.beginTransaction().show(subjectsFragment).commit()
+                        MainActivity.sfm.beginTransaction().hide(notificationsFragment).commit()
+                        //thisActivity.title = "Предметы"
                     }
                     R.id.bnv_notifications -> {
                         //makeCurrentFragment(notificationsFragment)
-                        thisActivity.supportFragmentManager.beginTransaction().hide(scheduleFragment).commit()
-                        thisActivity.supportFragmentManager.beginTransaction().hide(subjectsFragment).commit()
-                        thisActivity.supportFragmentManager.beginTransaction().show(notificationsFragment).commit()
-                        thisActivity.title = "Уведомления"
+                        MainActivity.sfm.beginTransaction().hide(scheduleFragment).commit()
+                        MainActivity.sfm.beginTransaction().hide(subjectsFragment).commit()
+                        MainActivity.sfm.beginTransaction().show(notificationsFragment).commit()
+                        //thisActivity.title = "Уведомления"
                     }
                 }
                 true
