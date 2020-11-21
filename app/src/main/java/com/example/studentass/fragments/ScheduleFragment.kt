@@ -140,7 +140,7 @@ class ScheduleFragment : Fragment() {
     }
 
     private fun updateWeek() {
-        val text = "Неделя ${weekNum + 1}"
+        val text = "${weekNum + 1} неделя"
         weekTv.text = text
     }
 
