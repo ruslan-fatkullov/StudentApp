@@ -48,6 +48,8 @@
             android:id="@+id/emailIv"
             android:layout_width="20dp"
             android:layout_height="20dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
             android:layout_weight="0"
             app:srcCompat="@drawable/ic_auth_ico_mail" />
 
@@ -55,10 +57,6 @@
             android:id="@+id/emailEt"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:background="#00FFFFFF"
             android:ems="10"
@@ -66,10 +64,13 @@
             android:inputType="textEmailAddress" />
 
         <ImageView
-            android:id="@+id/mailOkIv"
+            android:id="@+id/emailOkIv"
             android:layout_width="20dp"
             android:layout_height="20dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
             android:layout_weight="0"
+            android:visibility="gone"
             app:srcCompat="@drawable/ic_auth_ico_confirmed"
             app:tint="@color/colorAuthField" />
     </LinearLayout>
@@ -92,6 +93,8 @@
             android:id="@+id/passwordIv"
             android:layout_width="20dp"
             android:layout_height="20dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
             android:layout_weight="0"
             app:srcCompat="@drawable/ic_auth_ico_password" />
 
@@ -99,10 +102,6 @@
             android:id="@+id/passwordEt"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:background="#00FFFFFF"
             android:ems="10"
@@ -113,8 +112,8 @@
             android:id="@+id/passwordModeIv"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
             android:layout_weight="0"
             app:srcCompat="@drawable/ic_auth_ico_password_hidden" />
 
@@ -122,7 +121,10 @@
             android:id="@+id/passwordOkIv"
             android:layout_width="20dp"
             android:layout_height="20dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
             android:layout_weight="0"
+            android:visibility="gone"
             app:srcCompat="@drawable/ic_auth_ico_confirmed"
             app:tint="@color/colorAuthField" />
     </LinearLayout>

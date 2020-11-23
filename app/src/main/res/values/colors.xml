@@ -6,6 +6,7 @@
 
     <color name="colorAuthField">#5A9CFF</color>
     <color name="colorAuthFieldBackground">#1A5A9CFF</color>
+    <color name="colorAuthInactive">#AEB1BF</color>
 
     <color name="colorActionBar">#0D5A9CFF</color>
 

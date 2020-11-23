@@ -48,6 +48,8 @@
             android:id="@+id/nameIv"
             android:layout_width="20dp"
             android:layout_height="20dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
             android:layout_weight="0"
             app:srcCompat="@drawable/ic_auth_ico_name" />
 
@@ -55,10 +57,6 @@
             android:id="@+id/nameEt"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:background="#00FFFFFF"
             android:ems="10"
@@ -68,7 +66,10 @@
             android:id="@+id/nameOkIv"
             android:layout_width="20dp"
             android:layout_height="20dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
             android:layout_weight="0"
+            android:visibility="gone"
             app:srcCompat="@drawable/ic_auth_ico_confirmed"
             app:tint="@color/colorAuthField" />
     </LinearLayout>
@@ -91,17 +92,15 @@
             android:id="@+id/groupIv"
             android:layout_width="20dp"
             android:layout_height="20dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
             android:layout_weight="0"
-            app:srcCompat="@drawable/ic_auth_ico_name" />
+            app:srcCompat="@drawable/ic_auth_ico_group" />
 
         <EditText
             android:id="@+id/groupEt"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:background="#00FFFFFF"
             android:ems="10"
@@ -111,7 +110,10 @@
             android:id="@+id/groupOkIv"
             android:layout_width="20dp"
             android:layout_height="20dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
             android:layout_weight="0"
+            android:visibility="gone"
             app:srcCompat="@drawable/ic_auth_ico_confirmed"
             app:tint="@color/colorAuthField" />
     </LinearLayout>
@@ -134,6 +136,8 @@
             android:id="@+id/emailRegIv"
             android:layout_width="20dp"
             android:layout_height="20dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
             android:layout_weight="0"
             app:srcCompat="@drawable/ic_auth_ico_mail" />
 
@@ -141,10 +145,6 @@
             android:id="@+id/emailRegEt"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:background="#00FFFFFF"
             android:ems="10"
@@ -155,7 +155,10 @@
             android:id="@+id/emailRegOkIv"
             android:layout_width="20dp"
             android:layout_height="20dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
             android:layout_weight="0"
+            android:visibility="gone"
             app:srcCompat="@drawable/ic_auth_ico_confirmed"
             app:tint="@color/colorAuthField" />
     </LinearLayout>

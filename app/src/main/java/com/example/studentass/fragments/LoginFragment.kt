@@ -1,6 +1,8 @@
 package com.example.studentass.fragments
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +10,7 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.auth0.android.jwt.JWT
 import com.example.studentass.MainActivity
 import com.example.studentass.R
@@ -28,10 +31,6 @@ class LoginFragment : Fragment() {
         var loginRole = "NONE"
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,6 +42,34 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        emailEt.addTextChangedListener (object: TextWatcher {
+            override fun afterTextChanged(s: Editable?) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (isValidEmail(s.toString())) {
+                    emailIv?.setColorFilter(ContextCompat.getColor(context!!, R.color.colorAuthField))
+                    emailOkIv.visibility = View.VISIBLE
+                }
+                else {
+                    emailIv?.setColorFilter(ContextCompat.getColor(context!!, R.color.colorAuthInactive))
+                    emailOkIv.visibility = View.GONE
+                }
+            }
+        })
+        passwordEt.addTextChangedListener (object: TextWatcher {
+            override fun afterTextChanged(s: Editable?) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (isValidPassword(s.toString())) {
+                    passwordIv?.setColorFilter(ContextCompat.getColor(context!!, R.color.colorAuthField))
+                    passwordOkIv.visibility = View.VISIBLE
+                }
+                else {
+                    passwordIv?.setColorFilter(ContextCompat.getColor(context!!, R.color.colorAuthInactive))
+                    passwordOkIv.visibility = View.GONE
+                }
+            }
+        })
         loginBn.setOnClickListener { _ -> onLoginButtonClick() }
         registrationTv.setOnClickListener { _ ->  onRegistrationTextViewClick()}
     }
@@ -88,6 +115,13 @@ class LoginFragment : Fragment() {
         val intentActivity = Intent(this, MainActivity::class.java)
         startActivity(intentActivity)
     }*/
+
+    private fun isValidEmail(email: String): Boolean {
+        return email.isNotEmpty() && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
+    private fun isValidPassword(password: String): Boolean {
+        return password.isNotEmpty()
+    }
 
     private fun onLoginButtonClick() {
         try {
