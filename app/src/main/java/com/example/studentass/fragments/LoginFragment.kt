@@ -3,6 +3,7 @@ package com.example.studentass.fragments
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.text.method.PasswordTransformationMethod
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -31,6 +32,9 @@ class LoginFragment : Fragment() {
         var loginRole = "NONE"
     }
 
+    var emailIsValid = false
+    var passwordIsValid = false
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,10 +53,12 @@ class LoginFragment : Fragment() {
                 if (isValidEmail(s.toString())) {
                     emailIv?.setColorFilter(ContextCompat.getColor(context!!, R.color.colorAuthField))
                     emailOkIv.visibility = View.VISIBLE
+                    emailIsValid = true
                 }
                 else {
                     emailIv?.setColorFilter(ContextCompat.getColor(context!!, R.color.colorAuthInactive))
                     emailOkIv.visibility = View.GONE
+                    emailIsValid = false
                 }
             }
         })
@@ -61,17 +67,30 @@ class LoginFragment : Fragment() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (isValidPassword(s.toString())) {
-                    passwordIv?.setColorFilter(ContextCompat.getColor(context!!, R.color.colorAuthField))
+                    passwordIv.setColorFilter(ContextCompat.getColor(context!!, R.color.colorAuthField))
                     passwordOkIv.visibility = View.VISIBLE
+                    passwordIsValid = true
                 }
                 else {
-                    passwordIv?.setColorFilter(ContextCompat.getColor(context!!, R.color.colorAuthInactive))
+                    passwordIv.setColorFilter(ContextCompat.getColor(context!!, R.color.colorAuthInactive))
                     passwordOkIv.visibility = View.GONE
+                    passwordIsValid = false
                 }
             }
         })
-        loginBn.setOnClickListener { _ -> onLoginButtonClick() }
-        registrationTv.setOnClickListener { _ ->  onRegistrationTextViewClick()}
+        passwordModeIv.setColorFilter(ContextCompat.getColor(context!!, R.color.colorAuthField))
+        passwordModeIv.setOnClickListener {
+            if (passwordEt.transformationMethod == null) {
+                passwordEt.transformationMethod = PasswordTransformationMethod()
+                passwordModeIv.setColorFilter(ContextCompat.getColor(context!!, R.color.colorAuthField))
+            }
+            else {
+                passwordEt.transformationMethod = null
+                passwordModeIv.setColorFilter(ContextCompat.getColor(context!!, R.color.colorAuthInactive))
+            }
+        }
+        loginBn.setOnClickListener { onLoginButtonClick() }
+        registrationTv.setOnClickListener { onRegistrationTextViewClick()}
     }
 
     private fun login(login: String, password: String) {
@@ -111,14 +130,10 @@ class LoginFragment : Fragment() {
         })
     }
 
-    /*fun goToMainActivity() {
-        val intentActivity = Intent(this, MainActivity::class.java)
-        startActivity(intentActivity)
-    }*/
-
     private fun isValidEmail(email: String): Boolean {
         return email.isNotEmpty() && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
+
     private fun isValidPassword(password: String): Boolean {
         return password.isNotEmpty()
     }
@@ -128,14 +143,16 @@ class LoginFragment : Fragment() {
             val emailText : String = emailEt?.text.toString()
             val passwordText : String = passwordEt?.text.toString()
 
-            if (emailText.isEmpty())
-                throw Exception("Не указан адрес эл. почты")
-            if (passwordText.isEmpty())
-                throw Exception("Не указан пароль")
+            if (!emailIsValid) {
+                error("Email is invalid")
+            }
+            if (!passwordIsValid) {
+                error("Password is invalid")
+            }
 
             loginBn.startAnimation()
             //login(emailText, passwordText)
-            loginRole = "student"
+            //loginRole = "student"
             MainActivity.switchFragment(this, MainActivity.mainFragment)
         }
         catch (e: Exception) {

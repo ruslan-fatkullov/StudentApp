@@ -22,6 +22,10 @@ class RegistrationFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_registration, container, false)
     }
 
+    var nameIsValid = false
+    var groupIsValid = false
+    var emailRegIsValid = false
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -30,12 +34,14 @@ class RegistrationFragment : Fragment() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (isValidName(s.toString())) {
-                    nameIv?.setColorFilter(ContextCompat.getColor(context!!, R.color.colorAuthField))
+                    nameIv.setColorFilter(ContextCompat.getColor(context!!, R.color.colorAuthField))
                     nameOkIv.visibility = View.VISIBLE
+                    nameIsValid = true
                 }
                 else {
-                    nameIv?.setColorFilter(ContextCompat.getColor(context!!, R.color.colorAuthInactive))
+                    nameIv.setColorFilter(ContextCompat.getColor(context!!, R.color.colorAuthInactive))
                     nameOkIv.visibility = View.GONE
+                    nameIsValid = false
                 }
             }
         })
@@ -44,12 +50,14 @@ class RegistrationFragment : Fragment() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (isValidGroup(s.toString())) {
-                    groupIv?.setColorFilter(ContextCompat.getColor(context!!, R.color.colorAuthField))
+                    groupIv.setColorFilter(ContextCompat.getColor(context!!, R.color.colorAuthField))
                     groupOkIv.visibility = View.VISIBLE
+                    groupIsValid = true
                 }
                 else {
-                    groupIv?.setColorFilter(ContextCompat.getColor(context!!, R.color.colorAuthInactive))
+                    groupIv.setColorFilter(ContextCompat.getColor(context!!, R.color.colorAuthInactive))
                     groupOkIv.visibility = View.GONE
+                    groupIsValid = false
                 }
             }
         })
@@ -58,12 +66,14 @@ class RegistrationFragment : Fragment() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (isValidEmail(s.toString())) {
-                    emailRegIv?.setColorFilter(ContextCompat.getColor(context!!, R.color.colorAuthField))
+                    emailRegIv.setColorFilter(ContextCompat.getColor(context!!, R.color.colorAuthField))
                     emailRegOkIv.visibility = View.VISIBLE
+                    emailRegIsValid = true
                 }
                 else {
-                    emailRegIv?.setColorFilter(ContextCompat.getColor(context!!, R.color.colorAuthInactive))
+                    emailRegIv.setColorFilter(ContextCompat.getColor(context!!, R.color.colorAuthInactive))
                     emailRegOkIv.visibility = View.GONE
+                    emailRegIsValid = false
                 }
             }
         })
