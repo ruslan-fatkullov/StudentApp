@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.example.studentass.MainActivity
 import com.example.studentass.R
@@ -81,17 +82,17 @@ class RegistrationFragment : Fragment() {
     }
 
     private fun validateName(name: String): String {
-        if (name.isEmpty()) return "Является обязательным полем"
+        if (name.isEmpty()) return "Поле не должно быть пустым"
         return ""
     }
 
     private fun validateGroup(group: String): String {
-        if (group.isEmpty()) return "Является обязательным полем"
+        if (group.isEmpty()) return "Поле не должно быть пустым"
         return ""
     }
 
     private fun validateEmailReg(emailReg: String): String {
-        if (emailReg.isEmpty()) return "Является обязательным полем"
+        if (emailReg.isEmpty()) return "Поле не должно быть пустым"
         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(emailReg).matches()) return "Неверый формат"
         return ""
     }
@@ -103,15 +104,15 @@ class RegistrationFragment : Fragment() {
         var validData = true
 
         if (nameValidity != "") {
-            nameEt.error = "Ошибка: $nameValidity"
+            nameEt.error = nameValidity
             validData = false
         }
         if (groupValidity != "") {
-            groupEt.error = "Ошибка: $groupValidity"
+            groupEt.error = groupValidity
             validData = false
         }
         if (emailRegValidity != "") {
-            emailRegEt.error = "Ошибка: $emailRegValidity"
+            emailRegEt.error = emailRegValidity
             validData = false
         }
 
@@ -125,6 +126,7 @@ class RegistrationFragment : Fragment() {
         else {
             val shake: Animation = AnimationUtils.loadAnimation(context, R.anim.anim_shake)
             signupBn.startAnimation(shake)
+            Toast.makeText(context, "Обнаружены некорректные данные", Toast.LENGTH_SHORT).show()
         }
     }
 

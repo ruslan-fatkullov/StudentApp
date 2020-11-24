@@ -129,13 +129,13 @@ class LoginFragment : Fragment() {
     }
 
     private fun validateEmail(email: String): String {
-        if (email.isEmpty()) return "Является обязательным полем"
+        if (email.isEmpty()) return "Поле не должно быть пустым"
         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) return "Неверый формат"
         return ""
     }
 
     private fun validatePassword(password: String): String {
-        if (password.isEmpty()) return "Является обязательным полем"
+        if (password.isEmpty()) return "Поле не должно быть пустым"
         return ""
     }
 
@@ -145,11 +145,11 @@ class LoginFragment : Fragment() {
         var validData = true
 
         if (emailValidity != "") {
-            emailEt.error = "Ошибка: $emailValidity"
+            emailEt.error = emailValidity
             validData = false
         }
         if (passwordValidity != "") {
-            passwordEt.error = "Ошибка: $passwordValidity"
+            passwordEt.error = passwordValidity
             validData = false
         }
 
@@ -162,6 +162,7 @@ class LoginFragment : Fragment() {
         else {
             val shake: Animation = AnimationUtils.loadAnimation(context, R.anim.anim_shake)
             loginBn.startAnimation(shake)
+            Toast.makeText(context, "Обнаружены некорректные данные", Toast.LENGTH_SHORT).show()
         }
     }
 
