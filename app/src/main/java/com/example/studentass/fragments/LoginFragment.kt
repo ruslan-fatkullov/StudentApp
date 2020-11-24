@@ -24,13 +24,16 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.IOException
 
 class LoginFragment : Fragment() {
-    companion object {
-        const val credentialsLogin = "ritg"
-        const val credentialsPassword = "ritg"
+    private val apiPath = "/auth/login"
 
-        var loginTokens = AuthLoginTokens("", "")
-        var loginRole = "NONE"
-    }
+    private val credentialsLogin = "ritg"
+    private val credentialsPassword = "ritg"
+
+    var loginEmail: String? = null
+    var loginPassword: String? = null
+
+    var loginTokens = AuthLoginTokens("", "")
+    var loginRole = "NONE"
 
     var emailValidity: String? = null
     var passwordValidity: String? = null
@@ -91,8 +94,8 @@ class LoginFragment : Fragment() {
         registrationTv.setOnClickListener { onRegistrationTextViewClick()}
     }
 
-    private fun login(login: String, password: String) {
-        val url = "http://test.asus.russianitgroup.ru/api/auth/login"
+    private fun login(login: String, password: String, onResponseListener: (call: Call, response: Response) -> Unit, onFailureListener: (call: Call, e: IOException) -> Unit) {
+        val url = MainActivity.rootUrl + apiPath
         val body = AuthLoginData(login, password)
 
         val credential = Credentials.basic(credentialsLogin, credentialsPassword)
@@ -101,36 +104,14 @@ class LoginFragment : Fragment() {
         val client = OkHttpClient()
         val request = Request.Builder().header("Authorization", credential).method("POST", requestBody).url(url).build()
         client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                MainActivity.mHandler.post {
-                    Toast.makeText(context, "Login request error: $e", Toast.LENGTH_LONG).show()
-                }
-            }
-            override fun onResponse(call: Call, response: Response) {
-                try {
-                    val loginTokensObject = GsonBuilder().create().fromJson(
-                        response.body!!.string(),
-                        AuthLoginTokens::class.java
-                    )
-                    loginTokens = loginTokensObject
-                    val accessToken = loginTokens.accessToken
-                    val jwt = JWT(accessToken)
-                    loginRole = jwt.getClaim("role").asString()!!
-                    MainActivity.mHandler.post {
-                        //goToMainActivity()
-                    }
-                } catch (e: Exception) {
-                    MainActivity.mHandler.post {
-                        Toast.makeText(context, "Response interpretation error: $e", Toast.LENGTH_LONG).show()
-                    }
-                }
-            }
+            override fun onFailure(call: Call, e: IOException) = onFailureListener(call, e)
+            override fun onResponse(call: Call, response: Response) = onResponseListener(call, response)
         })
     }
 
     private fun validateEmail(email: String): String {
         if (email.isEmpty()) return "Поле не должно быть пустым"
-        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) return "Неверый формат"
+        //if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) return "Неверый формат"
         return ""
     }
 
@@ -155,9 +136,32 @@ class LoginFragment : Fragment() {
 
         if (validData) {
             loginBn.startAnimation()
-            //login(emailText, passwordText)
-            //loginRole = "student"
-            MainActivity.switchFragment(this, MainActivity.mainFragment)
+            login(
+                emailEt.text.toString(),
+                passwordEt.text.toString(),
+                { _: Call, response: Response ->
+                    try {
+                        loginTokens = GsonBuilder().create().fromJson(
+                            response.body!!.string(),
+                            AuthLoginTokens::class.java
+                        )
+                        val jwt = JWT(loginTokens.accessToken)
+                        loginRole = jwt.getClaim("role").asString()!!
+                    } catch (e: Exception) {
+                        MainActivity.mHandler.post {
+                            Toast.makeText(context, "Login response interpretation error: $e", Toast.LENGTH_LONG).show()
+                        }
+                    }
+                    MainActivity.mHandler.post {
+                        MainActivity.switchFragment(this, MainActivity.mainFragment)
+                    }
+                },
+                { _: Call, e: IOException ->
+                    MainActivity.mHandler.post {
+                        Toast.makeText(context, "Login no response error: $e", Toast.LENGTH_LONG).show()
+                    }
+                }
+            )
         }
         else {
             val shake: Animation = AnimationUtils.loadAnimation(context, R.anim.anim_shake)

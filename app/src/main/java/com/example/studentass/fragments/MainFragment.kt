@@ -1,53 +1,45 @@
 package com.example.studentass.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.example.studentass.MainActivity
 import com.example.studentass.R
 import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainFragment : Fragment() {
-    lateinit var currentFragment: Fragment
+    private lateinit var currentFragment: Fragment
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if ("student" == "student") {
-            val scheduleFragment = ScheduleFragment()
-            val subjectsFragment = SubjectsFragment()
-            val notificationsFragment = NotificationsFragment()
+        val scheduleFragment = ScheduleFragment()
+        val subjectsFragment = SubjectsFragment()
+        val notificationsFragment = NotificationsFragment()
 
-            MainActivity.sfm.beginTransaction().add(fragment_container.id, scheduleFragment).commit()
-            MainActivity.sfm.beginTransaction().hide(scheduleFragment).commit()
+        MainActivity.sfm.beginTransaction().add(fragment_container.id, scheduleFragment).commit()
+        MainActivity.sfm.beginTransaction().hide(scheduleFragment).commit()
 
-            MainActivity.sfm.beginTransaction().add(fragment_container.id, subjectsFragment).commit()
-            MainActivity.sfm.beginTransaction().hide(subjectsFragment).commit()
+        MainActivity.sfm.beginTransaction().add(fragment_container.id, subjectsFragment).commit()
+        MainActivity.sfm.beginTransaction().hide(subjectsFragment).commit()
 
-            MainActivity.sfm.beginTransaction().add(fragment_container.id, notificationsFragment).commit()
-            MainActivity.sfm.beginTransaction().hide(notificationsFragment).commit()
+        MainActivity.sfm.beginTransaction().add(fragment_container.id, notificationsFragment).commit()
+        MainActivity.sfm.beginTransaction().hide(notificationsFragment).commit()
 
-            //thisActivity.title = "Расписание занятий"
+        currentFragment = scheduleFragment
 
-            currentFragment = scheduleFragment
-
-            bottomNavigationView.setOnNavigationItemSelectedListener {
-                MainActivity.sfm.beginTransaction().hide(currentFragment).commit()
-                currentFragment = when (it.itemId) {
-                    R.id.bnv_schedule -> scheduleFragment
-                    R.id.bnv_subjects -> subjectsFragment
-                    R.id.bnv_notifications -> notificationsFragment
-                    else -> currentFragment
-                }
-                MainActivity.sfm.beginTransaction().show(currentFragment).commit()
-                true
+        bottomNavigationView.setOnNavigationItemSelectedListener {
+            MainActivity.sfm.beginTransaction().hide(currentFragment).commit()
+            currentFragment = when (it.itemId) {
+                R.id.bnv_schedule -> scheduleFragment
+                R.id.bnv_subjects -> subjectsFragment
+                R.id.bnv_notifications -> notificationsFragment
+                else -> currentFragment
             }
-        }
-        else {
-            Toast.makeText(context, "This app is only for students, and you're ${555}", Toast.LENGTH_LONG).show()
+            MainActivity.sfm.beginTransaction().show(currentFragment).commit()
+            true
         }
     }
 
@@ -62,11 +54,13 @@ class MainFragment : Fragment() {
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
 
-        if (hidden) {
-            MainActivity.sfm.beginTransaction().hide(currentFragment).commit()
-        }
-        else {
-            MainActivity.sfm.beginTransaction().show(currentFragment).commit()
+        if (::currentFragment.isInitialized) {
+            if (hidden) {
+                MainActivity.sfm.beginTransaction().hide(currentFragment).commit()
+            }
+            else {
+                MainActivity.sfm.beginTransaction().show(currentFragment).commit()
+            }
         }
     }
 }
