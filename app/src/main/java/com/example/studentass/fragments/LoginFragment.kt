@@ -32,8 +32,8 @@ class LoginFragment : Fragment() {
         var loginRole = "NONE"
     }
 
-    var emailIsValid = false
-    var passwordIsValid = false
+    var emailValidity: String? = null
+    var passwordValidity: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,15 +50,14 @@ class LoginFragment : Fragment() {
             override fun afterTextChanged(s: Editable?) {}
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (isValidEmail(s.toString())) {
+                emailValidity = validateEmail(s.toString())
+                if (emailValidity == "") {
                     emailIv?.setColorFilter(ContextCompat.getColor(context!!, R.color.colorAuthField))
                     emailOkIv.visibility = View.VISIBLE
-                    emailIsValid = true
                 }
                 else {
                     emailIv?.setColorFilter(ContextCompat.getColor(context!!, R.color.colorAuthInactive))
                     emailOkIv.visibility = View.GONE
-                    emailIsValid = false
                 }
             }
         })
@@ -66,15 +65,14 @@ class LoginFragment : Fragment() {
             override fun afterTextChanged(s: Editable?) {}
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (isValidPassword(s.toString())) {
+                passwordValidity = validatePassword(s.toString())
+                if (passwordValidity == "") {
                     passwordIv.setColorFilter(ContextCompat.getColor(context!!, R.color.colorAuthField))
                     passwordOkIv.visibility = View.VISIBLE
-                    passwordIsValid = true
                 }
                 else {
                     passwordIv.setColorFilter(ContextCompat.getColor(context!!, R.color.colorAuthInactive))
                     passwordOkIv.visibility = View.GONE
-                    passwordIsValid = false
                 }
             }
         })
@@ -130,37 +128,40 @@ class LoginFragment : Fragment() {
         })
     }
 
-    private fun isValidEmail(email: String): Boolean {
-        return email.isNotEmpty() && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    private fun validateEmail(email: String): String {
+        if (email.isEmpty()) return "Является обязательным полем"
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) return "Неверый формат"
+        return ""
     }
 
-    private fun isValidPassword(password: String): Boolean {
-        return password.isNotEmpty()
+    private fun validatePassword(password: String): String {
+        if (password.isEmpty()) return "Является обязательным полем"
+        return ""
     }
 
     private fun onLoginButtonClick() {
-        try {
-            val emailText : String = emailEt?.text.toString()
-            val passwordText : String = passwordEt?.text.toString()
+        if (emailValidity == null) emailValidity = validateEmail(emailEt.text.toString())
+        if (passwordValidity == null) passwordValidity = validatePassword(passwordEt.text.toString())
+        var validData = true
 
-            if (!emailIsValid) {
-                error("Email is invalid")
-            }
-            if (!passwordIsValid) {
-                error("Password is invalid")
-            }
+        if (emailValidity != "") {
+            emailEt.error = "Ошибка: $emailValidity"
+            validData = false
+        }
+        if (passwordValidity != "") {
+            passwordEt.error = "Ошибка: $passwordValidity"
+            validData = false
+        }
 
+        if (validData) {
             loginBn.startAnimation()
             //login(emailText, passwordText)
             //loginRole = "student"
             MainActivity.switchFragment(this, MainActivity.mainFragment)
         }
-        catch (e: Exception) {
+        else {
             val shake: Animation = AnimationUtils.loadAnimation(context, R.anim.anim_shake)
             loginBn.startAnimation(shake)
-
-            val errorMessage : String = "Ошибка: " + e.message
-            Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
         }
     }
 

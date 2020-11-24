@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.core.content.ContextCompat
 import com.example.studentass.MainActivity
 import com.example.studentass.R
@@ -22,9 +24,9 @@ class RegistrationFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_registration, container, false)
     }
 
-    var nameIsValid = false
-    var groupIsValid = false
-    var emailRegIsValid = false
+    var nameValidity: String? = null
+    var groupValidity: String? = null
+    var emailRegValidity: String? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -33,15 +35,14 @@ class RegistrationFragment : Fragment() {
             override fun afterTextChanged(s: Editable?) {}
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (isValidName(s.toString())) {
+                nameValidity = validateName(s.toString())
+                if (nameValidity == "") {
                     nameIv.setColorFilter(ContextCompat.getColor(context!!, R.color.colorAuthField))
                     nameOkIv.visibility = View.VISIBLE
-                    nameIsValid = true
                 }
                 else {
                     nameIv.setColorFilter(ContextCompat.getColor(context!!, R.color.colorAuthInactive))
                     nameOkIv.visibility = View.GONE
-                    nameIsValid = false
                 }
             }
         })
@@ -49,15 +50,14 @@ class RegistrationFragment : Fragment() {
             override fun afterTextChanged(s: Editable?) {}
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (isValidGroup(s.toString())) {
+                groupValidity = validateGroup(s.toString())
+                if (groupValidity == "") {
                     groupIv.setColorFilter(ContextCompat.getColor(context!!, R.color.colorAuthField))
                     groupOkIv.visibility = View.VISIBLE
-                    groupIsValid = true
                 }
                 else {
                     groupIv.setColorFilter(ContextCompat.getColor(context!!, R.color.colorAuthInactive))
                     groupOkIv.visibility = View.GONE
-                    groupIsValid = false
                 }
             }
         })
@@ -65,31 +65,67 @@ class RegistrationFragment : Fragment() {
             override fun afterTextChanged(s: Editable?) {}
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (isValidEmail(s.toString())) {
+                emailRegValidity = validateEmailReg(s.toString())
+                if (emailRegValidity == "") {
                     emailRegIv.setColorFilter(ContextCompat.getColor(context!!, R.color.colorAuthField))
                     emailRegOkIv.visibility = View.VISIBLE
-                    emailRegIsValid = true
                 }
                 else {
                     emailRegIv.setColorFilter(ContextCompat.getColor(context!!, R.color.colorAuthInactive))
                     emailRegOkIv.visibility = View.GONE
-                    emailRegIsValid = false
                 }
             }
         })
-        loginTv.setOnClickListener { _ -> onLoginTextViewClick() }
+        signupBn.setOnClickListener { onSignupButtonClick() }
+        loginTv.setOnClickListener { onLoginTextViewClick() }
     }
 
-    private fun isValidName(name: String): Boolean {
-        return name.isNotEmpty()
+    private fun validateName(name: String): String {
+        if (name.isEmpty()) return "Является обязательным полем"
+        return ""
     }
 
-    private fun isValidGroup(group: String): Boolean {
-        return group.isNotEmpty()
+    private fun validateGroup(group: String): String {
+        if (group.isEmpty()) return "Является обязательным полем"
+        return ""
     }
 
-    private fun isValidEmail(email: String): Boolean {
-        return email.isNotEmpty() && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    private fun validateEmailReg(emailReg: String): String {
+        if (emailReg.isEmpty()) return "Является обязательным полем"
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(emailReg).matches()) return "Неверый формат"
+        return ""
+    }
+
+    private fun onSignupButtonClick() {
+        if (nameValidity == null) nameValidity = validateName(nameEt.text.toString())
+        if (groupValidity == null) groupValidity = validateGroup(groupEt.text.toString())
+        if (emailRegValidity == null) emailRegValidity = validateEmailReg(emailRegEt.text.toString())
+        var validData = true
+
+        if (nameValidity != "") {
+            nameEt.error = "Ошибка: $nameValidity"
+            validData = false
+        }
+        if (groupValidity != "") {
+            groupEt.error = "Ошибка: $groupValidity"
+            validData = false
+        }
+        if (emailRegValidity != "") {
+            emailRegEt.error = "Ошибка: $emailRegValidity"
+            validData = false
+        }
+
+        if (validData) {
+            signupBn.startAnimation()
+            MainActivity.switchFragment(this, MainActivity.loginFragment)
+            //login(emailText, passwordText)
+            //loginRole = "student"
+            //MainActivity.switchFragment(this, MainActivity.mainFragment)
+        }
+        else {
+            val shake: Animation = AnimationUtils.loadAnimation(context, R.anim.anim_shake)
+            signupBn.startAnimation(shake)
+        }
     }
 
     private fun onLoginTextViewClick() {

@@ -109,15 +109,6 @@
             android:inputType="textPassword" />
 
         <ImageView
-            android:id="@+id/passwordModeIv"
-            android:layout_width="20dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="0"
-            app:srcCompat="@drawable/ic_auth_ico_password_hidden" />
-
-        <ImageView
             android:id="@+id/passwordOkIv"
             android:layout_width="20dp"
             android:layout_height="20dp"
@@ -127,6 +118,15 @@
             android:visibility="gone"
             app:srcCompat="@drawable/ic_auth_ico_confirmed"
             app:tint="@color/colorAuthField" />
+
+        <ImageView
+            android:id="@+id/passwordModeIv"
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="0"
+            app:srcCompat="@drawable/ic_auth_ico_password_hidden" />
     </LinearLayout>
 
     <!--<Button
