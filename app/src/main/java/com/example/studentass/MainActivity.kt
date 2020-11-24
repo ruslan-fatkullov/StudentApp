@@ -1,17 +1,12 @@
 package com.example.studentass
 
-import android.graphics.Color
-import android.graphics.drawable.Drawable
-import android.icu.text.CaseMap
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.studentass.fragments.*
-import com.example.studentass.models.AuthLoginTokens
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -27,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         val registrationFragment = RegistrationFragment()
         val mainFragment = MainFragment()
 
-        fun switchFragment(from: Fragment, to: Fragment) {
+        fun switchFragment(from: LoginFragment, to: Fragment) {
             sfm.beginTransaction().hide(from).commit()
             sfm.beginTransaction().show(to).commit()
         }
