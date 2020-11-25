@@ -12,17 +12,16 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import com.auth0.android.jwt.JWT
 import com.example.studentass.MainActivity
 import com.example.studentass.R
 import com.example.studentass.models.AuthLoginData
 import com.example.studentass.models.AuthLoginTokens
-import com.example.studentass.models.AuthRefreshData
 import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.fragment_login.*
 import okhttp3.*
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.IOException
+import kotlin.concurrent.thread
 
 class LoginFragment : Fragment() {
     private val credentialsLogin = "ritg"
@@ -93,123 +92,112 @@ class LoginFragment : Fragment() {
         registrationTv.setOnClickListener { onRegistrationTextViewClick()}
     }
 
-    /*fun sendRequest(request: Request, onFailureListener: (call: Call, e: IOException) -> Unit, onResponseListener: (call: Call, response: Response) -> Unit) {
+    /*fun executeRequest(request: Request): Response {
         val client = OkHttpClient()
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) = onFailureListener(call, e)
-            override fun onResponse(call: Call, response: Response) {
-                when (response.code) {
-                    333 -> {
-                        val refreshCode = refresh()
-                        if (refreshCode != 200) {
-                            val reLoginCode = reLogin()
-                            if (reLoginCode != 200) {
-                                onFailureListener(call, IOException("Can't refresh token or reLogin"))
-                            }
-                        }
-                        try {
-                            val newCall = client.newCall(request)
-                            val newResponse = newCall.execute()
-                            if (newResponse.code == 333) {
-                                throw IOException("Tokens die instantly")
-                            }
-                            else {
-                                onResponseListener(newCall, newResponse)
-                            }
-                        }
-                        catch (e: IOException) {
-                            onFailureListener(call, e)
-                        }
-                    }
-                }
-                onResponseListener(call, response)
+        var response: Response
+        try {
+            try {
+                response = client.newCall(request).execute()
             }
-        })
-    }*/
-
-    /*private fun login(login: String, password: String) {
-        val url = MainActivity.rootUrl + "/auth/login"
-        val body = AuthLoginData(login, password)
-
-        val credential = Credentials.basic(credentialsLogin, credentialsPassword)
-        val requestBody = GsonBuilder().create().toJson(body).toRequestBody()
-
-        val client = OkHttpClient()
-        val request = Request.Builder().header("Authorization", credential).method("POST", requestBody).url(url).build()
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                MainActivity.mHandler.post {
-                    Toast.makeText(context, "Login no response error: $e", Toast.LENGTH_LONG).show()
-                }
+            catch (e: IOException) {
+                throw IOException("no response ($e)")
             }
-            override fun onResponse(call: Call, response: Response) {
-                if (response.code == 200) {
+            var responseCode = response.code
+            if (responseCode != 200) {
+                if (responseCode == 426) {
+                    val refreshResponse: Response
                     try {
-                        loginTokens = GsonBuilder().create().fromJson(
-                            response.body!!.string(),
-                            AuthLoginTokens::class.java
-                        )
-                        val jwt = JWT(loginTokens.accessToken)
-                        loginRole = jwt.getClaim("role").asString()!!
-                    } catch (e: Exception) {
-                        MainActivity.mHandler.post {
-                            Toast.makeText(context, "Response body interpretation error: $e", Toast.LENGTH_LONG).show()
+                        refreshResponse = executeRefresh(loginTokens.refrashToken)
+                    }
+                    catch (e: IOException) {
+                        throw IOException("refresh error ($e)")
+                    }
+                    val refreshResponseCode = refreshResponse.code
+                    if (refreshResponseCode != 200) {
+                        if (refreshResponseCode == 401) {
+                            val reLoginResponse: Response
+                            if (loginEmail == null || loginPassword == null) {
+                                throw IOException("login error (no data to send)")
+                            }
+                            try {
+                                reLoginResponse = executeLogin(loginEmail!!, loginPassword!!)
+                            }
+                            catch (e: IOException) {
+                                throw IOException("login error ($e)")
+                            }
+                            val reLoginResponseCode = reLoginResponse.code
+                            if (reLoginResponseCode != 200) {
+                                throw IOException("login response code: $reLoginResponseCode")
+                            }
+                        }
+                        else {
+                            throw IOException("refresh response code: $refreshResponseCode")
                         }
                     }
-                    MainActivity.mHandler.post {
-                        MainActivity.switchFragment(this, MainActivity.mainFragment)
+                    try {
+                        response = client.newCall(request).execute()
+                    }
+                    catch (e: IOException) {
+                        throw IOException("no response ($e)")
+                    }
+                    responseCode = response.code
+                    if (responseCode != 200) {
+                        throw IOException("duplicated response code: $responseCode")
                     }
                 }
                 else {
-                    MainActivity.mHandler.post {
-                        Toast.makeText(context, "Login response error: $response.code", Toast.LENGTH_LONG).show()
-                    }
+                    throw IOException("response code: $responseCode")
                 }
             }
-        })
-    }*/
-
-    /*private fun reLogin(): Int {
-        val url = MainActivity.rootUrl + "/auth/login"
-        val body = AuthLoginData(loginEmail!!, loginPassword!!)
-
-        val credential = Credentials.basic(credentialsLogin, credentialsPassword)
-        val requestBody = GsonBuilder().create().toJson(body).toRequestBody()
-
-        val client = OkHttpClient()
-        val request = Request.Builder().header("Authorization", credential).method("POST", requestBody).url(url).build()
-        val response = client.newCall(request).execute()
-        when (response.code) {
-            200 -> {
-                loginTokens = GsonBuilder().create().fromJson(
-                    response.body!!.string(),
-                    AuthLoginTokens::class.java
-                )
-            }
         }
-        return response.code
+        catch (e: IOException) {
+            throw IOException("Request error (${e.message})")
+        }
+        return response
     }*/
 
-    /*private fun refresh(): Int {
+    /*private fun executeRefresh(refreshToken: String): Response {
         val url = MainActivity.rootUrl + "/auth/refrash"
-        val body = AuthRefreshData(loginTokens.refrashToken)
+        val body = AuthRefreshData(refreshToken)
 
         val credential = Credentials.basic(credentialsLogin, credentialsPassword)
         val requestBody = GsonBuilder().create().toJson(body).toRequestBody()
 
         val client = OkHttpClient()
         val request = Request.Builder().header("Authorization", credential).method("POST", requestBody).url(url).build()
-        val response = client.newCall(request).execute()
-        when (response.code) {
-            200 -> {
-                loginTokens = GsonBuilder().create().fromJson(
-                    response.body!!.string(),
-                    AuthLoginTokens::class.java
-                )
-            }
-        }
-        return response.code
+
+        return client.newCall(request).execute()
     }*/
+
+    /*private fun executeLogin(email: String, password: String): Response {
+        val url = MainActivity.rootUrl + "/auth/login"
+        val body = AuthLoginData(email, password)
+
+        val credential = Credentials.basic(credentialsLogin, credentialsPassword)
+        val requestBody = GsonBuilder().create().toJson(body).toRequestBody()
+
+        val client = OkHttpClient()
+        val request = Request.Builder().header("Authorization", credential).method("POST", requestBody).url(url).build()
+
+        return client.newCall(request).execute()
+    }*/
+    private fun executeLogin(email: String, password: String): Response {
+        val url = MainActivity.rootUrl + "/auth/login"
+        val body = AuthLoginData(email, password)
+
+        val credential = Credentials.basic(credentialsLogin, credentialsPassword)
+        val requestBody = GsonBuilder().create().toJson(body).toRequestBody()
+
+        val client = OkHttpClient()
+        val request = Request.Builder().header("Authorization", credential).method("POST", requestBody).url(url).build()
+
+        val response = client.newCall(request).execute()
+
+        checkResponseCode(response.code)
+
+        return response
+    }
+
 
     private fun validateEmail(email: String): String {
         if (email.isEmpty()) return "Поле не должно быть пустым"
@@ -240,7 +228,26 @@ class LoginFragment : Fragment() {
             loginBn.startAnimation()
             val email = emailEt.text.toString()
             val password = passwordEt.text.toString()
-            //login(email, password)
+
+            thread {
+                try {
+                    executeLogin(email, password)
+                }
+                catch (e: IOException) {
+                    val errorMessage = when (e) {
+                        is UnauthorizedException -> "Неверные почта и/или пароль"
+                        else -> "Ошибка подключения: $e (${e.message})"
+                    }
+                    MainActivity.mHandler.post {
+                        Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
+                        loginBn.revertAnimation()
+                    }
+                    return@thread
+                }
+                loginEmail = email
+                loginPassword = password
+                MainActivity.switchFragment(this, MainActivity.mainFragment)
+            }
         }
         else {
             val shake: Animation = AnimationUtils.loadAnimation(context, R.anim.anim_shake)
@@ -253,3 +260,20 @@ class LoginFragment : Fragment() {
         MainActivity.switchFragment(this, MainActivity.registrationFragment)
     }
 }
+
+private fun checkResponseCode(code: Int) {
+    if (code == 200) return
+    throw when (code) {
+        400 -> BadRequestException("плохой запрос")
+        401 -> UnauthorizedException("не авторизован")
+        426 -> UpgradeRequiredException("необходимо обновление")
+        500 -> InternalServerErrorException("внутренняя ошибка сервера")
+        else -> DefaultCodeException("код $code")
+    }
+}
+
+class DefaultCodeException(message: String) : IOException(message) // unknown
+class BadRequestException(message: String) : IOException(message) // 400
+class UnauthorizedException(message: String) : IOException(message) // 401
+class UpgradeRequiredException(message: String) : IOException(message)// 426
+class InternalServerErrorException(message: String) : IOException(message) // 500

@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         val registrationFragment = RegistrationFragment()
         val mainFragment = MainFragment()
 
-        fun switchFragment(from: LoginFragment, to: Fragment) {
+        fun switchFragment(from: Fragment, to: Fragment) {
             sfm.beginTransaction().hide(from).commit()
             sfm.beginTransaction().show(to).commit()
         }
