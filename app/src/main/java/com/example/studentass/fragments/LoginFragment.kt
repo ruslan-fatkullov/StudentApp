@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.text.method.PasswordTransformationMethod
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,10 +11,14 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import com.auth0.android.jwt.JWT
 import com.example.studentass.MainActivity
+import com.example.studentass.MainActivity.Companion.client
 import com.example.studentass.R
 import com.example.studentass.models.AuthLoginData
 import com.example.studentass.models.AuthLoginTokens
+import com.example.studentass.models.AuthRefreshData
 import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.fragment_login.*
 import okhttp3.*
@@ -27,14 +30,14 @@ class LoginFragment : Fragment() {
     private val credentialsLogin = "ritg"
     private val credentialsPassword = "ritg"
 
-    var loginEmail: String? = null
-    var loginPassword: String? = null
+    private lateinit var loginEmail: String
+    private lateinit var loginPassword: String
 
     var loginTokens = AuthLoginTokens("", "")
     var loginRole = "NONE"
 
-    var emailValidity: String? = null
-    var passwordValidity: String? = null
+    private var emailValidity: String? = null
+    private var passwordValidity: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -92,108 +95,66 @@ class LoginFragment : Fragment() {
         registrationTv.setOnClickListener { onRegistrationTextViewClick()}
     }
 
-    /*fun executeRequest(request: Request): Response {
-        val client = OkHttpClient()
-        var response: Response
-        try {
-            try {
-                response = client.newCall(request).execute()
-            }
-            catch (e: IOException) {
-                throw IOException("no response ($e)")
-            }
-            var responseCode = response.code
-            if (responseCode != 200) {
-                if (responseCode == 426) {
-                    val refreshResponse: Response
-                    try {
-                        refreshResponse = executeRefresh(loginTokens.refrashToken)
-                    }
-                    catch (e: IOException) {
-                        throw IOException("refresh error ($e)")
-                    }
-                    val refreshResponseCode = refreshResponse.code
-                    if (refreshResponseCode != 200) {
-                        if (refreshResponseCode == 401) {
-                            val reLoginResponse: Response
-                            if (loginEmail == null || loginPassword == null) {
-                                throw IOException("login error (no data to send)")
-                            }
-                            try {
-                                reLoginResponse = executeLogin(loginEmail!!, loginPassword!!)
-                            }
-                            catch (e: IOException) {
-                                throw IOException("login error ($e)")
-                            }
-                            val reLoginResponseCode = reLoginResponse.code
-                            if (reLoginResponseCode != 200) {
-                                throw IOException("login response code: $reLoginResponseCode")
-                            }
-                        }
-                        else {
-                            throw IOException("refresh response code: $refreshResponseCode")
-                        }
-                    }
-                    try {
-                        response = client.newCall(request).execute()
-                    }
-                    catch (e: IOException) {
-                        throw IOException("no response ($e)")
-                    }
-                    responseCode = response.code
-                    if (responseCode != 200) {
-                        throw IOException("duplicated response code: $responseCode")
-                    }
-                }
-                else {
-                    throw IOException("response code: $responseCode")
-                }
-            }
-        }
-        catch (e: IOException) {
-            throw IOException("Request error (${e.message})")
-        }
+    private fun executeRequest(request: Request): Response {
+        val response = client.newCall(request).execute()
+        checkResponseCode(response.code)
         return response
-    }*/
+    }
 
-    /*private fun executeRefresh(refreshToken: String): Response {
+    private fun executeJwtRequest(request: Request, onUpgradeListener: (Request.Builder) -> Request): Response {
+        var response: Response
+
+        try {
+            response = client.newCall(request).execute()
+            checkResponseCode(response.code)
+        }
+        catch (e: UpgradeRequiredException) {
+            try {
+                executeRefresh()
+            }
+            catch (e: UnauthorizedException) {
+                executeLogin()
+            }
+            val newRequest = onUpgradeListener(request.newBuilder())
+            response = client.newCall(newRequest).execute()
+            checkResponseCode(response.code)
+        }
+
+        return response
+    }
+
+    private fun executeRefresh(): Response {
         val url = MainActivity.rootUrl + "/auth/refrash"
-        val body = AuthRefreshData(refreshToken)
+        val body = AuthRefreshData(loginTokens.refrashToken)
 
         val credential = Credentials.basic(credentialsLogin, credentialsPassword)
         val requestBody = GsonBuilder().create().toJson(body).toRequestBody()
 
-        val client = OkHttpClient()
-        val request = Request.Builder().header("Authorization", credential).method("POST", requestBody).url(url).build()
-
-        return client.newCall(request).execute()
-    }*/
-
-    /*private fun executeLogin(email: String, password: String): Response {
-        val url = MainActivity.rootUrl + "/auth/login"
-        val body = AuthLoginData(email, password)
-
-        val credential = Credentials.basic(credentialsLogin, credentialsPassword)
-        val requestBody = GsonBuilder().create().toJson(body).toRequestBody()
-
-        val client = OkHttpClient()
-        val request = Request.Builder().header("Authorization", credential).method("POST", requestBody).url(url).build()
-
-        return client.newCall(request).execute()
-    }*/
-    private fun executeLogin(email: String, password: String): Response {
-        val url = MainActivity.rootUrl + "/auth/login"
-        val body = AuthLoginData(email, password)
-
-        val credential = Credentials.basic(credentialsLogin, credentialsPassword)
-        val requestBody = GsonBuilder().create().toJson(body).toRequestBody()
-
-        val client = OkHttpClient()
         val request = Request.Builder().header("Authorization", credential).method("POST", requestBody).url(url).build()
 
         val response = client.newCall(request).execute()
-
         checkResponseCode(response.code)
+
+        loginTokens = GsonBuilder().create().fromJson(response.body!!.string(), AuthLoginTokens::class.java)
+
+        return response
+    }
+
+    private fun executeLogin(): Response {
+        val url = MainActivity.rootUrl + "/auth/login"
+        val body = AuthLoginData(loginEmail, loginPassword)
+
+        val credential = Credentials.basic(credentialsLogin, credentialsPassword)
+        val requestBody = GsonBuilder().create().toJson(body).toRequestBody()
+
+        val request = Request.Builder().header("Authorization", credential).method("POST", requestBody).url(url).build()
+
+        val response = client.newCall(request).execute()
+        checkResponseCode(response.code)
+
+        loginTokens = GsonBuilder().create().fromJson(response.body!!.string(), AuthLoginTokens::class.java)
+        val jwt = JWT(loginTokens.accessToken)
+        loginRole = jwt.getClaim("role").asString()!!
 
         return response
     }
@@ -226,33 +187,38 @@ class LoginFragment : Fragment() {
 
         if (validData) {
             loginBn.startAnimation()
-            val email = emailEt.text.toString()
-            val password = passwordEt.text.toString()
+            loginEmail = emailEt.text.toString()
+            loginPassword = passwordEt.text.toString()
 
             thread {
                 try {
-                    executeLogin(email, password)
+                    executeLogin()
                 }
-                catch (e: IOException) {
+                catch (e: Exception) {
                     val errorMessage = when (e) {
                         is UnauthorizedException -> "Неверные почта и/или пароль"
-                        else -> "Ошибка подключения: $e (${e.message})"
+                        is IOException -> "Ошибка подключения: $e (${e.message})"
+                        else -> "Неизвестная ощибка подключения: $e (${e.message})"
                     }
                     MainActivity.mHandler.post {
-                        Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
                         loginBn.revertAnimation()
                     }
                     return@thread
                 }
-                loginEmail = email
-                loginPassword = password
-                MainActivity.switchFragment(this, MainActivity.mainFragment)
+                MainActivity.mHandler.post {
+                    when (loginRole) {
+                        "student" -> MainActivity.switchFragment(this, MainActivity.mainFragment)
+                        else -> Toast.makeText(context, "Invalid role: $loginRole", Toast.LENGTH_LONG).show()
+                    }
+                    loginBn.revertAnimation()
+                }
             }
         }
         else {
             val shake: Animation = AnimationUtils.loadAnimation(context, R.anim.anim_shake)
             loginBn.startAnimation(shake)
-            Toast.makeText(context, "Обнаружены некорректные данные", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Обнаружены некорректные данные", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -262,18 +228,18 @@ class LoginFragment : Fragment() {
 }
 
 private fun checkResponseCode(code: Int) {
-    if (code == 200) return
+    if (code in 100..399) return
     throw when (code) {
         400 -> BadRequestException("плохой запрос")
         401 -> UnauthorizedException("не авторизован")
         426 -> UpgradeRequiredException("необходимо обновление")
         500 -> InternalServerErrorException("внутренняя ошибка сервера")
-        else -> DefaultCodeException("код $code")
+        else -> RequestCodeException("код $code")
     }
 }
 
-class DefaultCodeException(message: String) : IOException(message) // unknown
-class BadRequestException(message: String) : IOException(message) // 400
-class UnauthorizedException(message: String) : IOException(message) // 401
-class UpgradeRequiredException(message: String) : IOException(message)// 426
-class InternalServerErrorException(message: String) : IOException(message) // 500
+open class RequestCodeException(message: String) : Exception(message) // родительский класс ошибок запросов
+class BadRequestException(message: String) : RequestCodeException(message) // 400
+class UnauthorizedException(message: String) : RequestCodeException(message) // 401
+class UpgradeRequiredException(message: String) : RequestCodeException(message)// 426
+class InternalServerErrorException(message: String) : RequestCodeException(message) // 500

@@ -8,11 +8,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.studentass.fragments.*
 import kotlinx.android.synthetic.main.activity_main.*
+import okhttp3.OkHttpClient
 
 
 class MainActivity : AppCompatActivity() {
     companion object {
         val mHandler = Handler(Looper.getMainLooper())
+
+        val client = OkHttpClient()
 
         const val rootUrl = "http://test.asus.russianitgroup.ru/api"
 
