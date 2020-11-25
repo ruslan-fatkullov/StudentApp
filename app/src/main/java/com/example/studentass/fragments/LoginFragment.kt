@@ -1,5 +1,6 @@
 package com.example.studentass.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -30,8 +31,8 @@ class LoginFragment : Fragment() {
     private val credentialsLogin = "ritg"
     private val credentialsPassword = "ritg"
 
-    private lateinit var loginEmail: String
-    private lateinit var loginPassword: String
+    private var loginEmail: String? = null
+    private var loginPassword: String? = null
 
     var loginTokens = AuthLoginTokens("", "")
     var loginRole = "NONE"
@@ -95,13 +96,13 @@ class LoginFragment : Fragment() {
         registrationTv.setOnClickListener { onRegistrationTextViewClick()}
     }
 
-    private fun executeRequest(request: Request): Response {
+    fun executeRequest(request: Request): Response {
         val response = client.newCall(request).execute()
         checkResponseCode(response.code)
         return response
     }
 
-    private fun executeJwtRequest(request: Request, onUpgradeListener: (Request.Builder) -> Request): Response {
+    fun executeJwtRequest(request: Request, onUpgradeListener: (Request.Builder) -> Request): Response {
         var response: Response
 
         try {
@@ -141,8 +142,12 @@ class LoginFragment : Fragment() {
     }
 
     private fun executeLogin(): Response {
+        if (loginEmail == null || loginPassword == null) {
+            throw Exception("Login data is missing")
+        }
+
         val url = MainActivity.rootUrl + "/auth/login"
-        val body = AuthLoginData(loginEmail, loginPassword)
+        val body = AuthLoginData(loginEmail!!, loginPassword!!)
 
         val credential = Credentials.basic(credentialsLogin, credentialsPassword)
         val requestBody = GsonBuilder().create().toJson(body).toRequestBody()
@@ -159,7 +164,6 @@ class LoginFragment : Fragment() {
         return response
     }
 
-
     private fun validateEmail(email: String): String {
         if (email.isEmpty()) return "Поле не должно быть пустым"
         //if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) return "Неверый формат"
@@ -169,6 +173,23 @@ class LoginFragment : Fragment() {
     private fun validatePassword(password: String): String {
         if (password.isEmpty()) return "Поле не должно быть пустым"
         return ""
+    }
+
+    private fun saveLoginData() {
+        val sharedPreferences = activity!!.getSharedPreferences("LoginData", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.apply {
+            putString("loginEmail", loginEmail)
+            putString("loginPassword", loginPassword)
+        }.apply()
+    }
+
+    private fun loadLoginData() {
+        val sharedPreferences = activity!!.getSharedPreferences("LoginData", Context.MODE_PRIVATE)
+        sharedPreferences.apply {
+            loginEmail = getString("loginEmail", null)
+            loginPassword = getString("loginPassword", null)
+        }
     }
 
     private fun onLoginButtonClick() {
