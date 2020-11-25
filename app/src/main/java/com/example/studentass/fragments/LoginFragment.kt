@@ -21,6 +21,7 @@ import com.example.studentass.models.AuthLoginData
 import com.example.studentass.models.AuthLoginTokens
 import com.example.studentass.models.AuthRefreshData
 import com.google.gson.GsonBuilder
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_login.*
 import okhttp3.*
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -28,14 +29,149 @@ import java.io.IOException
 import kotlin.concurrent.thread
 
 class LoginFragment : Fragment() {
-    private val credentialsLogin = "ritg"
-    private val credentialsPassword = "ritg"
+    companion object {
+        private const val credentialsLogin = "ritg"
+        private const val credentialsPassword = "ritg"
 
-    private var loginEmail: String? = null
-    private var loginPassword: String? = null
+        private var loginEmail: String? = null
+        private var loginPassword: String? = null
 
-    var loginTokens = AuthLoginTokens("", "")
-    var loginRole = "NONE"
+        var loginTokens: AuthLoginTokens? = null
+        var loginRole = "invalid"
+
+        fun executeRequest(request: Request): Response {
+            val response = client.newCall(request).execute()
+            checkResponseCode(response.code)
+            return response
+        }
+
+        fun executeJwtRequest(request: Request, onUpgradeListener: (Request.Builder) -> Request): Response {
+            var response: Response
+
+            try {
+                response = client.newCall(request).execute()
+                checkResponseCode(response.code)
+            }
+            catch (e: UpgradeRequiredException) {
+                try {
+                    executeRefresh()
+                }
+                catch (e: UnauthorizedException) {
+                    executeLogin()
+                }
+                val newRequest = onUpgradeListener(request.newBuilder())
+                response = client.newCall(newRequest).execute()
+                checkResponseCode(response.code)
+            }
+
+            return response
+        }
+
+        private fun executeRefresh(): Response {
+            if (loginTokens == null) {
+                throw NoDataException("Refresh token is missing")
+            }
+
+            val url = MainActivity.rootUrl + "/auth/refrash"
+            val body = AuthRefreshData(loginTokens!!.refrashToken)
+
+            val credential = Credentials.basic(credentialsLogin, credentialsPassword)
+            val requestBody = GsonBuilder().create().toJson(body).toRequestBody()
+
+            val request = Request.Builder().header("Authorization", credential).method("POST", requestBody).url(url).build()
+
+            val response = client.newCall(request).execute()
+            checkResponseCode(response.code)
+
+            loginTokens = GsonBuilder().create().fromJson(response.body!!.string(), AuthLoginTokens::class.java)
+
+            return response
+        }
+
+        fun executeLogin(): Response {
+            if (loginEmail == null || loginPassword == null) {
+                throw NoDataException("Login data is missing")
+            }
+
+            val url = MainActivity.rootUrl + "/auth/login"
+            val body = AuthLoginData(loginEmail!!, loginPassword!!)
+
+            val credential = Credentials.basic(credentialsLogin, credentialsPassword)
+            val requestBody = GsonBuilder().create().toJson(body).toRequestBody()
+
+            val request = Request.Builder().header("Authorization", credential).method("POST", requestBody).url(url).build()
+
+            val response = client.newCall(request).execute()
+            checkResponseCode(response.code)
+
+            loginTokens = GsonBuilder().create().fromJson(response.body!!.string(), AuthLoginTokens::class.java)
+            val jwt = JWT(loginTokens!!.accessToken)
+            loginRole = jwt.getClaim("role").asString()!!
+
+            return response
+        }
+
+        fun executeLogout(): Response {
+            if (loginTokens == null) {
+                throw NoDataException("Refresh token is missing")
+            }
+
+            val url = MainActivity.rootUrl + "/auth/logout"
+            val body = AuthRefreshData(loginTokens!!.refrashToken)
+
+            val credential = Credentials.basic(credentialsLogin, credentialsPassword)
+            val requestBody = GsonBuilder().create().toJson(body).toRequestBody()
+
+            val request = Request.Builder().header("Authorization", credential).method("POST", requestBody).url(url).build()
+
+            val response = client.newCall(request).execute()
+            checkResponseCode(response.code)
+
+            return response
+        }
+
+        fun saveLoginData(mainActivity: MainActivity) {
+            val sharedPreferences = mainActivity.getSharedPreferences("LoginData", Context.MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
+            editor.apply {
+                putString("loginEmail", loginEmail)
+                putString("loginPassword", loginPassword)
+            }.apply()
+        }
+
+        fun loadLoginData(mainActivity: MainActivity) {
+            val sharedPreferences = mainActivity.getSharedPreferences("LoginData", Context.MODE_PRIVATE)
+            sharedPreferences.apply {
+                loginEmail = getString("loginEmail", null)
+                loginPassword = getString("loginPassword", null)
+            }
+        }
+
+        fun deleteLoginData(mainActivity: MainActivity) {
+            val sharedPreferences = mainActivity.getSharedPreferences("LoginData", Context.MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
+            editor.clear().apply()
+        }
+
+        private fun checkResponseCode(code: Int) {
+            if (code in 100..399) return
+            throw when (code) {
+                400 -> BadRequestException("плохой запрос")
+                401 -> UnauthorizedException("не авторизован")
+                426 -> UpgradeRequiredException("необходимо обновление")
+                500 -> InternalServerErrorException("внутренняя ошибка сервера")
+                else -> RequestCodeException("код $code")
+            }
+        }
+
+        class NoDataException(message: String) : Exception(message)
+
+        open class RequestCodeException(message: String) : Exception(message) // родительский класс ошибок запросов
+        class BadRequestException(message: String) : RequestCodeException(message) // 400
+        class UnauthorizedException(message: String) : RequestCodeException(message) // 401
+        class UpgradeRequiredException(message: String) : RequestCodeException(message)// 426
+        class InternalServerErrorException(message: String) : RequestCodeException(message) // 500
+    }
 
     private var emailValidity: String? = null
     private var passwordValidity: String? = null
@@ -96,74 +232,6 @@ class LoginFragment : Fragment() {
         registrationTv.setOnClickListener { onRegistrationTextViewClick()}
     }
 
-    fun executeRequest(request: Request): Response {
-        val response = client.newCall(request).execute()
-        checkResponseCode(response.code)
-        return response
-    }
-
-    fun executeJwtRequest(request: Request, onUpgradeListener: (Request.Builder) -> Request): Response {
-        var response: Response
-
-        try {
-            response = client.newCall(request).execute()
-            checkResponseCode(response.code)
-        }
-        catch (e: UpgradeRequiredException) {
-            try {
-                executeRefresh()
-            }
-            catch (e: UnauthorizedException) {
-                executeLogin()
-            }
-            val newRequest = onUpgradeListener(request.newBuilder())
-            response = client.newCall(newRequest).execute()
-            checkResponseCode(response.code)
-        }
-
-        return response
-    }
-
-    private fun executeRefresh(): Response {
-        val url = MainActivity.rootUrl + "/auth/refrash"
-        val body = AuthRefreshData(loginTokens.refrashToken)
-
-        val credential = Credentials.basic(credentialsLogin, credentialsPassword)
-        val requestBody = GsonBuilder().create().toJson(body).toRequestBody()
-
-        val request = Request.Builder().header("Authorization", credential).method("POST", requestBody).url(url).build()
-
-        val response = client.newCall(request).execute()
-        checkResponseCode(response.code)
-
-        loginTokens = GsonBuilder().create().fromJson(response.body!!.string(), AuthLoginTokens::class.java)
-
-        return response
-    }
-
-    private fun executeLogin(): Response {
-        if (loginEmail == null || loginPassword == null) {
-            throw Exception("Login data is missing")
-        }
-
-        val url = MainActivity.rootUrl + "/auth/login"
-        val body = AuthLoginData(loginEmail!!, loginPassword!!)
-
-        val credential = Credentials.basic(credentialsLogin, credentialsPassword)
-        val requestBody = GsonBuilder().create().toJson(body).toRequestBody()
-
-        val request = Request.Builder().header("Authorization", credential).method("POST", requestBody).url(url).build()
-
-        val response = client.newCall(request).execute()
-        checkResponseCode(response.code)
-
-        loginTokens = GsonBuilder().create().fromJson(response.body!!.string(), AuthLoginTokens::class.java)
-        val jwt = JWT(loginTokens.accessToken)
-        loginRole = jwt.getClaim("role").asString()!!
-
-        return response
-    }
-
     private fun validateEmail(email: String): String {
         if (email.isEmpty()) return "Поле не должно быть пустым"
         //if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) return "Неверый формат"
@@ -173,23 +241,6 @@ class LoginFragment : Fragment() {
     private fun validatePassword(password: String): String {
         if (password.isEmpty()) return "Поле не должно быть пустым"
         return ""
-    }
-
-    private fun saveLoginData() {
-        val sharedPreferences = activity!!.getSharedPreferences("LoginData", Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        editor.apply {
-            putString("loginEmail", loginEmail)
-            putString("loginPassword", loginPassword)
-        }.apply()
-    }
-
-    private fun loadLoginData() {
-        val sharedPreferences = activity!!.getSharedPreferences("LoginData", Context.MODE_PRIVATE)
-        sharedPreferences.apply {
-            loginEmail = getString("loginEmail", null)
-            loginPassword = getString("loginPassword", null)
-        }
     }
 
     private fun onLoginButtonClick() {
@@ -229,9 +280,13 @@ class LoginFragment : Fragment() {
                 }
                 MainActivity.mHandler.post {
                     when (loginRole) {
-                        "student" -> MainActivity.switchFragment(this, MainActivity.mainFragment)
-                        else -> Toast.makeText(context, "Invalid role: $loginRole", Toast.LENGTH_LONG).show()
+                        "student" -> MainActivity.instance!!.goToMain()
+                        else -> {
+                            Toast.makeText(context, "Invalid role: $loginRole", Toast.LENGTH_LONG).show()
+                            return@post
+                        }
                     }
+                    saveLoginData(MainActivity.instance!!)
                     loginBn.revertAnimation()
                 }
             }
@@ -244,23 +299,6 @@ class LoginFragment : Fragment() {
     }
 
     private fun onRegistrationTextViewClick() {
-        MainActivity.switchFragment(this, MainActivity.registrationFragment)
+        MainActivity.instance!!.goToRegistration()
     }
 }
-
-private fun checkResponseCode(code: Int) {
-    if (code in 100..399) return
-    throw when (code) {
-        400 -> BadRequestException("плохой запрос")
-        401 -> UnauthorizedException("не авторизован")
-        426 -> UpgradeRequiredException("необходимо обновление")
-        500 -> InternalServerErrorException("внутренняя ошибка сервера")
-        else -> RequestCodeException("код $code")
-    }
-}
-
-open class RequestCodeException(message: String) : Exception(message) // родительский класс ошибок запросов
-class BadRequestException(message: String) : RequestCodeException(message) // 400
-class UnauthorizedException(message: String) : RequestCodeException(message) // 401
-class UpgradeRequiredException(message: String) : RequestCodeException(message)// 426
-class InternalServerErrorException(message: String) : RequestCodeException(message) // 500

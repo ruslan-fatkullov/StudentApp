@@ -117,10 +117,10 @@ class RegistrationFragment : Fragment() {
 
         if (validData) {
             signupBn.startAnimation()
-            MainActivity.switchFragment(this, MainActivity.loginFragment)
             //login(emailText, passwordText)
             //loginRole = "student"
             //MainActivity.switchFragment(this, MainActivity.mainFragment)
+            MainActivity.instance!!.goToLogin()
         }
         else {
             val shake: Animation = AnimationUtils.loadAnimation(context, R.anim.anim_shake)
@@ -130,6 +130,6 @@ class RegistrationFragment : Fragment() {
     }
 
     private fun onLoginTextViewClick() {
-        MainActivity.switchFragment(this, MainActivity.loginFragment)
+        MainActivity.instance!!.goToLogin()
     }
 }
