@@ -280,7 +280,7 @@ class LoginFragment : Fragment() {
                 }
                 MainActivity.mHandler.post {
                     when (loginRole) {
-                        "student" -> MainActivity.instance!!.goToMain()
+                        "student" -> MainActivity.instance!!.switchFragment(MainFragment::class.java)
                         else -> {
                             Toast.makeText(context, "Invalid role: $loginRole", Toast.LENGTH_LONG).show()
                             return@post
@@ -299,6 +299,6 @@ class LoginFragment : Fragment() {
     }
 
     private fun onRegistrationTextViewClick() {
-        MainActivity.instance!!.goToRegistration()
+        MainActivity.instance!!.switchFragment(RegistrationFragment::class.java)
     }
 }

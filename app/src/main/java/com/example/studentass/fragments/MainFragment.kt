@@ -60,7 +60,7 @@ class MainFragment : Fragment() {
                         Toast.makeText(MainActivity.instance!!, "Logout error: $e (${e.message})", Toast.LENGTH_LONG).show()
                     }
                 }
-                MainActivity.instance!!.goToLogin()
+                MainActivity.instance!!.switchFragment(LoginFragment::class.java)
                 LoginFragment.deleteLoginData(MainActivity.instance!!)
             }
         }

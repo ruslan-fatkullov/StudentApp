@@ -5,6 +5,7 @@ import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.studentass.fragments.*
 import kotlinx.android.synthetic.main.activity_main.*
@@ -26,9 +27,8 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var sfm: FragmentManager
 
-    var loginFragment: LoginFragment? = null
-    var registrationFragment: RegistrationFragment? = null
-    var mainFragment: MainFragment? = null
+    lateinit var currentFragment: Fragment
+    var fragmentsList = mutableListOf<Fragment>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,10 +46,10 @@ class MainActivity : AppCompatActivity() {
             LoginFragment.loadLoginData(this)
             try {
                 LoginFragment.executeLogin()
-                goToMain()
+                switchFragment(MainFragment::class.java)
             }
             catch (e: Exception) {
-                goToLogin()
+                switchFragment(LoginFragment::class.java)
                 if (e !is LoginFragment.Companion.NoDataException) {
                     mHandler.post {
                         Toast.makeText(this, "Login error: $e (${e.message})", Toast.LENGTH_LONG).show()
@@ -59,56 +59,30 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun goToMain() {
-        if (mainFragment == null) {
-            mainFragment = MainFragment()
-            sfm.beginTransaction().add(main_activity_fragment_container.id, mainFragment!!).commit()
+    fun <T: Fragment> switchFragment(toEntityClass: Class<T>, removeOtherInstances: Boolean = true) {
+        if (::currentFragment.isInitialized && currentFragment::javaClass == toEntityClass) {
+            throw Exception("Can't re-instantiate fragment")
         }
-        else {
-            sfm.beginTransaction().show(mainFragment!!).commit()
+        var fragmentAlreadyExists = false
+        for (fr in fragmentsList) {
+            if (fr::javaClass == toEntityClass) {
+                fragmentAlreadyExists = true
+                currentFragment = fr
+                sfm.beginTransaction().show(currentFragment).commit()
+            }
+            else {
+                if (removeOtherInstances) {
+                    sfm.beginTransaction().remove(fr).commit()
+                }
+                else {
+                    sfm.beginTransaction().hide(fr).commit()
+                }
+            }
         }
-        if (loginFragment != null) {
-            sfm.beginTransaction().remove(loginFragment!!).commit()
-            loginFragment = null
-        }
-        if (registrationFragment != null) {
-            sfm.beginTransaction().remove(registrationFragment!!).commit()
-            registrationFragment = null
-        }
-    }
-
-    fun goToRegistration() {
-        if (registrationFragment == null) {
-            registrationFragment = RegistrationFragment()
-            sfm.beginTransaction().add(main_activity_fragment_container.id, registrationFragment!!).commit()
-        }
-        else {
-            sfm.beginTransaction().show(registrationFragment!!).commit()
-        }
-        if (loginFragment != null) {
-            sfm.beginTransaction().hide(loginFragment!!).commit()
-        }
-        if (mainFragment != null) {
-            sfm.beginTransaction().remove(mainFragment!!).commit()
-            mainFragment = null
-        }
-    }
-
-    fun goToLogin() {
-        if (loginFragment == null) {
-            loginFragment = LoginFragment()
-            sfm.beginTransaction().add(main_activity_fragment_container.id, loginFragment!!).commit()
-        }
-        else {
-            sfm.beginTransaction().show(loginFragment!!).commit()
-        }
-        if (registrationFragment != null) {
-            sfm.beginTransaction().remove(registrationFragment!!).commit()
-            registrationFragment = null
-        }
-        if (mainFragment != null) {
-            sfm.beginTransaction().remove(mainFragment!!).commit()
-            mainFragment = null
+        if (!fragmentAlreadyExists) {
+            currentFragment = toEntityClass.newInstance()
+            fragmentsList.add(currentFragment)
+            sfm.beginTransaction().add(main_activity_fragment_container.id, currentFragment).commit()
         }
     }
 }
