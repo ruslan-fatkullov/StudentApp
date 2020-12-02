@@ -4,14 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.example.studentass.MainActivity
+import com.example.studentass.MainActivity.Companion.mainActivity
 import com.example.studentass.R
 import kotlinx.android.synthetic.main.fragment_main.*
-import java.lang.Exception
-import kotlin.concurrent.thread
 
 class MainFragment : Fragment() {
     private lateinit var sfm: FragmentManager
@@ -20,7 +17,7 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        sfm = MainActivity.instance!!.sfm
+        sfm = mainActivity.sfm
 
         val ratingFragment = RatingFragment()
         val scheduleFragment = ScheduleFragment()
@@ -55,20 +52,21 @@ class MainFragment : Fragment() {
             true
         }
 
-        headerExitBn.setOnClickListener {
+        /*headerExitBn.setOnClickListener {
             thread {
                 try {
                     LoginFragment.executeLogout()
                 }
                 catch (e: Exception) {
                     MainActivity.mHandler.post {
-                        Toast.makeText(MainActivity.instance!!, "Logout error: $e (${e.message})", Toast.LENGTH_LONG).show()
+                        Toast.makeText(MainActivity.mainActivity!!, "Logout error: $e (${e.message})", Toast.LENGTH_LONG).show()
                     }
                 }
-                MainActivity.instance!!.switchFragment(LoginFragment::class.java)
-                LoginFragment.deleteLoginData(MainActivity.instance!!)
+                MainActivity.mainActivity!!.switchFragment(LoginFragment::class.java)
+                LoginFragment.deleteLoginData(MainActivity.mainActivity!!)
             }
-        }
+        }*/
+        onHiddenChanged(false)
     }
 
     override fun onCreateView(
@@ -81,6 +79,10 @@ class MainFragment : Fragment() {
 
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
+
+        if (!hidden) {
+            mainActivity.sab.show()
+        }
 
         if (::currentFragment.isInitialized) {
             if (hidden) {

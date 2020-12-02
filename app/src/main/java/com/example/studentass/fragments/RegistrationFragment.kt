@@ -3,7 +3,6 @@ package com.example.studentass.fragments
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,8 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import com.example.studentass.MainActivity
+import androidx.fragment.app.Fragment
+import com.example.studentass.MainActivity.Companion.mainActivity
 import com.example.studentass.R
 import kotlinx.android.synthetic.main.fragment_registration.*
 
@@ -78,6 +78,14 @@ class RegistrationFragment : Fragment() {
         })
         signupBn.setOnClickListener { onSignupButtonClick() }
         loginTv.setOnClickListener { onLoginTextViewClick() }
+        onHiddenChanged(false)
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if (!hidden) {
+            mainActivity.sab.hide()
+        }
     }
 
     private fun validateName(name: String): String {
@@ -120,7 +128,7 @@ class RegistrationFragment : Fragment() {
             //login(emailText, passwordText)
             //loginRole = "student"
             //MainActivity.switchFragment(this, MainActivity.mainFragment)
-            MainActivity.instance!!.switchFragment(LoginFragment::class.java)
+            mainActivity.switchFragment(LoginFragment::class.java)
         }
         else {
             val shake: Animation = AnimationUtils.loadAnimation(context, R.anim.anim_shake)
@@ -130,6 +138,6 @@ class RegistrationFragment : Fragment() {
     }
 
     private fun onLoginTextViewClick() {
-        MainActivity.instance!!.switchFragment(LoginFragment::class.java)
+        mainActivity.switchFragment(LoginFragment::class.java)
     }
 }

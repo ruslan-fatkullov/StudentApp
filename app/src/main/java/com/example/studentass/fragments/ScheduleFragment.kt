@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.studentass.MainActivity
+import com.example.studentass.MainActivity.Companion.mainActivity
 import com.example.studentass.R
 import com.example.studentass.adapters.SchedulePairsRvAdapter
 import com.example.studentass.models.Schedule
@@ -69,12 +70,14 @@ class ScheduleFragment : Fragment() {
         //setPairsList(0, 0)
 
         getSchedule()
+        onHiddenChanged(false)
     }
 
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
 
         if (!hidden) {
+            mainActivity.sab.title = "Расписание"
             daysIn!![dayNum].requestFocus()
             updateWeek()
             updateDaysOfMonth()

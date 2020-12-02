@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment
 import com.auth0.android.jwt.JWT
 import com.example.studentass.MainActivity
 import com.example.studentass.MainActivity.Companion.client
+import com.example.studentass.MainActivity.Companion.mainActivity
 import com.example.studentass.R
 import com.example.studentass.models.AuthLoginData
 import com.example.studentass.models.AuthLoginTokens
@@ -230,6 +231,14 @@ class LoginFragment : Fragment() {
         }
         loginBn.setOnClickListener { onLoginButtonClick() }
         registrationTv.setOnClickListener { onRegistrationTextViewClick()}
+        onHiddenChanged(false)
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if (!hidden) {
+            mainActivity.sab.hide()
+        }
     }
 
     private fun validateEmail(email: String): String {
@@ -280,13 +289,13 @@ class LoginFragment : Fragment() {
                 }
                 MainActivity.mHandler.post {
                     when (loginRole) {
-                        "student" -> MainActivity.instance!!.switchFragment(MainFragment::class.java)
+                        "student" -> mainActivity.switchFragment(MainFragment::class.java)
                         else -> {
                             Toast.makeText(context, "Invalid role: $loginRole", Toast.LENGTH_LONG).show()
                             return@post
                         }
                     }
-                    saveLoginData(MainActivity.instance!!)
+                    saveLoginData(mainActivity)
                     loginBn.revertAnimation()
                 }
             }
@@ -299,6 +308,6 @@ class LoginFragment : Fragment() {
     }
 
     private fun onRegistrationTextViewClick() {
-        MainActivity.instance!!.switchFragment(RegistrationFragment::class.java)
+        mainActivity.switchFragment(RegistrationFragment::class.java)
     }
 }
