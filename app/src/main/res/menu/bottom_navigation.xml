@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+
     <item
         android:id="@+id/bnv_schedule"
-        android:icon="@drawable/ic_baseline_schedule_24"
+        android:icon="@drawable/ic_bnv_schedule"
         android:title="Расписание" />
     <item
         android:id="@+id/bnv_subjects"
-        android:icon="@drawable/ic_baseline_list_24"
+        android:icon="@drawable/ic_bnv_subjects"
         android:title="Предметы" />
     <item
+        android:id="@+id/bnv_rating"
+        android:icon="@drawable/ic_bnv_rating"
+        android:title="Рейтинг" />
+    <item
         android:id="@+id/bnv_notifications"
-        android:icon="@drawable/ic_baseline_notifications_24"
+        android:icon="@drawable/ic_bnv_notifications"
         android:title="Уведомления" />
 
 
