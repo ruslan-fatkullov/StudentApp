@@ -27,7 +27,7 @@ class RatingFragment : Fragment() {
         super.onHiddenChanged(hidden)
 
         if (!hidden) {
-            mainActivity.sab.title = "Рейтинг"
+            mainActivity.actionBar.title = "Рейтинг"
         }
     }
 }

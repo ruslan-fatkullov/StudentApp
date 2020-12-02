@@ -237,7 +237,7 @@ class LoginFragment : Fragment() {
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
         if (!hidden) {
-            mainActivity.sab.hide()
+            mainActivity.actionBar.hide()
         }
     }
 
@@ -308,6 +308,6 @@ class LoginFragment : Fragment() {
     }
 
     private fun onRegistrationTextViewClick() {
-        mainActivity.switchFragment(RegistrationFragment::class.java)
+        mainActivity.switchFragment(RegistrationFragment::class.java, false)
     }
 }

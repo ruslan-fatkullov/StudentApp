@@ -41,7 +41,7 @@ class NotificationsFragment : Fragment() {
         super.onHiddenChanged(hidden)
 
         if (!hidden) {
-            mainActivity.sab.title = "Уведомления"
+            mainActivity.actionBar.title = "Уведомления"
         }
     }
 }

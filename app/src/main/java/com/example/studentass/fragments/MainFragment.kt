@@ -17,7 +17,7 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        sfm = mainActivity.sfm
+        sfm = mainActivity.fragmentManager
 
         val ratingFragment = RatingFragment()
         val scheduleFragment = ScheduleFragment()
@@ -81,7 +81,7 @@ class MainFragment : Fragment() {
         super.onHiddenChanged(hidden)
 
         if (!hidden) {
-            mainActivity.sab.show()
+            mainActivity.actionBar.show()
         }
 
         if (::currentFragment.isInitialized) {

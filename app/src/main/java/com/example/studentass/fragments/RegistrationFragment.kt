@@ -84,7 +84,7 @@ class RegistrationFragment : Fragment() {
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
         if (!hidden) {
-            mainActivity.sab.hide()
+            mainActivity.actionBar.hide()
         }
     }
 

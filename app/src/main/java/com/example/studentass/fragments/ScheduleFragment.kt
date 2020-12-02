@@ -77,7 +77,7 @@ class ScheduleFragment : Fragment() {
         super.onHiddenChanged(hidden)
 
         if (!hidden) {
-            mainActivity.sab.title = "Расписание"
+            mainActivity.actionBar.title = "Расписание"
             daysIn!![dayNum].requestFocus()
             updateWeek()
             updateDaysOfMonth()

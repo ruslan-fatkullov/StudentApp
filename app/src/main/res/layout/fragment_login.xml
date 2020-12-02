@@ -8,7 +8,7 @@
     android:paddingTop="32dp"
     android:paddingRight="32dp"
     android:paddingBottom="32dp"
-    tools:context=".AuthActivity">
+    tools:context=".fragments.LoginFragment">
 
     <ImageView
         android:id="@+id/imageView"

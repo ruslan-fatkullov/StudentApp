@@ -30,8 +30,8 @@ class MainActivity : AppCompatActivity() {
         const val rootUrl = "http://test.asus.russianitgroup.ru/api"
     }
 
-    lateinit var sfm: FragmentManager
-    lateinit var sab: ActionBar
+    lateinit var fragmentManager: FragmentManager
+    lateinit var actionBar: ActionBar
 
     lateinit var currentFragment: Fragment
     var fragmentsList = mutableListOf<Fragment>()
@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             R.id.ab_about_program -> {
-                
+                switchFragment(AboutProgramFragment::class.java, false)
             }
         }
         return super.onOptionsItemSelected(item)
@@ -77,15 +77,15 @@ class MainActivity : AppCompatActivity() {
             throw Exception("Error: second MainActivity instance detected")
         }
 
-        sfm = supportFragmentManager
+        fragmentManager = supportFragmentManager
         val qsab = (this as AppCompatActivity).supportActionBar
         if (qsab == null) {
             throw Exception("Action bar missing")
         }
         else {
-            sab = qsab
+            actionBar = qsab
         }
-        sab.hide()
+        actionBar.hide()
 
         thread {
             LoginFragment.loadLoginData(this)
@@ -105,29 +105,50 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun <T : Fragment> switchFragment(toEntityClass: Class<T>, removeOtherInstances: Boolean = true) {
-        if (::currentFragment.isInitialized && currentFragment::javaClass == toEntityClass) {
+        if (::currentFragment.isInitialized && currentFragment.javaClass == toEntityClass) {
             throw Exception("Can't re-instantiate fragment")
         }
         var fragmentAlreadyExists = false
         for (fr in fragmentsList) {
-            if (fr::javaClass == toEntityClass) {
+            if (fr.javaClass == toEntityClass) {
                 fragmentAlreadyExists = true
                 currentFragment = fr
-                sfm.beginTransaction().show(currentFragment).commit()
+                showFragment(currentFragment)
             }
             else {
                 if (removeOtherInstances) {
-                    sfm.beginTransaction().remove(fr).commit()
+                    fragmentsList.remove(fr)
+                    removeFragment(fr)
                 }
                 else {
-                    sfm.beginTransaction().hide(fr).commit()
+                    hideFragment(fr)
                 }
             }
         }
         if (!fragmentAlreadyExists) {
             currentFragment = toEntityClass.newInstance()
             fragmentsList.add(currentFragment)
-            sfm.beginTransaction().add(main_activity_fragment_container.id, currentFragment).commit()
+            addFragment(currentFragment)
         }
+    }
+
+    fun addFragmentTo(fr: Fragment, containerId: Int) {
+        fragmentManager.beginTransaction().add(containerId, fr).commit()
+    }
+
+    fun addFragment(fr: Fragment) {
+        addFragmentTo(fr, main_activity_fragment_container.id)
+    }
+
+    fun removeFragment(fr: Fragment) {
+        fragmentManager.beginTransaction().remove(fr).commit()
+    }
+
+    fun showFragment(fr: Fragment) {
+        fragmentManager.beginTransaction().show(fr).commit()
+    }
+
+    fun hideFragment(fr: Fragment) {
+        fragmentManager.beginTransaction().hide(fr).commit()
     }
 }
