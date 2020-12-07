@@ -7,10 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.studentass.MainActivity.Companion.mainActivity
 import com.example.studentass.R
+import kotlinx.android.synthetic.main.fragment_rating.*
 
 class RatingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
 
         onHiddenChanged(false)
     }

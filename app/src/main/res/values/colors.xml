@@ -22,4 +22,8 @@
     <color name="colorSchedulePairTypeBackgroundLection">#1A5A9CFF</color>
     <color name="colorSchedulePairTypePractice">#FFA45A</color>
     <color name="colorSchedulePairTypeBackgroundPractice">#1AFFA45A</color>
+
+    <color name="colorRatingGroup">#FFA45A</color>
+    <color name="colorRatingDepartment">#FD6374</color>
+    <color name="colorRatingUniversity">#33D69F</color>
 </resources>
