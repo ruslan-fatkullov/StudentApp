@@ -17,6 +17,7 @@ import com.auth0.android.jwt.JWT
 import com.example.studentass.MainActivity
 import com.example.studentass.MainActivity.Companion.client
 import com.example.studentass.MainActivity.Companion.mainActivity
+import com.example.studentass.MainActivity.Companion.rootUrl
 import com.example.studentass.R
 import com.example.studentass.models.AuthLoginData
 import com.example.studentass.models.AuthLoginTokens
@@ -37,7 +38,7 @@ class LoginFragment : Fragment() {
         private var loginEmail: String? = null
         private var loginPassword: String? = null
 
-        var loginTokens: AuthLoginTokens? = null
+        private var loginTokens: AuthLoginTokens? = null
         var loginRole = "invalid"
 
         fun executeRequest(request: Request): Response {
@@ -73,7 +74,7 @@ class LoginFragment : Fragment() {
                 throw NoDataException("Refresh token is missing")
             }
 
-            val url = MainActivity.rootUrl + "/auth/refrash"
+            val url = "$rootUrl/auth/refrash"
             val body = AuthRefreshData(loginTokens!!.refrashToken)
 
             val credential = Credentials.basic(credentialsLogin, credentialsPassword)
@@ -94,7 +95,8 @@ class LoginFragment : Fragment() {
                 throw NoDataException("Login data is missing")
             }
 
-            val url = MainActivity.rootUrl + "/auth/login"
+            val url = "$rootUrl/auth/login"
+            //val url = "https://4b7af1df-c62e-49e5-b0a5-929837fb7e36.mock.pstmn.io/api/auth/login"
             val body = AuthLoginData(loginEmail!!, loginPassword!!)
 
             val credential = Credentials.basic(credentialsLogin, credentialsPassword)
@@ -117,7 +119,7 @@ class LoginFragment : Fragment() {
                 throw NoDataException("Refresh token is missing")
             }
 
-            val url = MainActivity.rootUrl + "/auth/logout"
+            val url = "$rootUrl/auth/logout"
             val body = AuthRefreshData(loginTokens!!.refrashToken)
 
             val credential = Credentials.basic(credentialsLogin, credentialsPassword)
