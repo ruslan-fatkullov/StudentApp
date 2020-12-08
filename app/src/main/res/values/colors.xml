@@ -26,4 +26,8 @@
     <color name="colorRatingGroup">#FFA45A</color>
     <color name="colorRatingDepartment">#FD6374</color>
     <color name="colorRatingUniversity">#33D69F</color>
+    <color name="colorRatingAttendanceLectionsProgress">#FD6374</color>
+    <color name="colorRatingAttendanceLectionsBackground">#FEDDE3</color>
+    <color name="colorRatingAttendancePracticesProgress">#5A9CFF</color>
+    <color name="colorRatingAttendancePracticesBackground">#E2E7FF</color>
 </resources>

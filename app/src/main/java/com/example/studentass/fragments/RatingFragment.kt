@@ -14,6 +14,12 @@ class RatingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
+        setRatingGroupValue(35, 50)
+        setRatingDepartmentValue(50, 120)
+        setRatingUniversityValue(100, 1445)
+        setAttendanceLectionsValue(33)
+        setAttendancePracticesValue(75)
+
         onHiddenChanged(false)
     }
 
@@ -31,5 +37,38 @@ class RatingFragment : Fragment() {
         if (!hidden) {
             mainActivity.actionBar.title = "Рейтинг"
         }
+    }
+
+    private fun setRatingGroupValue(value: Int, maxValue: Int) {
+        ratingGroupPb.max = maxValue
+        ratingGroupPb.progress = value
+        val tvText = "$value/$maxValue"
+        ratingGroupTv.text = tvText
+    }
+
+    private fun setRatingDepartmentValue(value: Int, maxValue: Int) {
+        ratingDepartmentPb.max = maxValue
+        ratingDepartmentPb.progress = value
+        val tvText = "$value/$maxValue"
+        ratingDepartmentTv.text = tvText
+    }
+
+    private fun setRatingUniversityValue(value: Int, maxValue: Int) {
+        ratingUniversityPb.max = maxValue
+        ratingUniversityPb.progress = value
+        val tvText = "$value/$maxValue"
+        ratingUniversityTv.text = tvText
+    }
+
+    private fun setAttendanceLectionsValue(value: Int) {
+        attendanceLectionsGg.value = value
+        val tvText = "$value%"
+        attendanceLectionsTv.text = tvText
+    }
+
+    private fun setAttendancePracticesValue(value: Int) {
+        attendancePracticesGg.value = value
+        val tvText = "$value%"
+        attendancePracticesTv.text = tvText
     }
 }
