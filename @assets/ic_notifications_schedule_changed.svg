@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="33.1068"
+   height="34.0154"
+   viewBox="0 0 33.1068 34.0154"
+   fill="none"
+   version="1.1"
+   id="svg6"
+   sodipodi:docname="ic_notifications_schedule_changed.svg"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)">
+  <metadata
+     id="metadata12">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs10" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="2560"
+     inkscape:window-height="1017"
+     id="namedview8"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="24.285714"
+     inkscape:cx="16.917647"
+     inkscape:cy="18.529412"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg6" />
+  <path
+     d="M 25.8931,22.7898 18.0261,9.16159 c -0.4561,-0.78967 -1.5979,-0.78967 -2.0539,0 L 8.10518,22.7898 c -0.456,0.7897 0.11493,1.7795 1.02694,1.7795 H 24.8661 c 0.912,0 1.483,-0.9898 1.027,-1.7795 z m -8.8829,-9.4315 c 0.5042,0 0.912,0.4189 0.8972,0.9231 l -0.1483,5.1755 c -0.0111,0.4078 -0.3448,0.7303 -0.7526,0.7303 -0.4078,0 -0.7414,-0.3262 -0.7526,-0.7303 l -0.1445,-5.1755 c -0.0112,-0.5042 0.3929,-0.9231 0.9008,-0.9231 z m -0.0111,9.3611 c -0.5153,0 -0.9342,-0.419 -0.9342,-0.9343 0,-0.5153 0.4189,-0.9342 0.9342,-0.9342 0.5153,0 0.9343,0.4189 0.9343,0.9342 0,0.5153 -0.419,0.9343 -0.9343,0.9343 z"
+     fill="#fd6374"
+     id="path2" />
+  <rect
+     width="33.1068"
+     height="34.0154"
+     rx="7"
+     fill="#fd6374"
+     fill-opacity="0.25"
+     id="rect4"
+     x="0"
+     y="0" />
+</svg>

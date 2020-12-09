@@ -85,16 +85,16 @@ class SchedulePairsRvAdapter (private val context : Context) : RecyclerView.Adap
         }
     }
     class ViewHolder(view : View) : RecyclerView.ViewHolder(view) {
-        private val pairNameTv: TextView? = view.pairNameTv
-        private val timeTv: TextView? = view.timeTv
-        private val locationTv: TextView? = view.locationTv
-        private val teacherNameTv: TextView? = view.teacherNameTv
+        private val pairNameTv: TextView = view.pairNameTv
+        private val timeTv: TextView = view.timeTv
+        private val locationTv: TextView = view.locationTv
+        private val teacherNameTv: TextView = view.teacherNameTv
 
-        private val pairLayout: ConstraintLayout? = view.pairLayout
-        private val timeIv: ImageView? = view.timeIv
-        private val locationIv: ImageView? = view.locationIv
-        private val teacherNameIv: ImageView? = view.teacherNameIv
-        private val pairTypeTv: TextView? = view.pairTypeTv
+        private val pairLayout: ConstraintLayout = view.pairLayout
+        private val timeIv: ImageView = view.timeIv
+        private val locationIv: ImageView = view.locationIv
+        private val teacherNameIv: ImageView = view.teacherNameIv
+        private val pairTypeTv: TextView = view.pairTypeTv
 
         fun bind(pair: ScheduleDayCouple, context: Context, dataYear: Int, dataDayOfYear: Int){
             val currentCalendar = Calendar.getInstance()
@@ -104,14 +104,14 @@ class SchedulePairsRvAdapter (private val context : Context) : RecyclerView.Adap
             pairCalendar.set(Calendar.DAY_OF_YEAR, dataDayOfYear)
 
             val pairNameTvText = "${pair.subject} ${if (pair.subgroup != 0) (", ${pair.subgroup} пг") else ("")}"
-            pairNameTv?.text = pairNameTvText
+            pairNameTv.text = pairNameTvText
 
             val timeText = "${pair.pair_number} пара, ${pairTime.intervalString}"
-            timeTv?.text = timeText
+            timeTv.text = timeText
 
-            locationTv?.text = pair.place
+            locationTv.text = pair.place
 
-            teacherNameTv?.text = pair.teacher
+            teacherNameTv.text = pair.teacher
 
             val pairTypeText = when (pair.typeSubject) {
                 1 -> "Практика"
@@ -132,10 +132,10 @@ class SchedulePairsRvAdapter (private val context : Context) : RecyclerView.Adap
                 else -> R.color.colorPrimary
             }
 
-            pairTypeTv?.text = pairTypeText
-            pairTypeTv?.setTextColor(ContextCompat.getColor(context, pairTypeColor))
-            val shapeDrawable: GradientDrawable? = pairTypeTv?.background as GradientDrawable
-            shapeDrawable?.setColor(ContextCompat.getColor(context, pairTypeBackgroundColor))
+            pairTypeTv.text = pairTypeText
+            pairTypeTv.setTextColor(ContextCompat.getColor(context, pairTypeColor))
+            val shapeDrawable: GradientDrawable = pairTypeTv.background as GradientDrawable
+            shapeDrawable.setColor(ContextCompat.getColor(context, pairTypeBackgroundColor))
 
             itemView.setOnClickListener {
                 run {
@@ -146,33 +146,33 @@ class SchedulePairsRvAdapter (private val context : Context) : RecyclerView.Adap
             pairCalendar.set(Calendar.HOUR_OF_DAY, pairTime.endHour)
             pairCalendar.set(Calendar.MINUTE, pairTime.endMinute)
             if (pairCalendar > currentCalendar) {
-                pairLayout?.background = when (pair.typeSubject) {
+                pairLayout.background = when (pair.typeSubject) {
                     1 -> ContextCompat.getDrawable(context, R.drawable.ic_im_schedule_pair_background_practice)
                     2 -> ContextCompat.getDrawable(context, R.drawable.ic_im_schedule_pair_background_lection)
                     3 -> ContextCompat.getDrawable(context, R.drawable.ic_im_schedule_pair_background_lab)
                     else -> null
                 }
-                timeIv?.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_im_schedule_pair_ico_time))
-                locationIv?.setColorFilter(ContextCompat.getColor(context, pairTypeColor))
-                teacherNameIv?.setColorFilter(ContextCompat.getColor(context, pairTypeColor))
+                timeIv.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_im_schedule_pair_ico_time))
+                locationIv.setColorFilter(ContextCompat.getColor(context, pairTypeColor))
+                teacherNameIv.setColorFilter(ContextCompat.getColor(context, pairTypeColor))
 
 
                 pairCalendar.set(Calendar.HOUR_OF_DAY, pairTime.beginHour)
                 pairCalendar.set(Calendar.MINUTE, pairTime.beginHour)
                 if (pairCalendar < currentCalendar) {
-                    timeIv?.setColorFilter(ContextCompat.getColor(context, pairTypeColor))
+                    timeIv.setColorFilter(ContextCompat.getColor(context, pairTypeColor))
                 }
                 else {
-                    timeIv?.setColorFilter(ContextCompat.getColor(context, R.color.colorSchedulePairTypeAnyDone))
+                    timeIv.setColorFilter(ContextCompat.getColor(context, R.color.colorSchedulePairTypeAnyDone))
                 }
             }
             else {
-                pairLayout?.background = ContextCompat.getDrawable(context, R.drawable.ic_im_schedule_pair_background_any_done)
+                pairLayout.background = ContextCompat.getDrawable(context, R.drawable.ic_im_schedule_pair_background_any_done)
 
-                timeIv?.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_im_schedule_pair_ico_time_done))
-                timeIv?.setColorFilter(ContextCompat.getColor(context, pairTypeColor))
-                locationIv?.setColorFilter(ContextCompat.getColor(context, R.color.colorSchedulePairTypeAnyDone))
-                teacherNameIv?.setColorFilter(ContextCompat.getColor(context, R.color.colorSchedulePairTypeAnyDone))
+                timeIv.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_im_schedule_pair_ico_time_done))
+                timeIv.setColorFilter(ContextCompat.getColor(context, pairTypeColor))
+                locationIv.setColorFilter(ContextCompat.getColor(context, R.color.colorSchedulePairTypeAnyDone))
+                teacherNameIv.setColorFilter(ContextCompat.getColor(context, R.color.colorSchedulePairTypeAnyDone))
             }
         }
     }
@@ -188,9 +188,7 @@ class SchedulePairsRvAdapter (private val context : Context) : RecyclerView.Adap
         return  ViewHolder(inflater.inflate(R.layout.schedule_pair_rv_item, parent, false))
     }
 
-    override fun getItemCount(): Int {
-        return dataList.size
-    }
+    override fun getItemCount(): Int = dataList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val pairItem = dataList[position]

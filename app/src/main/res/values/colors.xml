@@ -30,4 +30,7 @@
     <color name="colorRatingAttendanceLectionsBackground">#FEDDE3</color>
     <color name="colorRatingAttendancePracticesProgress">#5A9CFF</color>
     <color name="colorRatingAttendancePracticesBackground">#E2E7FF</color>
+
+    <color name="colorNotificationBackground">#FFFFFF</color>
+    <color name="colorNotificationNewBackground">#ebf2ff</color>
 </resources>
