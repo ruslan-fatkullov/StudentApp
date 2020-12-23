@@ -85,7 +85,8 @@ class ScheduleFragment : Fragment() {
     }
 
     private fun getSchedule() {
-        val url = "https://my-json-server.typicode.com/AntonScript/schedule-service/GroupStudent"
+        val url = "http://test.asus.russianitgroup.ru/api/schedule/group?nameGroup=ИВТАПбд-31"
+        //val url = "https://my-json-server.typicode.com/AntonScript/schedule-service/GroupStudent"
         val client = OkHttpClient()
         val request = Request.Builder().url(url).build()
         client.newCall(request).enqueue(object: Callback {
