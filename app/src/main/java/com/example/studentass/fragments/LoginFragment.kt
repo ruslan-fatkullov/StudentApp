@@ -38,7 +38,7 @@ class LoginFragment : Fragment() {
         private var loginEmail: String? = null
         private var loginPassword: String? = null
 
-        private var loginTokens: AuthLoginTokens? = null
+        var loginTokens: AuthLoginTokens? = null
         var loginRole = "invalid"
 
         fun executeRequest(request: Request): Response {
@@ -47,11 +47,12 @@ class LoginFragment : Fragment() {
             return response
         }
 
-        fun executeJwtRequest(request: Request, onUpgradeListener: (Request.Builder) -> Request): Response {
+        fun executeJwtRequest(requestBuilder: Request.Builder): Response {
             var response: Response
+            requestBuilder.addHeader("Authorization", loginTokens!!.accessToken)
 
             try {
-                response = client.newCall(request).execute()
+                response = client.newCall(requestBuilder.build()).execute()
                 checkResponseCode(response.code)
             }
             catch (e: UpgradeRequiredException) {
@@ -61,8 +62,8 @@ class LoginFragment : Fragment() {
                 catch (e: UnauthorizedException) {
                     executeLogin()
                 }
-                val newRequest = onUpgradeListener(request.newBuilder())
-                response = client.newCall(newRequest).execute()
+                requestBuilder.removeHeader("Authorization").addHeader("Authorization", loginTokens!!.accessToken)
+                response = client.newCall(requestBuilder.build()).execute()
                 checkResponseCode(response.code)
             }
 
@@ -139,6 +140,8 @@ class LoginFragment : Fragment() {
             editor.apply {
                 putString("loginEmail", loginEmail)
                 putString("loginPassword", loginPassword)
+                putString("accessToken", loginTokens!!.accessToken)
+                putString("refrashToken", loginTokens!!.refrashToken)
             }.apply()
         }
 
@@ -147,6 +150,11 @@ class LoginFragment : Fragment() {
             sharedPreferences.apply {
                 loginEmail = getString("loginEmail", null)
                 loginPassword = getString("loginPassword", null)
+                val accessToken = getString("accessToken", null)
+                val refrashToken = getString("refrashToken", null)
+                if (accessToken != null && refrashToken != null) {
+                    loginTokens = AuthLoginTokens(accessToken, refrashToken)
+                }
             }
         }
 

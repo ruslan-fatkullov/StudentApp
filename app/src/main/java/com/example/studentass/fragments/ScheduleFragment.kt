@@ -21,6 +21,7 @@ import okhttp3.*
 import java.io.IOException
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.concurrent.thread
 
 class ScheduleFragment : Fragment() {
     private var schedule: Schedule? = null
@@ -85,7 +86,36 @@ class ScheduleFragment : Fragment() {
     }
 
     private fun getSchedule() {
-        val url = "http://test.asus.russianitgroup.ru/api/schedule/group?nameGroup=ИВТАПбд-31"
+        val url = "http://05614989e7fe.ngrok.io/group?nameGroup=ИВТАПбд-31"
+        val request = Request.Builder().url(url)
+        thread {
+            try {
+                val response = LoginFragment.executeJwtRequest(request)
+                try {
+                    val scheduleObject = GsonBuilder().create().fromJson(response.body!!.string(), Schedule::class.java)
+                    schedule = scheduleObject
+                } catch (e : Exception) {
+                    MainActivity.mHandler.post {
+                        Toast.makeText(context, "Schedule interpretation error: $e", Toast.LENGTH_LONG).show()
+                    }
+                }
+                MainActivity.mHandler.post {
+                    try {
+                        updatePairsList()
+                        pairsPb.visibility = View.GONE
+                    } catch (e : Exception) {
+                        Toast.makeText(context, "Schedule init error: $e", Toast.LENGTH_LONG).show()
+                    }
+                }
+            } catch (e: Exception) {
+                MainActivity.mHandler.post {
+                    Toast.makeText(context, "Schedule request error: $e", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+
+        /*val url = "http://ef462968066b.ngrok.io/group?nameGroup=ИВТАПбд-31"
+        //val url = "http://test.asus.russianitgroup.ru/api/schedule/group?nameGroup=ИВТАПбд-31"
         //val url = "https://my-json-server.typicode.com/AntonScript/schedule-service/GroupStudent"
         val client = OkHttpClient()
         val request = Request.Builder().url(url).build()
@@ -111,7 +141,7 @@ class ScheduleFragment : Fragment() {
                     }
                 }
             }
-        })
+        })*/
     }
 
     private fun formatDayOfWeek(dayOfWeek: Int): Int {

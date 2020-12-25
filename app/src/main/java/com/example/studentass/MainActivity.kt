@@ -90,7 +90,9 @@ class MainActivity : AppCompatActivity() {
         thread {
             LoginFragment.loadLoginData(this)
             try {
-                LoginFragment.executeLogin()
+                if (LoginFragment.loginTokens == null) {
+                    LoginFragment.executeLogin()
+                }
                 switchFragment(MainFragment::class.java)
             }
             catch (e: Exception) {
