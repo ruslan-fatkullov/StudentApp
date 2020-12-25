@@ -1,10 +1,15 @@
 package com.example.studentass.fragments
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Adapter
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,6 +30,7 @@ import kotlin.concurrent.thread
 
 class ScheduleFragment : Fragment() {
     private var schedule: Schedule? = null
+    private var groupList: List<String>? = null
     private var weekNum: Int = 0
     private var dayNum: Int = 0
     private var daysIn: List<View>? = null
@@ -70,7 +76,22 @@ class ScheduleFragment : Fragment() {
         schedulePairsRv.adapter = SchedulePairsRvAdapter(context!!)
         //setPairsList(0, 0)
 
-        getSchedule()
+        val scheduleGroupTvAdapter = ArrayAdapter<String>(context!!, android.R.layout.simple_dropdown_item_1line)
+        scheduleGroupTv.setAdapter(scheduleGroupTvAdapter)
+        scheduleGroupTv.onItemClickListener = object : AdapterView.OnItemClickListener {
+            override fun onItemClick(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                daysIn!![dayNum].requestFocus()
+                val groupName = scheduleGroupTv.text.toString()
+                getSchedule(groupName)
+            }
+        }
+        getGroupList()
+
         onHiddenChanged(false)
     }
 
@@ -85,8 +106,37 @@ class ScheduleFragment : Fragment() {
         }
     }
 
-    private fun getSchedule() {
-        val url = "http://05614989e7fe.ngrok.io/group?nameGroup=ИВТАПбд-31"
+    private fun getGroupList() {
+        val url = "http://test.asus.russianitgroup.ru/api/schedule/group-list"
+        val request = Request.Builder().url(url)
+        thread {
+            try {
+                val response = LoginFragment.executeJwtRequest(request)
+                try {
+                    val groupsArray = GsonBuilder().create().fromJson(response.body!!.string(), Array<String>::class.java)
+                    groupList = groupsArray.toList()
+                } catch (e : Exception) {
+                    MainActivity.mHandler.post {
+                        Toast.makeText(context, "Group list interpretation error: $e", Toast.LENGTH_LONG).show()
+                    }
+                }
+                MainActivity.mHandler.post {
+                    try {
+                        updateGroupList()
+                    } catch (e : Exception) {
+                        Toast.makeText(context, "Group list init error: $e", Toast.LENGTH_LONG).show()
+                    }
+                }
+            } catch (e: Exception) {
+                MainActivity.mHandler.post {
+                    Toast.makeText(context, "Group list request error: $e", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+    }
+
+    private fun getSchedule(groupName: String) {
+        val url = "http://test.asus.russianitgroup.ru/api/schedule/group?nameGroup=$groupName"
         val request = Request.Builder().url(url)
         thread {
             try {
@@ -102,7 +152,6 @@ class ScheduleFragment : Fragment() {
                 MainActivity.mHandler.post {
                     try {
                         updatePairsList()
-                        pairsPb.visibility = View.GONE
                     } catch (e : Exception) {
                         Toast.makeText(context, "Schedule init error: $e", Toast.LENGTH_LONG).show()
                     }
@@ -150,6 +199,13 @@ class ScheduleFragment : Fragment() {
         return newDayOfWeek
     }
 
+    private fun updateGroupList() {
+        if (groupList != null) {
+            val adapter = scheduleGroupTv.adapter as ArrayAdapter<String>
+            adapter.addAll(groupList!!)
+        }
+    }
+
     private fun updatePairsList() {
         val day = dayNum + 1
         val week = weekNum + 1
@@ -176,7 +232,7 @@ class ScheduleFragment : Fragment() {
             adapter.dataDayOfYear = calendar.get(Calendar.DAY_OF_YEAR)
             pairsAbsenceTv.visibility = View.INVISIBLE
         }
-        schedulePairsRv?.adapter?.notifyDataSetChanged()
+        adapter.notifyDataSetChanged()
     }
 
     private fun updateWeek() {

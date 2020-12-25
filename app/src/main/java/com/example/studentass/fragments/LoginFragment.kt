@@ -41,8 +41,8 @@ class LoginFragment : Fragment() {
         var loginTokens: AuthLoginTokens? = null
         var loginRole = "invalid"
 
-        fun executeRequest(request: Request): Response {
-            val response = client.newCall(request).execute()
+        fun executeRequest(requestBuilder: Request.Builder): Response {
+            val response = client.newCall(requestBuilder.build()).execute()
             checkResponseCode(response.code)
             return response
         }
