@@ -1,31 +1,26 @@
 package com.example.studentass.fragments
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Adapter
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.studentass.MainActivity
-import com.example.studentass.MainActivity.Companion.mainActivity
 import com.example.studentass.R
 import com.example.studentass.adapters.SchedulePairsRvAdapter
+import com.example.studentass.getAppCompatActivity
 import com.example.studentass.models.Schedule
 import com.example.studentass.models.ScheduleDayCouple
 import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import kotlinx.android.synthetic.main.schedule_days_layout_item.view.*
 import okhttp3.*
-import java.io.IOException
 import java.util.*
-import kotlin.collections.ArrayList
 import kotlin.concurrent.thread
 
 class ScheduleFragment : Fragment() {
@@ -99,7 +94,7 @@ class ScheduleFragment : Fragment() {
         super.onHiddenChanged(hidden)
 
         if (!hidden) {
-            mainActivity.actionBar.title = "Расписание"
+            getAppCompatActivity<MainActivity>()?.actionBar?.title = "Расписание"
             daysIn!![dayNum].requestFocus()
             updateWeek()
             updateDaysOfMonth()

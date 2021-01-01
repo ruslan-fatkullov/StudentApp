@@ -11,8 +11,9 @@ import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.example.studentass.MainActivity.Companion.mainActivity
+import com.example.studentass.MainActivity
 import com.example.studentass.R
+import com.example.studentass.getAppCompatActivity
 import kotlinx.android.synthetic.main.fragment_registration.*
 
 class RegistrationFragment : Fragment() {
@@ -84,7 +85,7 @@ class RegistrationFragment : Fragment() {
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
         if (!hidden) {
-            mainActivity.actionBar.hide()
+            getAppCompatActivity<MainActivity>()?.actionBar?.hide()
         }
     }
 
@@ -128,7 +129,7 @@ class RegistrationFragment : Fragment() {
             //login(emailText, passwordText)
             //loginRole = "student"
             //MainActivity.switchFragment(this, MainActivity.mainFragment)
-            mainActivity.switchFragment(LoginFragment::class.java)
+            getAppCompatActivity<MainActivity>()?.switchFragment(LoginFragment::class.java)
         }
         else {
             val shake: Animation = AnimationUtils.loadAnimation(context, R.anim.anim_shake)
@@ -138,6 +139,6 @@ class RegistrationFragment : Fragment() {
     }
 
     private fun onLoginTextViewClick() {
-        mainActivity.switchFragment(LoginFragment::class.java)
+        getAppCompatActivity<MainActivity>()?.switchFragment(LoginFragment::class.java)
     }
 }

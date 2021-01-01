@@ -6,8 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.example.studentass.MainActivity.Companion.mainActivity
+import com.example.studentass.MainActivity
 import com.example.studentass.R
+import com.example.studentass.getAppCompatActivity
 import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainFragment : Fragment() {
@@ -17,7 +18,7 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        sfm = mainActivity.fragmentManager
+        sfm = getAppCompatActivity<MainActivity>()!!.fragmentManager
 
         val ratingFragment = RatingFragment()
         val scheduleFragment = ScheduleFragment()
@@ -81,7 +82,7 @@ class MainFragment : Fragment() {
         super.onHiddenChanged(hidden)
 
         if (!hidden) {
-            mainActivity.actionBar.show()
+            getAppCompatActivity<MainActivity>()?.actionBar?.show()
         }
 
         if (::currentFragment.isInitialized) {

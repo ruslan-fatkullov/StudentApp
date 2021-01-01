@@ -1,8 +1,6 @@
 package com.example.studentass
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -10,19 +8,20 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.example.studentass.fragments.*
+import com.example.studentass.fragments.AboutProgramFragment
+import com.example.studentass.fragments.LoginFragment
+import com.example.studentass.fragments.MainFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import okhttp3.OkHttpClient
 import kotlin.concurrent.thread
 
+@Suppress("UNCHECKED_CAST")
+fun <T: AppCompatActivity> Fragment.getAppCompatActivity(): T? {
+    return activity as T?
+}
 
 class MainActivity : AppCompatActivity() {
     companion object {
-        private var ma: MainActivity? = null
-        var mainActivity: MainActivity
-            get() = if (ma != null) {ma!!} else {throw Exception("Error: no instance of main activity")}
-            set(_) {}
-
         val client = OkHttpClient()
 
         const val rootUrl = "http://test.asus.russianitgroup.ru/api"
@@ -52,11 +51,11 @@ class MainActivity : AppCompatActivity() {
                     }
                     catch (e: Exception) {
                         runOnUiThread {
-                            Toast.makeText(mainActivity, "Logout error: $e (${e.message})", Toast.LENGTH_LONG).show()
+                            Toast.makeText(this, "Logout error: $e (${e.message})", Toast.LENGTH_LONG).show()
                         }
                     }
-                    mainActivity.switchFragment(LoginFragment::class.java)
-                    LoginFragment.deleteLoginData(mainActivity)
+                    this.switchFragment(LoginFragment::class.java)
+                    LoginFragment.deleteLoginData(this)
                 }
             }
             R.id.ab_about_program -> {
@@ -69,11 +68,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        ma = if (ma == null) {this} else {
-            Toast.makeText(this, "Error: second MainActivity instance detected", Toast.LENGTH_LONG).show()
-            throw Exception("Error: second MainActivity instance detected")
-        }
 
         fragmentManager = supportFragmentManager
         val qsab = (this as AppCompatActivity).supportActionBar

@@ -16,9 +16,9 @@ import androidx.fragment.app.Fragment
 import com.auth0.android.jwt.JWT
 import com.example.studentass.MainActivity
 import com.example.studentass.MainActivity.Companion.client
-import com.example.studentass.MainActivity.Companion.mainActivity
 import com.example.studentass.MainActivity.Companion.rootUrl
 import com.example.studentass.R
+import com.example.studentass.getAppCompatActivity
 import com.example.studentass.models.AuthLoginData
 import com.example.studentass.models.AuthLoginTokens
 import com.example.studentass.models.AuthRefreshData
@@ -249,7 +249,7 @@ class LoginFragment : Fragment() {
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
         if (!hidden) {
-            mainActivity.actionBar.hide()
+            getAppCompatActivity<MainActivity>()?.actionBar?.hide()
         }
     }
 
@@ -300,15 +300,18 @@ class LoginFragment : Fragment() {
                     return@thread
                 }
                 activity!!.runOnUiThread {
-                    when (loginRole) {
-                        "student" -> mainActivity.switchFragment(MainFragment::class.java)
-                        else -> {
-                            Toast.makeText(context, "Invalid role: $loginRole", Toast.LENGTH_LONG).show()
-                            return@runOnUiThread
+                    val mainActivity = getAppCompatActivity<MainActivity>()
+                    if (mainActivity != null) {
+                        when (loginRole) {
+                            "student" -> mainActivity.switchFragment(MainFragment::class.java)
+                            else -> {
+                                Toast.makeText(context, "Invalid role: $loginRole", Toast.LENGTH_LONG).show()
+                                return@runOnUiThread
+                            }
                         }
+                        saveLoginData(mainActivity)
+                        loginBn.revertAnimation()
                     }
-                    saveLoginData(mainActivity)
-                    loginBn.revertAnimation()
                 }
             }
         }
@@ -320,6 +323,6 @@ class LoginFragment : Fragment() {
     }
 
     private fun onRegistrationTextViewClick() {
-        mainActivity.switchFragment(RegistrationFragment::class.java, false)
+        getAppCompatActivity<MainActivity>()?.switchFragment(RegistrationFragment::class.java, false)
     }
 }

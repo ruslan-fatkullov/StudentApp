@@ -6,10 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.studentass.MainActivity.Companion.mainActivity
+import com.example.studentass.MainActivity
 import com.example.studentass.R
 import com.example.studentass.adapters.NotificationsRvAdapter
 import com.example.studentass.adapters.SchedulePairsRvAdapter
+import com.example.studentass.getAppCompatActivity
 import com.example.studentass.models.NotificationsItem
 import kotlinx.android.synthetic.main.fragment_notifications.*
 import kotlinx.android.synthetic.main.fragment_schedule.*
@@ -69,7 +70,7 @@ class NotificationsFragment : Fragment() {
         super.onHiddenChanged(hidden)
 
         if (!hidden) {
-            mainActivity.actionBar.title = "Уведомления"
+            getAppCompatActivity<MainActivity>()?.actionBar?.title = "Уведомления"
         }
     }
 }
