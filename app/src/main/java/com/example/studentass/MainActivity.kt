@@ -22,8 +22,6 @@ fun <T: AppCompatActivity> Fragment.getAppCompatActivity(): T? {
 
 class MainActivity : AppCompatActivity() {
     companion object {
-        val client = OkHttpClient()
-
         const val rootUrl = "http://test.asus.russianitgroup.ru/api"
     }
 

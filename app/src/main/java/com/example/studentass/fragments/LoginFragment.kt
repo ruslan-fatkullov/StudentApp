@@ -15,7 +15,6 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.auth0.android.jwt.JWT
 import com.example.studentass.MainActivity
-import com.example.studentass.MainActivity.Companion.client
 import com.example.studentass.MainActivity.Companion.rootUrl
 import com.example.studentass.R
 import com.example.studentass.getAppCompatActivity
@@ -42,12 +41,14 @@ class LoginFragment : Fragment() {
         var loginRole = "invalid"
 
         fun executeRequest(requestBuilder: Request.Builder): Response {
+            val client = OkHttpClient()
             val response = client.newCall(requestBuilder.build()).execute()
             checkResponseCode(response.code)
             return response
         }
 
         fun executeJwtRequest(requestBuilder: Request.Builder): Response {
+            val client = OkHttpClient()
             var response: Response
             requestBuilder.addHeader("Authorization", loginTokens!!.accessToken)
 
@@ -74,6 +75,7 @@ class LoginFragment : Fragment() {
             if (loginTokens == null) {
                 throw NoDataException("Refresh token is missing")
             }
+            val client = OkHttpClient()
 
             val url = "$rootUrl/auth/refrash"
             val body = AuthRefreshData(loginTokens!!.refrashToken)
@@ -95,6 +97,7 @@ class LoginFragment : Fragment() {
             if (loginEmail == null || loginPassword == null) {
                 throw NoDataException("Login data is missing")
             }
+            val client = OkHttpClient()
 
             //val url = "$rootUrl/auth/login"
             val url = "https://4b7af1df-c62e-49e5-b0a5-929837fb7e36.mock.pstmn.io/api/auth/login"
@@ -119,6 +122,7 @@ class LoginFragment : Fragment() {
             if (loginTokens == null) {
                 throw NoDataException("Refresh token is missing")
             }
+            val client = OkHttpClient()
 
             val url = "$rootUrl/auth/logout"
             val body = AuthRefreshData(loginTokens!!.refrashToken)
