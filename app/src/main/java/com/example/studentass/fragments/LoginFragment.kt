@@ -96,8 +96,8 @@ class LoginFragment : Fragment() {
                 throw NoDataException("Login data is missing")
             }
 
-            val url = "$rootUrl/auth/login"
-            //val url = "https://4b7af1df-c62e-49e5-b0a5-929837fb7e36.mock.pstmn.io/api/auth/login"
+            //val url = "$rootUrl/auth/login"
+            val url = "https://4b7af1df-c62e-49e5-b0a5-929837fb7e36.mock.pstmn.io/api/auth/login"
             val body = AuthLoginData(loginEmail!!, loginPassword!!)
 
             val credential = Credentials.basic(credentialsLogin, credentialsPassword)
@@ -167,10 +167,11 @@ class LoginFragment : Fragment() {
         private fun checkResponseCode(code: Int) {
             if (code in 100..399) return
             throw when (code) {
-                400 -> BadRequestException("плохой запрос")
-                401 -> UnauthorizedException("не авторизован")
-                426 -> UpgradeRequiredException("необходимо обновление")
-                500 -> InternalServerErrorException("внутренняя ошибка сервера")
+                400 -> BadRequestException("плохой запрос ($code)")
+                401 -> UnauthorizedException("не авторизован ($code)")
+                426 -> UpgradeRequiredException("необходимо обновление ($code)")
+                500 -> InternalServerErrorException("внутренняя ошибка сервера ($code)")
+                502 -> BadGatewayException("плохой шлюз ($code)")
                 else -> RequestCodeException("код $code")
             }
         }
@@ -182,6 +183,7 @@ class LoginFragment : Fragment() {
         class UnauthorizedException(message: String) : RequestCodeException(message) // 401
         class UpgradeRequiredException(message: String) : RequestCodeException(message)// 426
         class InternalServerErrorException(message: String) : RequestCodeException(message) // 500
+        class BadGatewayException(message: String) : RequestCodeException(message) // 502
     }
 
     private var emailValidity: String? = null
@@ -291,18 +293,18 @@ class LoginFragment : Fragment() {
                         is IOException -> "Ошибка подключения: $e (${e.message})"
                         else -> "Неизвестная ощибка подключения: $e (${e.message})"
                     }
-                    MainActivity.mHandler.post {
+                    activity!!.runOnUiThread {
                         Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
                         loginBn.revertAnimation()
                     }
                     return@thread
                 }
-                MainActivity.mHandler.post {
+                activity!!.runOnUiThread {
                     when (loginRole) {
                         "student" -> mainActivity.switchFragment(MainFragment::class.java)
                         else -> {
                             Toast.makeText(context, "Invalid role: $loginRole", Toast.LENGTH_LONG).show()
-                            return@post
+                            return@runOnUiThread
                         }
                     }
                     saveLoginData(mainActivity)

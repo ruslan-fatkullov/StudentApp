@@ -23,8 +23,6 @@ class MainActivity : AppCompatActivity() {
             get() = if (ma != null) {ma!!} else {throw Exception("Error: no instance of main activity")}
             set(_) {}
 
-        val mHandler = Handler(Looper.getMainLooper())
-
         val client = OkHttpClient()
 
         const val rootUrl = "http://test.asus.russianitgroup.ru/api"
@@ -53,7 +51,7 @@ class MainActivity : AppCompatActivity() {
                         LoginFragment.executeLogout()
                     }
                     catch (e: Exception) {
-                        mHandler.post {
+                        runOnUiThread {
                             Toast.makeText(mainActivity, "Logout error: $e (${e.message})", Toast.LENGTH_LONG).show()
                         }
                     }
@@ -98,7 +96,7 @@ class MainActivity : AppCompatActivity() {
             catch (e: Exception) {
                 switchFragment(LoginFragment::class.java)
                 if (e !is LoginFragment.Companion.NoDataException) {
-                    mHandler.post {
+                    runOnUiThread {
                         Toast.makeText(this, "Login error: $e (${e.message})", Toast.LENGTH_LONG).show()
                     }
                 }

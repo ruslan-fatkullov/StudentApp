@@ -116,11 +116,11 @@ class ScheduleFragment : Fragment() {
                     val groupsArray = GsonBuilder().create().fromJson(response.body!!.string(), Array<String>::class.java)
                     groupList = groupsArray.toList()
                 } catch (e : Exception) {
-                    MainActivity.mHandler.post {
+                    activity!!.runOnUiThread {
                         Toast.makeText(context, "Group list interpretation error: $e", Toast.LENGTH_LONG).show()
                     }
                 }
-                MainActivity.mHandler.post {
+                activity!!.runOnUiThread {
                     try {
                         updateGroupList()
                     } catch (e : Exception) {
@@ -128,7 +128,7 @@ class ScheduleFragment : Fragment() {
                     }
                 }
             } catch (e: Exception) {
-                MainActivity.mHandler.post {
+                activity!!.runOnUiThread {
                     Toast.makeText(context, "Group list request error: $e", Toast.LENGTH_LONG).show()
                 }
             }
@@ -145,11 +145,11 @@ class ScheduleFragment : Fragment() {
                     val scheduleObject = GsonBuilder().create().fromJson(response.body!!.string(), Schedule::class.java)
                     schedule = scheduleObject
                 } catch (e : Exception) {
-                    MainActivity.mHandler.post {
+                    activity!!.runOnUiThread {
                         Toast.makeText(context, "Schedule interpretation error: $e", Toast.LENGTH_LONG).show()
                     }
                 }
-                MainActivity.mHandler.post {
+                activity!!.runOnUiThread {
                     try {
                         updatePairsList()
                     } catch (e : Exception) {
@@ -157,7 +157,7 @@ class ScheduleFragment : Fragment() {
                     }
                 }
             } catch (e: Exception) {
-                MainActivity.mHandler.post {
+                activity!!.runOnUiThread {
                     Toast.makeText(context, "Schedule request error: $e", Toast.LENGTH_LONG).show()
                 }
             }
