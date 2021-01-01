@@ -53,13 +53,13 @@ class ScheduleFragment : Fragment() {
         daysIn = listOf<View>(dayIn1, dayIn2, dayIn3, dayIn4, dayIn5, dayIn6, dayIn7)
         dayNum = formatDayOfWeek(calendar.get(Calendar.DAY_OF_WEEK))
         weekNum = 0
-        dayIn1.dayOfWeekTextView.text = "ПН"
-        dayIn2.dayOfWeekTextView.text = "ВТ"
-        dayIn3.dayOfWeekTextView.text = "СР"
-        dayIn4.dayOfWeekTextView.text = "ЧТ"
-        dayIn5.dayOfWeekTextView.text = "ПТ"
-        dayIn6.dayOfWeekTextView.text = "СБ"
-        dayIn7.dayOfWeekTextView.text = "ВС"
+        dayIn1.dayOfWeekTextView.text = getString(R.string.schedule_monday)
+        dayIn2.dayOfWeekTextView.text = getString(R.string.schedule_tuesday)
+        dayIn3.dayOfWeekTextView.text = getString(R.string.schedule_wednesday)
+        dayIn4.dayOfWeekTextView.text = getString(R.string.schedule_thursday)
+        dayIn5.dayOfWeekTextView.text = getString(R.string.schedule_friday)
+        dayIn6.dayOfWeekTextView.text = getString(R.string.schedule_saturday)
+        dayIn7.dayOfWeekTextView.text = getString(R.string.schedule_sunday)
         for (x in 0..6) {
             daysIn!![x].setOnFocusChangeListener { newFocus, _ ->
                 newFocus?.dayOfWeekTextView?.setTextColor(ContextCompat.getColor(context!!, R.color.colorScheduleDayOfWeekOnFocus))
@@ -197,9 +197,10 @@ class ScheduleFragment : Fragment() {
         if (newDayOfWeek < 0) newDayOfWeek = 6
         return newDayOfWeek
     }
-
+    
     private fun updateGroupList() {
         if (groupList != null) {
+            @Suppress("UNCHECKED_CAST")
             val adapter = scheduleGroupTv.adapter as ArrayAdapter<String>
             adapter.addAll(groupList!!)
         }
@@ -235,8 +236,7 @@ class ScheduleFragment : Fragment() {
     }
 
     private fun updateWeek() {
-        val text = "${weekNum + 1} неделя"
-        weekTv.text = text
+        weekTv.text = if (weekNum == 0) getText(R.string.schedule_first_week) else getText(R.string.schedule_second_week)
     }
 
     private fun updateDaysOfMonth() {
@@ -249,21 +249,21 @@ class ScheduleFragment : Fragment() {
     }
 
     private fun updateMonthAndYear() {
-        val text = "${when (calendar.get(Calendar.MONTH)) {
-            Calendar.JANUARY -> "Январь"
-            Calendar.FEBRUARY -> "Февраль"
-            Calendar.MARCH -> "Март"
-            Calendar.APRIL -> "Апрель"
-            Calendar.MAY -> "Май"
-            Calendar.JUNE -> "Июнь"
-            Calendar.JULY -> "Июль"
-            Calendar.AUGUST -> "Август"
-            Calendar.SEPTEMBER -> "Сентябрь"
-            Calendar.OCTOBER -> "Октябрь"
-            Calendar.NOVEMBER -> "Ноябрь"
-            Calendar.DECEMBER -> "Декабрь"
-            else -> "Error"
-        }} ${calendar.get(Calendar.YEAR)}"
+        val text = "${getString(when (calendar.get(Calendar.MONTH)) {
+            Calendar.JANUARY -> R.string.schedule_january
+            Calendar.FEBRUARY -> R.string.schedule_february
+            Calendar.MARCH -> R.string.schedule_march
+            Calendar.APRIL -> R.string.schedule_april
+            Calendar.MAY -> R.string.schedule_may
+            Calendar.JUNE -> R.string.schedule_june
+            Calendar.JULY -> R.string.schedule_july
+            Calendar.AUGUST -> R.string.schedule_august
+            Calendar.SEPTEMBER -> R.string.schedule_september
+            Calendar.OCTOBER -> R.string.schedule_october
+            Calendar.NOVEMBER -> R.string.schedule_november
+            Calendar.DECEMBER -> R.string.schedule_december
+            else -> R.string.error
+        })} ${calendar.get(Calendar.YEAR)}"
         dateTv.text = text
     }
 

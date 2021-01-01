@@ -103,10 +103,10 @@ class SchedulePairsRvAdapter (private val context : Context) : RecyclerView.Adap
             pairCalendar.set(Calendar.YEAR, dataYear)
             pairCalendar.set(Calendar.DAY_OF_YEAR, dataDayOfYear)
 
-            val pairNameTvText = "${pair.subject} ${if (pair.subgroup != 0) (", ${pair.subgroup} пг") else ("")}"
+            val pairNameTvText = "${pair.subject} ${if (pair.subgroup != 0) (", ${pair.subgroup} ${context.getString(R.string.schedule_pair_subgroup)}") else ("")}"
             pairNameTv.text = pairNameTvText
 
-            val timeText = "${pair.pair_number} пара, ${pairTime.intervalString}"
+            val timeText = "${pair.pair_number} ${context.getString(R.string.schedule_pair)}, ${pairTime.intervalString}"
             timeTv.text = timeText
 
             locationTv.text = pair.place
@@ -114,10 +114,10 @@ class SchedulePairsRvAdapter (private val context : Context) : RecyclerView.Adap
             teacherNameTv.text = pair.teacher
 
             val pairTypeText = when (pair.typeSubject) {
-                1 -> "Практика"
-                2 -> "Лекция"
-                3 -> "Лаб"
-                else -> "Error"
+                1 -> context.getString(R.string.schedule_pair_practice)
+                2 -> context.getString(R.string.schedule_pair_lection)
+                3 -> context.getString(R.string.schedule_pair_lab)
+                else -> context.getString(R.string.error)
             }
             val pairTypeColor = when (pair.typeSubject) {
                 1 -> R.color.colorSchedulePairTypePractice

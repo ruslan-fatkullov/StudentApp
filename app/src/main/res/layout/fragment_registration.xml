@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:fontFamily="sans-serif-medium"
-        android:text="Создание аккаунта"
+        android:text="@string/registration_title"
         android:textColor="#000000"
         android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -60,7 +60,7 @@
             android:layout_weight="1"
             android:background="#00FFFFFF"
             android:ems="10"
-            android:hint="Введите ФИО" />
+            android:hint="@string/registration_name_hint" />
 
         <ImageView
             android:id="@+id/nameOkIv"
@@ -104,7 +104,7 @@
             android:layout_weight="1"
             android:background="#00FFFFFF"
             android:ems="10"
-            android:hint="Введите название группы" />
+            android:hint="@string/registration_group_hint" />
 
         <ImageView
             android:id="@+id/groupOkIv"
@@ -148,7 +148,7 @@
             android:layout_weight="1"
             android:background="#00FFFFFF"
             android:ems="10"
-            android:hint="Введите адрес эл. почты"
+            android:hint="registration_email_hint"
             android:inputType="textEmailAddress" />
 
         <ImageView
@@ -169,7 +169,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="70dp"
         android:background="@drawable/auth_login_button_background"
-        android:text="Отправить"
+        android:text="@string/registration_button"
         android:textAllCaps="false"
         android:textColor="@color/design_default_color_background"
         android:textSize="18sp"
@@ -192,7 +192,7 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Есть аккаунт?"
+            android:text="@string/registration_acc_question"
             android:textSize="18sp" />
 
         <TextView
@@ -202,7 +202,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:fontFamily="sans-serif-medium"
-            android:text="Войти"
+            android:text="@string/registration_login"
             android:textColor="@color/colorAuthField"
             android:textSize="18sp" />
     </LinearLayout>
@@ -212,7 +212,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="Оставьте нам свои контактные данные, и мы пришлём Вам доступ на почту"
+        android:text="@string/registration_tip"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />

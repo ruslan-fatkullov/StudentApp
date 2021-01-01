@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error">%%%</string>
+
+    <string name="login_title">Авторизация</string>
+    <string name="login_email_hint">Введите адрес эл. почты</string>
+    <string name="login_password_hint">Введите пароль</string>
+    <string name="login_button">Войти</string>
+    <string name="login_no_acc_question">Нет аккаунта?</string>
+    <string name="login_create_acc">Создать</string>
+
+    <string name="registration_title">Создание аккаунта</string>
+    <string name="registration_tip">Оставьте нам свои контактные данные, и мы пришлём Вам доступ на почту</string>
+    <string name="registration_name_hint">Введите ФИО</string>
+    <string name="registration_group_hint">Введите название группы</string>
+    <string name="registration_email_hint">Введите адрес эл. почты</string>
+    <string name="registration_button">Отправить</string>
+    <string name="registration_acc_question">Есть аккаунт?</string>
+    <string name="registration_login">Войти</string>
+
+    <string name="schedule_first_week">1 неделя</string>
+    <string name="schedule_second_week">2 неделя</string>
+    <string name="schedule_january">Январь</string>
+    <string name="schedule_february">Февраль</string>
+    <string name="schedule_march">Март</string>
+    <string name="schedule_april">Апрель</string>
+    <string name="schedule_may">Май</string>
+    <string name="schedule_june">Июнь</string>
+    <string name="schedule_july">Июль</string>
+    <string name="schedule_august">Август</string>
+    <string name="schedule_september">Сентябрь</string>
+    <string name="schedule_october">Октябрь</string>
+    <string name="schedule_november">Ноябрь</string>
+    <string name="schedule_december">Декабрь</string>
+    <string name="schedule_sunday">ВС</string>
+    <string name="schedule_monday">ПН</string>
+    <string name="schedule_tuesday">ВТ</string>
+    <string name="schedule_wednesday">СР</string>
+    <string name="schedule_thursday">ЧТ</string>
+    <string name="schedule_friday">ПТ</string>
+    <string name="schedule_saturday">СБ</string>
+    <string name="schedule_group">Группа:</string>
+    <string name="schedule_pair">пара</string>
+    <string name="schedule_pair_subgroup">пг</string>
+    <string name="schedule_pair_lection">Лекция</string>
+    <string name="schedule_pair_practice">Практика</string>
+    <string name="schedule_pair_lab">Лаб</string>
+
+    <string name="rating_tip">Ознакомься со своими позициями в рейтинге и результатами обучения.</string>
+    <string name="rating_in_group">В группе</string>
+    <string name="rating_in_department">На кафедре</string>
+    <string name="rating_in_university">По университету</string>
+    <string name="rating_attendance">Посещаемость</string>
+    <string name="rating_attendance_lections">Лекции</string>
+    <string name="rating_attendance_practices">Практики</string>
+</resources>

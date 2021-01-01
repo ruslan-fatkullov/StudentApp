@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:fontFamily="sans-serif-medium"
-        android:text="Авторизация"
+        android:text="@string/login_title"
         android:textColor="#000000"
         android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -60,7 +60,7 @@
             android:layout_weight="1"
             android:background="#00FFFFFF"
             android:ems="10"
-            android:hint="Введите адрес эл. почты"
+            android:hint="@string/login_email_hint"
             android:inputType="textEmailAddress" />
 
         <ImageView
@@ -105,7 +105,7 @@
             android:layout_weight="1"
             android:background="#00FFFFFF"
             android:ems="10"
-            android:hint="Введите пароль"
+            android:hint="@string/login_password_hint"
             android:inputType="textPassword" />
 
         <ImageView
@@ -149,7 +149,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="70dp"
         android:background="@drawable/auth_login_button_background"
-        android:text="Войти"
+        android:text="@string/login_button"
         android:textAllCaps="false"
         android:textColor="@color/design_default_color_background"
         android:textSize="18sp"
@@ -172,7 +172,7 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Нет аккаунта?"
+            android:text="@string/login_no_acc_question"
             android:textSize="18sp" />
 
         <TextView
