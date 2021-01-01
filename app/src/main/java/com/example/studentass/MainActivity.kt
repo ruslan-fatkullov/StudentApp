@@ -21,10 +21,6 @@ fun <T: AppCompatActivity> Fragment.getAppCompatActivity(): T? {
 }
 
 class MainActivity : AppCompatActivity() {
-    companion object {
-        const val rootUrl = "http://test.asus.russianitgroup.ru/api"
-    }
-
     lateinit var fragmentManager: FragmentManager
     lateinit var actionBar: ActionBar
 
@@ -76,6 +72,8 @@ class MainActivity : AppCompatActivity() {
             actionBar = qsab
         }
         actionBar.hide()
+
+        LoginFragment.init(this)
 
         thread {
             LoginFragment.loadLoginData(this)

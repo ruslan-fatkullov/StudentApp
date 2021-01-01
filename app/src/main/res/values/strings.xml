@@ -1,5 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE resources [
+    <!ENTITY root_url "https://4b7af1df-c62e-49e5-b0a5-929837fb7e36.mock.pstmn.io">
+    <!--<!ENTITY root_url "http://test.asus.russianitgroup.ru">-->
+    ]>
 <resources>
     <string name="app_name">StudentAss</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="url_login">&root_url;/api/auth/login</string>
+    <string name="url_refresh">&root_url;/api/auth/refrash</string>
+    <string name="url_logout">&root_url;/api/auth/logout</string>
+    <string name="url_get_group_list">&root_url;/api/schedule/group-list</string>
+    <string name="url_get_schedule">&root_url;/api/schedule/group</string>
+
 </resources>

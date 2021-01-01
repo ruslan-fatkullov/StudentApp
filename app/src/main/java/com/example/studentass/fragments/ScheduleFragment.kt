@@ -30,6 +30,8 @@ class ScheduleFragment : Fragment() {
     private var dayNum: Int = 0
     private var daysIn: List<View>? = null
     private val calendar = Calendar.getInstance()
+    private lateinit var getGroupListUrl: String
+    private lateinit var getScheduleUrl: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,6 +43,9 @@ class ScheduleFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        getGroupListUrl = getString(R.string.url_get_group_list)
+        getScheduleUrl = getString(R.string.url_get_schedule)
 
         previousWeekBn.setOnClickListener { run { onWeekBnClick(-1) } }
         nextWeekBn.setOnClickListener { run { onWeekBnClick(1) } }
@@ -102,8 +107,7 @@ class ScheduleFragment : Fragment() {
     }
 
     private fun getGroupList() {
-        val url = "http://test.asus.russianitgroup.ru/api/schedule/group-list"
-        val request = Request.Builder().url(url)
+        val request = Request.Builder().url(getGroupListUrl)
         thread {
             try {
                 val response = LoginFragment.executeJwtRequest(request)
@@ -131,7 +135,7 @@ class ScheduleFragment : Fragment() {
     }
 
     private fun getSchedule(groupName: String) {
-        val url = "http://test.asus.russianitgroup.ru/api/schedule/group?nameGroup=$groupName"
+        val url = "$getScheduleUrl?nameGroup=$groupName"
         val request = Request.Builder().url(url)
         thread {
             try {

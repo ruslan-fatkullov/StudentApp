@@ -15,7 +15,6 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.auth0.android.jwt.JWT
 import com.example.studentass.MainActivity
-import com.example.studentass.MainActivity.Companion.rootUrl
 import com.example.studentass.R
 import com.example.studentass.getAppCompatActivity
 import com.example.studentass.models.AuthLoginData
@@ -31,14 +30,21 @@ import kotlin.concurrent.thread
 
 class LoginFragment : Fragment() {
     companion object {
-        private const val credentialsLogin = "ritg"
-        private const val credentialsPassword = "ritg"
+        private lateinit var loginUrl: String
+        private lateinit var refreshUrl: String
+        private lateinit var logoutUrl: String
 
         private var loginEmail: String? = null
         private var loginPassword: String? = null
 
         var loginTokens: AuthLoginTokens? = null
         var loginRole = "invalid"
+
+        fun init(context: Context) {
+            loginUrl = context.getString(R.string.url_login)
+            refreshUrl = context.getString(R.string.url_refresh)
+            logoutUrl = context.getString(R.string.url_logout)
+        }
 
         fun executeRequest(requestBuilder: Request.Builder): Response {
             val client = OkHttpClient()
@@ -77,13 +83,11 @@ class LoginFragment : Fragment() {
             }
             val client = OkHttpClient()
 
-            val url = "$rootUrl/auth/refrash"
             val body = AuthRefreshData(loginTokens!!.refrashToken)
 
-            val credential = Credentials.basic(credentialsLogin, credentialsPassword)
             val requestBody = GsonBuilder().create().toJson(body).toRequestBody()
 
-            val request = Request.Builder().header("Authorization", credential).method("POST", requestBody).url(url).build()
+            val request = Request.Builder().method("POST", requestBody).url(refreshUrl).build()
 
             val response = client.newCall(request).execute()
             checkResponseCode(response.code)
@@ -99,14 +103,12 @@ class LoginFragment : Fragment() {
             }
             val client = OkHttpClient()
 
-            //val url = "$rootUrl/auth/login"
-            val url = "https://4b7af1df-c62e-49e5-b0a5-929837fb7e36.mock.pstmn.io/api/auth/login"
+            //val url = "https://4b7af1df-c62e-49e5-b0a5-929837fb7e36.mock.pstmn.io/api/auth/login"
             val body = AuthLoginData(loginEmail!!, loginPassword!!)
 
-            val credential = Credentials.basic(credentialsLogin, credentialsPassword)
             val requestBody = GsonBuilder().create().toJson(body).toRequestBody()
 
-            val request = Request.Builder().header("Authorization", credential).method("POST", requestBody).url(url).build()
+            val request = Request.Builder().method("POST", requestBody).url(loginUrl).build()
 
             val response = client.newCall(request).execute()
             checkResponseCode(response.code)
@@ -124,13 +126,11 @@ class LoginFragment : Fragment() {
             }
             val client = OkHttpClient()
 
-            val url = "$rootUrl/auth/logout"
             val body = AuthRefreshData(loginTokens!!.refrashToken)
 
-            val credential = Credentials.basic(credentialsLogin, credentialsPassword)
             val requestBody = GsonBuilder().create().toJson(body).toRequestBody()
 
-            val request = Request.Builder().header("Authorization", credential).method("POST", requestBody).url(url).build()
+            val request = Request.Builder().method("POST", requestBody).url(logoutUrl).build()
 
             val response = client.newCall(request).execute()
             checkResponseCode(response.code)
