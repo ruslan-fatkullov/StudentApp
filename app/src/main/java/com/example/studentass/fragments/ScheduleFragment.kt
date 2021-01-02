@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -17,15 +16,19 @@ import com.example.studentass.getAppCompatActivity
 import com.example.studentass.models.Schedule
 import com.example.studentass.models.ScheduleDayCouple
 import com.google.gson.GsonBuilder
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import kotlinx.android.synthetic.main.schedule_days_layout_item.view.*
 import okhttp3.*
 import java.util.*
-import kotlin.concurrent.thread
+
 
 class ScheduleFragment : Fragment() {
     private var schedule: Schedule? = null
-    private var groupList: List<String>? = null
     private var weekNum: Int = 0
     private var dayNum: Int = 0
     private var daysIn: List<View>? = null
@@ -40,6 +43,8 @@ class ScheduleFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_schedule, container, false)
     }
+
+    private var compositeDisposable = CompositeDisposable()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -62,35 +67,73 @@ class ScheduleFragment : Fragment() {
         dayIn7.dayOfWeekTextView.text = getString(R.string.schedule_sunday)
         for (x in 0..6) {
             daysIn!![x].setOnFocusChangeListener { newFocus, _ ->
-                newFocus?.dayOfWeekTextView?.setTextColor(ContextCompat.getColor(context!!, R.color.colorScheduleDayOfWeekOnFocus))
-                newFocus?.dayTextView?.setTextColor(ContextCompat.getColor(context!!, R.color.colorScheduleDayOnFocus))
+                newFocus?.dayOfWeekTextView?.setTextColor(
+                    ContextCompat.getColor(
+                        context!!,
+                        R.color.colorScheduleDayOfWeekOnFocus
+                    )
+                )
+                newFocus?.dayTextView?.setTextColor(
+                    ContextCompat.getColor(
+                        context!!,
+                        R.color.colorScheduleDayOnFocus
+                    )
+                )
                 onDayFocus(x)
             }
             daysIn!![x].viewTreeObserver.addOnGlobalFocusChangeListener{ oldFocus, _ ->
-                oldFocus?.dayOfWeekTextView?.setTextColor(ContextCompat.getColor(context!!, R.color.colorScheduleDayOfWeekDefault))
-                oldFocus?.dayTextView?.setTextColor(ContextCompat.getColor(context!!, R.color.colorScheduleDayDefault))
+                oldFocus?.dayOfWeekTextView?.setTextColor(
+                    ContextCompat.getColor(
+                        context!!,
+                        R.color.colorScheduleDayOfWeekDefault
+                    )
+                )
+                oldFocus?.dayTextView?.setTextColor(
+                    ContextCompat.getColor(
+                        context!!,
+                        R.color.colorScheduleDayDefault
+                    )
+                )
             }
         }
 
-        schedulePairsRv.layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
+        schedulePairsRv.layoutManager = LinearLayoutManager(
+            context!!,
+            LinearLayoutManager.VERTICAL,
+            false
+        )
         schedulePairsRv.adapter = SchedulePairsRvAdapter(context!!)
         //setPairsList(0, 0)
 
-        val scheduleGroupTvAdapter = ArrayAdapter<String>(context!!, android.R.layout.simple_dropdown_item_1line)
+        val scheduleGroupTvAdapter = ArrayAdapter<String>(
+            context!!,
+            android.R.layout.simple_dropdown_item_1line
+        )
         scheduleGroupTv.setAdapter(scheduleGroupTvAdapter)
-        scheduleGroupTv.onItemClickListener = object : AdapterView.OnItemClickListener {
-            override fun onItemClick(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                daysIn!![dayNum].requestFocus()
-                val groupName = scheduleGroupTv.text.toString()
-                getSchedule(groupName)
-            }
+
+        val disposableGroupListRx: Disposable = Observable
+            .fromCallable { getGroupList() }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe (
+                {r -> onGetGroupList(r)},
+                {e -> Toast.makeText(context, "Get group list error: $e", Toast.LENGTH_LONG).show()}
+            )
+        compositeDisposable.add(disposableGroupListRx)
+
+        updateScheduleBn.setOnClickListener {
+            daysIn!![dayNum].requestFocus()
+            val groupName = scheduleGroupTv.text.toString()
+            val disposableScheduleRx: Disposable = Observable
+                .fromCallable { getSchedule(groupName) }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe (
+                    {r -> onGetSchedule(r)},
+                    {e -> Toast.makeText(context, "Get schedule error: $e", Toast.LENGTH_LONG).show()}
+                )
+            compositeDisposable.add(disposableScheduleRx)
         }
-        getGroupList()
 
         onHiddenChanged(false)
     }
@@ -106,104 +149,48 @@ class ScheduleFragment : Fragment() {
         }
     }
 
-    private fun getGroupList() {
+    override fun onDestroy() {
+        compositeDisposable.clear()
+        super.onDestroy()
+    }
+
+    private fun getGroupList(): List<String> {
         val request = Request.Builder().url(getGroupListUrl)
-        thread {
-            try {
-                val response = LoginFragment.executeJwtRequest(request)
-                try {
-                    val groupsArray = GsonBuilder().create().fromJson(response.body!!.string(), Array<String>::class.java)
-                    groupList = groupsArray.toList()
-                } catch (e : Exception) {
-                    activity!!.runOnUiThread {
-                        Toast.makeText(context, "Group list interpretation error: $e", Toast.LENGTH_LONG).show()
-                    }
-                }
-                activity!!.runOnUiThread {
-                    try {
-                        updateGroupList()
-                    } catch (e : Exception) {
-                        Toast.makeText(context, "Group list init error: $e", Toast.LENGTH_LONG).show()
-                    }
-                }
-            } catch (e: Exception) {
-                activity!!.runOnUiThread {
-                    Toast.makeText(context, "Group list request error: $e", Toast.LENGTH_LONG).show()
-                }
-            }
+        val response = LoginFragment.executeJwtRequest(request)
+        val groupsArray = GsonBuilder().create().fromJson(
+            response.body!!.string(),
+            Array<String>::class.java
+        )
+        return groupsArray.toList()
+    }
+
+    private fun onGetGroupList(groupList: List<String>?) {
+        if (groupList != null) {
+            @Suppress("UNCHECKED_CAST")
+            val adapter = scheduleGroupTv.adapter as ArrayAdapter<String>
+            adapter.addAll(groupList)
         }
     }
 
-    private fun getSchedule(groupName: String) {
+    private fun getSchedule(groupName: String): Schedule {
         val url = "$getScheduleUrl?nameGroup=$groupName"
         val request = Request.Builder().url(url)
-        thread {
-            try {
-                val response = LoginFragment.executeJwtRequest(request)
-                try {
-                    val scheduleObject = GsonBuilder().create().fromJson(response.body!!.string(), Schedule::class.java)
-                    schedule = scheduleObject
-                } catch (e : Exception) {
-                    activity!!.runOnUiThread {
-                        Toast.makeText(context, "Schedule interpretation error: $e", Toast.LENGTH_LONG).show()
-                    }
-                }
-                activity!!.runOnUiThread {
-                    try {
-                        updatePairsList()
-                    } catch (e : Exception) {
-                        Toast.makeText(context, "Schedule init error: $e", Toast.LENGTH_LONG).show()
-                    }
-                }
-            } catch (e: Exception) {
-                activity!!.runOnUiThread {
-                    Toast.makeText(context, "Schedule request error: $e", Toast.LENGTH_LONG).show()
-                }
-            }
-        }
+        val response = LoginFragment.executeJwtRequest(request)
+        return GsonBuilder().create().fromJson(
+            response.body!!.string(),
+            Schedule::class.java
+        )
+    }
 
-        /*val url = "http://ef462968066b.ngrok.io/group?nameGroup=ИВТАПбд-31"
-        //val url = "http://test.asus.russianitgroup.ru/api/schedule/group?nameGroup=ИВТАПбд-31"
-        //val url = "https://my-json-server.typicode.com/AntonScript/schedule-service/GroupStudent"
-        val client = OkHttpClient()
-        val request = Request.Builder().url(url).build()
-        client.newCall(request).enqueue(object: Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                MainActivity.mHandler.post {
-                    Toast.makeText(context, "Schedule request error: $e", Toast.LENGTH_LONG).show()
-                }
-            }
-            override fun onResponse(call: Call, response: Response) {
-                try {
-                    val scheduleObject = GsonBuilder().create().fromJson(response.body!!.string(), Schedule::class.java)
-                    schedule = scheduleObject
-                } catch (e : Exception) {
-                    Toast.makeText(context, "Schedule interpretation error: $e", Toast.LENGTH_LONG).show()
-                }
-                MainActivity.mHandler.post {
-                    try {
-                        updatePairsList()
-                        pairsPb.visibility = View.GONE
-                    } catch (e : Exception) {
-                        Toast.makeText(context, "Schedule init error: $e", Toast.LENGTH_LONG).show()
-                    }
-                }
-            }
-        })*/
+    private fun onGetSchedule(schedule: Schedule) {
+        this.schedule = schedule
+        updatePairsList()
     }
 
     private fun formatDayOfWeek(dayOfWeek: Int): Int {
         var newDayOfWeek = dayOfWeek - 2
         if (newDayOfWeek < 0) newDayOfWeek = 6
         return newDayOfWeek
-    }
-    
-    private fun updateGroupList() {
-        if (groupList != null) {
-            @Suppress("UNCHECKED_CAST")
-            val adapter = scheduleGroupTv.adapter as ArrayAdapter<String>
-            adapter.addAll(groupList!!)
-        }
     }
 
     private fun updatePairsList() {
@@ -249,21 +236,23 @@ class ScheduleFragment : Fragment() {
     }
 
     private fun updateMonthAndYear() {
-        val text = "${getString(when (calendar.get(Calendar.MONTH)) {
-            Calendar.JANUARY -> R.string.schedule_january
-            Calendar.FEBRUARY -> R.string.schedule_february
-            Calendar.MARCH -> R.string.schedule_march
-            Calendar.APRIL -> R.string.schedule_april
-            Calendar.MAY -> R.string.schedule_may
-            Calendar.JUNE -> R.string.schedule_june
-            Calendar.JULY -> R.string.schedule_july
-            Calendar.AUGUST -> R.string.schedule_august
-            Calendar.SEPTEMBER -> R.string.schedule_september
-            Calendar.OCTOBER -> R.string.schedule_october
-            Calendar.NOVEMBER -> R.string.schedule_november
-            Calendar.DECEMBER -> R.string.schedule_december
-            else -> R.string.error
-        })} ${calendar.get(Calendar.YEAR)}"
+        val text = "${getString(
+            when (calendar.get(Calendar.MONTH)) {
+                Calendar.JANUARY -> R.string.schedule_january
+                Calendar.FEBRUARY -> R.string.schedule_february
+                Calendar.MARCH -> R.string.schedule_march
+                Calendar.APRIL -> R.string.schedule_april
+                Calendar.MAY -> R.string.schedule_may
+                Calendar.JUNE -> R.string.schedule_june
+                Calendar.JULY -> R.string.schedule_july
+                Calendar.AUGUST -> R.string.schedule_august
+                Calendar.SEPTEMBER -> R.string.schedule_september
+                Calendar.OCTOBER -> R.string.schedule_october
+                Calendar.NOVEMBER -> R.string.schedule_november
+                Calendar.DECEMBER -> R.string.schedule_december
+                else -> R.string.error
+            }
+        )} ${calendar.get(Calendar.YEAR)}"
         dateTv.text = text
     }
 
