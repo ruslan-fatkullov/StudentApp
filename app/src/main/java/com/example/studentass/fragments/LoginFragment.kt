@@ -307,7 +307,7 @@ class LoginFragment : Fragment() {
                     val mainActivity = getAppCompatActivity<MainActivity>()
                     if (mainActivity != null) {
                         when (loginRole) {
-                            "student" -> mainActivity.switchFragment(MainFragment::class.java)
+                            "student" -> mainActivity.switchSideways(MainFragment::class.java)
                             else -> {
                                 Toast.makeText(context, "Invalid role: $loginRole", Toast.LENGTH_LONG).show()
                                 return@runOnUiThread
@@ -327,6 +327,6 @@ class LoginFragment : Fragment() {
     }
 
     private fun onRegistrationTextViewClick() {
-        getAppCompatActivity<MainActivity>()?.switchFragment(RegistrationFragment::class.java, false)
+        getAppCompatActivity<MainActivity>()?.switchUp(RegistrationFragment::class.java)
     }
 }

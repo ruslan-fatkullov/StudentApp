@@ -129,7 +129,7 @@ class RegistrationFragment : Fragment() {
             //login(emailText, passwordText)
             //loginRole = "student"
             //MainActivity.switchFragment(this, MainActivity.mainFragment)
-            getAppCompatActivity<MainActivity>()?.switchFragment(LoginFragment::class.java)
+            getAppCompatActivity<MainActivity>()?.switchDown()
         }
         else {
             val shake: Animation = AnimationUtils.loadAnimation(context, R.anim.anim_shake)
@@ -139,6 +139,6 @@ class RegistrationFragment : Fragment() {
     }
 
     private fun onLoginTextViewClick() {
-        getAppCompatActivity<MainActivity>()?.switchFragment(LoginFragment::class.java)
+        getAppCompatActivity<MainActivity>()?.switchDown()
     }
 }

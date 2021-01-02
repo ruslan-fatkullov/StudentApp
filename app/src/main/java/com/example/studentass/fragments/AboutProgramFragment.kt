@@ -23,7 +23,7 @@ class AboutProgramFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         exitAboutProgramBn.setOnClickListener {
-            getAppCompatActivity<MainActivity>()?.switchFragment(MainFragment::class.java)
+            getAppCompatActivity<MainActivity>()?.switchDown()
         }
 
         onHiddenChanged(false)

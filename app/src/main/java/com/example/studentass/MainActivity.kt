@@ -12,8 +12,8 @@ import com.example.studentass.fragments.AboutProgramFragment
 import com.example.studentass.fragments.LoginFragment
 import com.example.studentass.fragments.MainFragment
 import kotlinx.android.synthetic.main.activity_main.*
-import okhttp3.OkHttpClient
 import kotlin.concurrent.thread
+import kotlin.properties.Delegates
 
 @Suppress("UNCHECKED_CAST")
 fun <T: AppCompatActivity> Fragment.getAppCompatActivity(): T? {
@@ -24,8 +24,10 @@ class MainActivity : AppCompatActivity() {
     lateinit var fragmentManager: FragmentManager
     lateinit var actionBar: ActionBar
 
-    lateinit var currentFragment: Fragment
-    var fragmentsList = mutableListOf<Fragment>()
+    private var fragmentLayersDepth = -1
+    private val fragmentLayersMaxDepth = 32
+    private val fragmentLayers = arrayOfNulls<Fragment?>(fragmentLayersMaxDepth)
+    private var fragmentsMainContainerId by Delegates.notNull<Int>()
 
     // create an action bar button
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -48,12 +50,12 @@ class MainActivity : AppCompatActivity() {
                             Toast.makeText(this, "Logout error: $e (${e.message})", Toast.LENGTH_LONG).show()
                         }
                     }
-                    this.switchFragment(LoginFragment::class.java)
+                    switchSideways(LoginFragment::class.java)
                     LoginFragment.deleteLoginData(this)
                 }
             }
             R.id.ab_about_program -> {
-                switchFragment(AboutProgramFragment::class.java, false)
+                switchUp(AboutProgramFragment::class.java)
             }
         }
         return super.onOptionsItemSelected(item)
@@ -73,6 +75,8 @@ class MainActivity : AppCompatActivity() {
         }
         actionBar.hide()
 
+        fragmentsMainContainerId = main_activity_fragment_container.id
+
         LoginFragment.init(this)
 
         thread {
@@ -81,10 +85,10 @@ class MainActivity : AppCompatActivity() {
                 if (LoginFragment.loginTokens == null) {
                     LoginFragment.executeLogin()
                 }
-                switchFragment(MainFragment::class.java)
+                switchUp(MainFragment::class.java)
             }
             catch (e: Exception) {
-                switchFragment(LoginFragment::class.java)
+                switchUp(LoginFragment::class.java)
                 if (e !is LoginFragment.Companion.NoDataException) {
                     runOnUiThread {
                         Toast.makeText(this, "Login error: $e (${e.message})", Toast.LENGTH_LONG).show()
@@ -94,51 +98,48 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun <T : Fragment> switchFragment(toEntityClass: Class<T>, removeOtherInstances: Boolean = true) {
-        if (::currentFragment.isInitialized && currentFragment.javaClass == toEntityClass) {
-            throw Exception("Can't re-instantiate fragment")
+    fun <T : Fragment> switchUp(toEntityClass: Class<T>) {
+        if (fragmentLayersDepth < -1) {
+            throw RuntimeException("SwitchUp error: fragment layers depth is below -1")
         }
-        var fragmentAlreadyExists = false
-        for (fr in fragmentsList) {
-            if (fr.javaClass == toEntityClass) {
-                fragmentAlreadyExists = true
-                currentFragment = fr
-                showFragment(currentFragment)
-            }
-            else {
-                if (removeOtherInstances) {
-                    fragmentsList.remove(fr)
-                    removeFragment(fr)
-                }
-                else {
-                    hideFragment(fr)
-                }
-            }
+
+        if (fragmentLayersDepth >= 0) {
+            val currentFragment = fragmentLayers[fragmentLayersDepth]
+                ?: throw RuntimeException("SwitchUp error: current fragment is null")
+            fragmentManager.beginTransaction().hide(currentFragment).commit()
         }
-        if (!fragmentAlreadyExists) {
-            currentFragment = toEntityClass.newInstance()
-            fragmentsList.add(currentFragment)
-            addFragment(currentFragment)
+
+        val newFragment = toEntityClass.newInstance()
+        fragmentManager.beginTransaction().add(fragmentsMainContainerId, newFragment).commit()
+        fragmentLayers[++fragmentLayersDepth] = newFragment
+    }
+
+    fun switchDown() {
+        if (fragmentLayersDepth < 1) {
+            throw RuntimeException("SwitchDown error: fragment layers depth is below 1")
         }
+
+        val currentFragment = fragmentLayers[fragmentLayersDepth]
+            ?: throw RuntimeException("SwitchDown error: current fragment is null")
+        fragmentManager.beginTransaction().remove(currentFragment).commit()
+        fragmentLayers[fragmentLayersDepth] = null
+
+        val newFragment = fragmentLayers[--fragmentLayersDepth]
+            ?: throw RuntimeException("SwitchDown error: new fragment is null")
+        fragmentManager.beginTransaction().show(newFragment).commit()
     }
 
-    fun addFragmentTo(fr: Fragment, containerId: Int) {
-        fragmentManager.beginTransaction().add(containerId, fr).commit()
-    }
+    fun <T : Fragment> switchSideways(toEntityClass: Class<T>) {
+        if (fragmentLayersDepth < 0) {
+            throw RuntimeException("SwitchSideways error: fragment layers depth is below 0")
+        }
 
-    fun addFragment(fr: Fragment) {
-        addFragmentTo(fr, main_activity_fragment_container.id)
-    }
+        val currentFragment = fragmentLayers[fragmentLayersDepth]
+            ?: throw RuntimeException("SwitchSideways error: current fragment is null")
+        fragmentManager.beginTransaction().remove(currentFragment).commit()
 
-    fun removeFragment(fr: Fragment) {
-        fragmentManager.beginTransaction().remove(fr).commit()
-    }
-
-    fun showFragment(fr: Fragment) {
-        fragmentManager.beginTransaction().show(fr).commit()
-    }
-
-    fun hideFragment(fr: Fragment) {
-        fragmentManager.beginTransaction().hide(fr).commit()
+        val newFragment = toEntityClass.newInstance()
+        fragmentManager.beginTransaction().add(fragmentsMainContainerId, newFragment).commit()
+        fragmentLayers[fragmentLayersDepth] = newFragment
     }
 }
