@@ -1,5 +1,6 @@
 package com.example.studentass
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -15,8 +16,9 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.concurrent.thread
 import kotlin.properties.Delegates
 
+
 @Suppress("UNCHECKED_CAST")
-fun <T: AppCompatActivity> Fragment.getAppCompatActivity(): T? {
+fun <T : AppCompatActivity> Fragment.getAppCompatActivity(): T? {
     return activity as T?
 }
 
@@ -44,10 +46,13 @@ class MainActivity : AppCompatActivity() {
                 thread {
                     try {
                         LoginFragment.executeLogout()
-                    }
-                    catch (e: Exception) {
+                    } catch (e: Exception) {
                         runOnUiThread {
-                            Toast.makeText(this, "Logout error: $e (${e.message})", Toast.LENGTH_LONG).show()
+                            Toast.makeText(
+                                this,
+                                "Logout error: $e (${e.message})",
+                                Toast.LENGTH_LONG
+                            ).show()
                         }
                     }
                     switchSideways(LoginFragment::class.java)
@@ -60,6 +65,15 @@ class MainActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
+    override fun onBackPressed() {
+        if (fragmentLayersDepth < 1) {
+            finishAffinity()
+        } else {
+            switchDown()
+        }
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
