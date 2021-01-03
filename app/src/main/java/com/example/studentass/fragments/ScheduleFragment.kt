@@ -15,26 +15,22 @@ import com.example.studentass.adapters.SchedulePairsRvAdapter
 import com.example.studentass.getAppCompatActivity
 import com.example.studentass.models.Schedule
 import com.example.studentass.models.ScheduleDayCouple
-import com.google.gson.GsonBuilder
-import io.reactivex.Observable
+import com.example.studentass.services.ScheduleApiService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import kotlinx.android.synthetic.main.schedule_days_layout_item.view.*
-import okhttp3.*
 import java.util.*
 
 
 class ScheduleFragment : Fragment() {
+    private val scheduleApiService = ScheduleApiService.create()
     private var schedule: Schedule? = null
     private var weekNum: Int = 0
     private var dayNum: Int = 0
     private var daysIn: List<View>? = null
     private val calendar = Calendar.getInstance()
-    private lateinit var getGroupListUrl: String
-    private lateinit var getScheduleUrl: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,9 +44,6 @@ class ScheduleFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        getGroupListUrl = getString(R.string.url_get_group_list)
-        getScheduleUrl = getString(R.string.url_get_schedule)
 
         previousWeekBn.setOnClickListener { run { onWeekBnClick(-1) } }
         nextWeekBn.setOnClickListener { run { onWeekBnClick(1) } }
@@ -103,7 +96,6 @@ class ScheduleFragment : Fragment() {
             false
         )
         schedulePairsRv.adapter = SchedulePairsRvAdapter(context!!)
-        //setPairsList(0, 0)
 
         val scheduleGroupTvAdapter = ArrayAdapter<String>(
             context!!,
@@ -111,10 +103,10 @@ class ScheduleFragment : Fragment() {
         )
         scheduleGroupTv.setAdapter(scheduleGroupTvAdapter)
 
-        val disposableGroupListRx: Disposable = Observable
-            .fromCallable { getGroupList() }
-            .subscribeOn(Schedulers.io())
+        val disposableGroupListRx = scheduleApiService
+            .getGroupList()
             .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
             .subscribe (
                 {r -> onGetGroupList(r)},
                 {e -> Toast.makeText(context, "Get group list error: $e", Toast.LENGTH_LONG).show()}
@@ -124,15 +116,15 @@ class ScheduleFragment : Fragment() {
         updateScheduleBn.setOnClickListener {
             daysIn!![dayNum].requestFocus()
             val groupName = scheduleGroupTv.text.toString()
-            val disposableScheduleRx: Disposable = Observable
-                .fromCallable { getSchedule(groupName) }
-                .subscribeOn(Schedulers.io())
+            val disposableGroupScheduleRx = scheduleApiService
+                .getGroupSchedule(groupName)
                 .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
                 .subscribe (
-                    {r -> onGetSchedule(r)},
-                    {e -> Toast.makeText(context, "Get schedule error: $e", Toast.LENGTH_LONG).show()}
+                    {r -> onGetGroupSchedule(r)},
+                    {e -> Toast.makeText(context, "Get group schedule error: $e", Toast.LENGTH_LONG).show()}
                 )
-            compositeDisposable.add(disposableScheduleRx)
+            compositeDisposable.add(disposableGroupScheduleRx)
         }
 
         onHiddenChanged(false)
@@ -154,35 +146,15 @@ class ScheduleFragment : Fragment() {
         super.onDestroy()
     }
 
-    private fun getGroupList(): List<String> {
-        val request = Request.Builder().url(getGroupListUrl)
-        val response = LoginFragment.executeJwtRequest(request)
-        val groupsArray = GsonBuilder().create().fromJson(
-            response.body!!.string(),
-            Array<String>::class.java
-        )
-        return groupsArray.toList()
-    }
-
-    private fun onGetGroupList(groupList: List<String>?) {
+    private fun onGetGroupList(groupList: Array<String>?) {
         if (groupList != null) {
             @Suppress("UNCHECKED_CAST")
             val adapter = scheduleGroupTv.adapter as ArrayAdapter<String>
-            adapter.addAll(groupList)
+            adapter.addAll(groupList.toList())
         }
     }
 
-    private fun getSchedule(groupName: String): Schedule {
-        val url = "$getScheduleUrl?nameGroup=$groupName"
-        val request = Request.Builder().url(url)
-        val response = LoginFragment.executeJwtRequest(request)
-        return GsonBuilder().create().fromJson(
-            response.body!!.string(),
-            Schedule::class.java
-        )
-    }
-
-    private fun onGetSchedule(schedule: Schedule) {
+    private fun onGetGroupSchedule(schedule: Schedule) {
         this.schedule = schedule
         updatePairsList()
     }
