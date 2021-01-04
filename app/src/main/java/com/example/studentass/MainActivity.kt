@@ -1,6 +1,5 @@
 package com.example.studentass
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -13,7 +12,6 @@ import com.example.studentass.fragments.AboutProgramFragment
 import com.example.studentass.fragments.LoginFragment
 import com.example.studentass.fragments.MainFragment
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlin.concurrent.thread
 import kotlin.properties.Delegates
 
 
@@ -43,21 +41,11 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.ab_exit -> {
-                thread {
-                    try {
-                        LoginFragment.executeLogout()
-                    } catch (e: Exception) {
-                        runOnUiThread {
-                            Toast.makeText(
-                                this,
-                                "Logout error: $e (${e.message})",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                    }
-                    switchSideways(LoginFragment::class.java)
-                    LoginFragment.deleteLoginData(this)
-                }
+                switchSideways(LoginFragment::class.java)
+                LoginFragment.logOut().subscribe(
+                    { },
+                    { e -> Toast.makeText(this, "LogOut error: $e", Toast.LENGTH_LONG).show() }
+                )
             }
             R.id.ab_about_program -> {
                 switchUp(AboutProgramFragment::class.java)
@@ -80,35 +68,17 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         fragmentManager = supportFragmentManager
-        val qsab = (this as AppCompatActivity).supportActionBar
-        if (qsab == null) {
-            throw Exception("Action bar missing")
-        }
-        else {
-            actionBar = qsab
-        }
+        actionBar = (this as AppCompatActivity).supportActionBar
+            ?: throw Exception("Action bar missing")
         actionBar.hide()
 
         fragmentsMainContainerId = main_activity_fragment_container.id
 
         LoginFragment.init(this)
-
-        thread {
-            LoginFragment.loadLoginData(this)
-            try {
-                if (LoginFragment.loginTokens == null) {
-                    LoginFragment.executeLogin()
-                }
-                switchUp(MainFragment::class.java)
-            }
-            catch (e: Exception) {
-                switchUp(LoginFragment::class.java)
-                if (e !is LoginFragment.Companion.NoDataException) {
-                    runOnUiThread {
-                        Toast.makeText(this, "Login error: $e (${e.message})", Toast.LENGTH_LONG).show()
-                    }
-                }
-            }
+        if (LoginFragment.tokens == null) {
+            switchUp(LoginFragment::class.java)
+        } else {
+            switchUp(MainFragment::class.java)
         }
     }
 

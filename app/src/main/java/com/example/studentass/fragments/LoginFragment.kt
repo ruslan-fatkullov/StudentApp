@@ -16,37 +16,103 @@ import androidx.fragment.app.Fragment
 import com.auth0.android.jwt.JWT
 import com.example.studentass.MainActivity
 import com.example.studentass.R
+import com.example.studentass.common.MemoryManager
 import com.example.studentass.getAppCompatActivity
-import com.example.studentass.models.AuthLoginData
-import com.example.studentass.models.AuthLoginTokens
-import com.example.studentass.models.AuthRefreshData
-import com.google.gson.GsonBuilder
-import kotlinx.android.synthetic.main.activity_main.*
+import com.example.studentass.models.Tokens
+import com.example.studentass.services.AuthApiService
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_login.*
-import okhttp3.*
-import okhttp3.RequestBody.Companion.toRequestBody
-import java.io.IOException
 import kotlin.concurrent.thread
 
 class LoginFragment : Fragment() {
     companion object {
-        private lateinit var loginUrl: String
-        private lateinit var refreshUrl: String
-        private lateinit var logoutUrl: String
-
-        private var loginEmail: String? = null
-        private var loginPassword: String? = null
-
-        var loginTokens: AuthLoginTokens? = null
-        var loginRole = "invalid"
+        private val authApiService = AuthApiService.create()
+        private val compositeDisposable = CompositeDisposable()
+        private lateinit var context: Context
+        var tokens: Tokens? = null
+            private set
+        var role: String? = null
+            private set
 
         fun init(context: Context) {
-            loginUrl = context.getString(R.string.url_login)
-            refreshUrl = context.getString(R.string.url_refresh)
-            logoutUrl = context.getString(R.string.url_logout)
+            LoginFragment.context = context
+            readTokens()
         }
 
-        fun executeRequest(requestBuilder: Request.Builder): Response {
+        fun logIn(login: String, password: String): Observable<Tokens> {
+            return authApiService.logIn(login, password)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .map { t -> onLogInMap(t) }
+        }
+
+        private fun onLogInMap(r: Tokens): Tokens {
+            tokens = r
+            role = identifyRole(r.accessToken)
+            thread {
+                writeTokens()
+            }
+            return r
+        }
+
+        fun logOut(): Observable<Unit> {
+            return authApiService.logOut()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .map { onLogOutMap() }
+        }
+
+        private fun onLogOutMap() {
+            thread {
+                deleteTokens()
+            }
+        }
+
+        fun refreshTokens(): Observable<Tokens> {
+            if (tokens == null)
+                throw RuntimeException("Refresh error: tokens are null")
+
+            return authApiService.refresh(tokens!!.refrashToken)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .map { t -> onRefreshTokensMap(t) }
+        }
+
+        private fun onRefreshTokensMap(r: Tokens): Tokens {
+            tokens = r
+            thread {
+                writeTokens()
+            }
+            return r
+        }
+
+        private fun identifyRole(accessToken: String): String {
+            return JWT(accessToken)
+                .getClaim("role")
+                .asString()
+                ?: throw RuntimeException("Role identification error: can't get claim")
+        }
+
+        private fun readTokens() {
+            tokens = MemoryManager.loadTokens(context)
+        }
+
+        private fun writeTokens() {
+            if (tokens == null)
+                throw RuntimeException("Write tokens error: tokens are null")
+
+            MemoryManager.saveTokens(context, tokens!!)
+        }
+
+        private fun deleteTokens() {
+            MemoryManager.deleteTokens(context)
+        }
+
+
+        /*fun executeRequest(requestBuilder: Request.Builder): Response {
             val client = OkHttpClient()
             val response = client.newCall(requestBuilder.build()).execute()
             checkResponseCode(response.code)
@@ -92,7 +158,7 @@ class LoginFragment : Fragment() {
             val response = client.newCall(request).execute()
             checkResponseCode(response.code)
 
-            loginTokens = GsonBuilder().create().fromJson(response.body!!.string(), AuthLoginTokens::class.java)
+            loginTokens = GsonBuilder().create().fromJson(response.body!!.string(), Tokens::class.java)
 
             return response
         }
@@ -113,7 +179,7 @@ class LoginFragment : Fragment() {
             val response = client.newCall(request).execute()
             checkResponseCode(response.code)
 
-            loginTokens = GsonBuilder().create().fromJson(response.body!!.string(), AuthLoginTokens::class.java)
+            loginTokens = GsonBuilder().create().fromJson(response.body!!.string(), Tokens::class.java)
             val jwt = JWT(loginTokens!!.accessToken)
             loginRole = jwt.getClaim("role").asString()!!
 
@@ -136,37 +202,9 @@ class LoginFragment : Fragment() {
             checkResponseCode(response.code)
 
             return response
-        }
+        }*/
 
-        fun saveLoginData(mainActivity: MainActivity) {
-            val sharedPreferences = mainActivity.getSharedPreferences("LoginData", Context.MODE_PRIVATE)
-            val editor = sharedPreferences.edit()
-            editor.apply {
-                putString("loginEmail", loginEmail)
-                putString("loginPassword", loginPassword)
-                putString("accessToken", loginTokens!!.accessToken)
-                putString("refrashToken", loginTokens!!.refrashToken)
-            }.apply()
-        }
 
-        fun loadLoginData(mainActivity: MainActivity) {
-            val sharedPreferences = mainActivity.getSharedPreferences("LoginData", Context.MODE_PRIVATE)
-            sharedPreferences.apply {
-                loginEmail = getString("loginEmail", null)
-                loginPassword = getString("loginPassword", null)
-                val accessToken = getString("accessToken", null)
-                val refrashToken = getString("refrashToken", null)
-                if (accessToken != null && refrashToken != null) {
-                    loginTokens = AuthLoginTokens(accessToken, refrashToken)
-                }
-            }
-        }
-
-        fun deleteLoginData(mainActivity: MainActivity) {
-            val sharedPreferences = mainActivity.getSharedPreferences("LoginData", Context.MODE_PRIVATE)
-            val editor = sharedPreferences.edit()
-            editor.clear().apply()
-        }
 
         private fun checkResponseCode(code: Int) {
             if (code in 100..399) return
@@ -179,8 +217,6 @@ class LoginFragment : Fragment() {
                 else -> RequestCodeException("код $code")
             }
         }
-
-        class NoDataException(message: String) : Exception(message)
 
         open class RequestCodeException(message: String) : Exception(message) // родительский класс ошибок запросов
         class BadRequestException(message: String) : RequestCodeException(message) // 400
@@ -257,6 +293,36 @@ class LoginFragment : Fragment() {
         }
     }
 
+    override fun onDestroy() {
+        compositeDisposable.clear()
+        super.onDestroy()
+    }
+
+    private fun onLogInSuccess() {
+        val mainActivity = getAppCompatActivity<MainActivity>()
+        if (mainActivity != null) {
+            when (role) {
+                "student" -> mainActivity.switchSideways(MainFragment::class.java)
+                else -> {
+                    Toast.makeText(context, "Invalid role: $role", Toast.LENGTH_LONG).show()
+                    return
+                }
+            }
+        }
+        loginBn.revertAnimation()
+    }
+
+    private fun onLogInError(e: Throwable) {
+        loginBn.revertAnimation()
+        /*val errorMessage = when (e) {
+            is UnauthorizedException -> "Неверные почта и/или пароль"
+            is IOException -> "Ошибка подключения: $e (${e.message})"
+            else -> "Неизвестная ошибка подключения: $e (${e.message})"
+        }
+        Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()*/
+        Toast.makeText(Companion.context, "LogIn error: $e", Toast.LENGTH_LONG).show()
+    }
+
     private fun validateEmail(email: String): String {
         if (email.isEmpty()) return "Поле не должно быть пустым"
         //if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) return "Неверый формат"
@@ -269,8 +335,11 @@ class LoginFragment : Fragment() {
     }
 
     private fun onLoginButtonClick() {
-        if (emailValidity == null) emailValidity = validateEmail(emailEt.text.toString())
-        if (passwordValidity == null) passwordValidity = validatePassword(passwordEt.text.toString())
+        val login = emailEt.text.toString()
+        val password = passwordEt.text.toString()
+
+        if (emailValidity == null) emailValidity = validateEmail(login)
+        if (passwordValidity == null) passwordValidity = validatePassword(password)
         var validData = true
 
         if (emailValidity != "") {
@@ -284,40 +353,14 @@ class LoginFragment : Fragment() {
 
         if (validData) {
             loginBn.startAnimation()
-            loginEmail = emailEt.text.toString()
-            loginPassword = passwordEt.text.toString()
 
-            thread {
-                try {
-                    executeLogin()
-                }
-                catch (e: Exception) {
-                    val errorMessage = when (e) {
-                        is UnauthorizedException -> "Неверные почта и/или пароль"
-                        is IOException -> "Ошибка подключения: $e (${e.message})"
-                        else -> "Неизвестная ощибка подключения: $e (${e.message})"
-                    }
-                    activity!!.runOnUiThread {
-                        Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
-                        loginBn.revertAnimation()
-                    }
-                    return@thread
-                }
-                activity!!.runOnUiThread {
-                    val mainActivity = getAppCompatActivity<MainActivity>()
-                    if (mainActivity != null) {
-                        when (loginRole) {
-                            "student" -> mainActivity.switchSideways(MainFragment::class.java)
-                            else -> {
-                                Toast.makeText(context, "Invalid role: $loginRole", Toast.LENGTH_LONG).show()
-                                return@runOnUiThread
-                            }
-                        }
-                        saveLoginData(mainActivity)
-                        loginBn.revertAnimation()
-                    }
-                }
-            }
+            compositeDisposable.add(
+                logIn(login, password)
+                    .subscribe (
+                        { this.onLogInSuccess() },
+                        { e -> this.onLogInError(e) }
+                    )
+            )
         }
         else {
             val shake: Animation = AnimationUtils.loadAnimation(context, R.anim.anim_shake)

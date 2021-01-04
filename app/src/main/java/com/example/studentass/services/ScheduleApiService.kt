@@ -16,7 +16,7 @@ interface ScheduleApiService {
                 .addConverterFactory(GsonConverterFactory.create())
                 .baseUrl("https://4b7af1df-c62e-49e5-b0a5-929837fb7e36.mock.pstmn.io/")
                 .build()
-            return retrofit.create(ScheduleApiService::class.java);
+            return retrofit.create(ScheduleApiService::class.java)
         }
     }
 

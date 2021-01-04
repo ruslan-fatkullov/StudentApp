@@ -31,6 +31,7 @@ class ScheduleFragment : Fragment() {
     private var dayNum: Int = 0
     private var daysIn: List<View>? = null
     private val calendar = Calendar.getInstance()
+    private val compositeDisposable = CompositeDisposable()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,8 +40,6 @@ class ScheduleFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_schedule, container, false)
     }
-
-    private var compositeDisposable = CompositeDisposable()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
