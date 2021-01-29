@@ -9,7 +9,16 @@ import com.example.studentass.MainActivity
 import com.example.studentass.R
 import com.example.studentass.getAppCompatActivity
 
+
+/*
+ * Фрагмент со списком предметов
+ */
 class SubjectsFragment : Fragment() {
+
+
+    /*
+     * Наполнение страницы элемнтами интерфейса
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -18,12 +27,20 @@ class SubjectsFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_subjects, container, false)
     }
 
+
+    /*
+     * Инициализация элементов интерфейса
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         onHiddenChanged(false)
     }
 
+
+    /*
+     * Управление заголовком страницы
+     */
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
 

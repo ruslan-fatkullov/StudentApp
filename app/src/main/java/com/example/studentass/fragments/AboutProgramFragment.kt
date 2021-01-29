@@ -10,7 +10,15 @@ import com.example.studentass.R
 import com.example.studentass.getAppCompatActivity
 import kotlinx.android.synthetic.main.fragment_about_program.*
 
+
+/*
+ * Фрагмент страницы с информацией о приложении
+ */
 class AboutProgramFragment : Fragment() {
+
+    /*
+     * Наполненние фрагмента
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -19,6 +27,9 @@ class AboutProgramFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_about_program, container, false)
     }
 
+    /*
+     * Инициализация контента фрагмента
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -29,11 +40,17 @@ class AboutProgramFragment : Fragment() {
         onHiddenChanged(false)
     }
 
+    /*
+     * Показывает панель
+     */
     override fun onDestroy() {
         super.onDestroy()
         onHiddenChanged(true)
     }
 
+    /*
+     * Вызывается когда нужно изменить отображение панели действий
+     */
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
 

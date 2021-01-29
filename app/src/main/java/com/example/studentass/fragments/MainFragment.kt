@@ -11,10 +11,18 @@ import com.example.studentass.R
 import com.example.studentass.getAppCompatActivity
 import kotlinx.android.synthetic.main.fragment_main.*
 
+
+/*
+ * Управляет основными страницами, доступными студенту
+ */
 class MainFragment : Fragment() {
     private lateinit var sfm: FragmentManager
     private lateinit var currentFragment: Fragment
 
+
+    /*
+     * Инициализация элементов интерфейса
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -53,23 +61,13 @@ class MainFragment : Fragment() {
             true
         }
 
-        /*headerExitBn.setOnClickListener {
-            thread {
-                try {
-                    LoginFragment.executeLogout()
-                }
-                catch (e: Exception) {
-                    MainActivity.mHandler.post {
-                        Toast.makeText(MainActivity.mainActivity!!, "Logout error: $e (${e.message})", Toast.LENGTH_LONG).show()
-                    }
-                }
-                MainActivity.mainActivity!!.switchFragment(LoginFragment::class.java)
-                LoginFragment.deleteLoginData(MainActivity.mainActivity!!)
-            }
-        }*/
         onHiddenChanged(false)
     }
 
+
+    /*
+     * Наполнение фрагмента интерфейсом
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -78,6 +76,10 @@ class MainFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_main, container, false)
     }
 
+
+    /*
+     * Управляет видамостию панели дайствий
+     */
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
 

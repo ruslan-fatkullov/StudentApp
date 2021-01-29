@@ -24,6 +24,9 @@ import kotlinx.android.synthetic.main.schedule_days_layout_item.view.*
 import java.util.*
 
 
+/*
+ * Фрагмент расписания
+ */
 class ScheduleFragment : Fragment() {
     private val scheduleApiService = ScheduleApiService.create()
     private var schedule: Schedule? = null
@@ -33,6 +36,10 @@ class ScheduleFragment : Fragment() {
     private val calendar = Calendar.getInstance()
     private val compositeDisposable = CompositeDisposable()
 
+
+    /*
+     * Наполнение фрагмента элементами интерфейса
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,6 +48,10 @@ class ScheduleFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_schedule, container, false)
     }
 
+
+    /*
+     * Инициализация элементов интерфейса
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -129,6 +140,10 @@ class ScheduleFragment : Fragment() {
         onHiddenChanged(false)
     }
 
+
+    /*
+     * Управление заголовком страницы и обновлением данных о дате
+     */
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
 
@@ -140,11 +155,19 @@ class ScheduleFragment : Fragment() {
         }
     }
 
+
+    /*
+     * Очистка мусора
+     */
     override fun onDestroy() {
         compositeDisposable.clear()
         super.onDestroy()
     }
 
+
+    /*
+     * Вызывается при успешном получении списка групп
+     */
     private fun onGetGroupList(groupList: Array<String>?) {
         if (groupList != null) {
             @Suppress("UNCHECKED_CAST")
@@ -153,17 +176,29 @@ class ScheduleFragment : Fragment() {
         }
     }
 
+
+    /*
+     * Вызывается при успешном получении списка пар
+     */
     private fun onGetGroupSchedule(schedule: Schedule) {
         this.schedule = schedule
         updatePairsList()
     }
 
+
+    /*
+     * Переводит день недели из американского формата в европейский
+     */
     private fun formatDayOfWeek(dayOfWeek: Int): Int {
         var newDayOfWeek = dayOfWeek - 2
         if (newDayOfWeek < 0) newDayOfWeek = 6
         return newDayOfWeek
     }
 
+
+    /*
+     * Обновление списка пар
+     */
     private fun updatePairsList() {
         val day = dayNum + 1
         val week = weekNum + 1
@@ -193,10 +228,18 @@ class ScheduleFragment : Fragment() {
         adapter.notifyDataSetChanged()
     }
 
+
+    /*
+     * Обновление надписи с номером недели
+     */
     private fun updateWeek() {
         weekTv.text = if (weekNum == 0) getText(R.string.schedule_first_week) else getText(R.string.schedule_second_week)
     }
 
+
+    /*
+     * Обновление чисел месяца
+     */
     private fun updateDaysOfMonth() {
         val tempCalendar = calendar.clone() as Calendar
         tempCalendar.add(Calendar.DAY_OF_WEEK, -dayNum)
@@ -206,6 +249,10 @@ class ScheduleFragment : Fragment() {
         }
     }
 
+
+    /*
+     * Обновление надписи с месяцем и годом
+     */
     private fun updateMonthAndYear() {
         val text = "${getString(
             when (calendar.get(Calendar.MONTH)) {
@@ -227,6 +274,10 @@ class ScheduleFragment : Fragment() {
         dateTv.text = text
     }
 
+
+    /*
+     * Обработчик нажатия на кнопки переключения недели. dir - указывает направление, в котором нужно пролистать неделю
+     */
     private fun onWeekBnClick(dir: Int){
         weekNum = if (weekNum == 0) 1 else 0
         calendar.add(Calendar.DAY_OF_WEEK, 7 * dir)
@@ -244,6 +295,10 @@ class ScheduleFragment : Fragment() {
         }
     }
 
+
+    /*
+     * Обработчик нажатия на кнопки дней недели
+     */
     private fun onDayFocus(dayOfWeek: Int) {
         calendar.add(Calendar.DAY_OF_WEEK, -dayNum)
         dayNum = dayOfWeek

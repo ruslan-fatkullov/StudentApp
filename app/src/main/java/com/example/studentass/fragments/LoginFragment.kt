@@ -27,14 +27,18 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_login.*
 import kotlin.concurrent.thread
 
+
+/*
+ * Отвечает за авторизацию
+ */
 class LoginFragment : Fragment() {
     companion object {
         private val authApiService = AuthApiService.create()
         private val compositeDisposable = CompositeDisposable()
-        private lateinit var context: Context
-        var tokens: Tokens? = null
+        private lateinit var context: Context                       // Статичные методы не имеют контекста, поэтому его нужно им передавать
+        var tokens: Tokens? = null                                  // Токены доступа и обновления
             private set
-        var role: String? = null
+        var role: String? = null                                    // Роль, извлекается из токенов
             private set
 
         fun init(context: Context) {
@@ -42,6 +46,10 @@ class LoginFragment : Fragment() {
             readTokens()
         }
 
+
+        /*
+         * Возвращает поток с токенами, запрос не выполняется до вызова термиального оператора
+         */
         fun logIn(login: String, password: String): Observable<Tokens> {
             return authApiService.logIn(login, password)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -49,6 +57,10 @@ class LoginFragment : Fragment() {
                 .map { t -> onLogInMap(t) }
         }
 
+
+        /*
+         * Нужно для автоматического сохранения данных авторизации
+         */
         private fun onLogInMap(r: Tokens): Tokens {
             tokens = r
             role = identifyRole(r.accessToken)
@@ -58,6 +70,10 @@ class LoginFragment : Fragment() {
             return r
         }
 
+
+        /*
+         * Возвращает пустой поток, запрос не выполняется до вызова термиального оператора
+         */
         fun logOut(): Observable<Unit> {
             return authApiService.logOut()
                 .observeOn(AndroidSchedulers.mainThread())
@@ -65,12 +81,20 @@ class LoginFragment : Fragment() {
                 .map { onLogOutMap() }
         }
 
+
+        /*
+         * Нужно для автоматического удаления данных авторизации
+         */
         private fun onLogOutMap() {
             thread {
                 deleteTokens()
             }
         }
 
+
+        /*
+         * Возвращает поток токенов, запрос не выполняется до вызова термиального оператора
+         */
         fun refreshTokens(): Observable<Tokens> {
             if (tokens == null)
                 throw RuntimeException("Refresh error: tokens are null")
@@ -81,6 +105,10 @@ class LoginFragment : Fragment() {
                 .map { t -> onRefreshTokensMap(t) }
         }
 
+
+        /*
+         * Нужно для автоматической перезаписи данных авторизации
+         */
         private fun onRefreshTokensMap(r: Tokens): Tokens {
             tokens = r
             thread {
@@ -89,6 +117,10 @@ class LoginFragment : Fragment() {
             return r
         }
 
+
+        /*
+         * Извлекает роль из токена доступа
+         */
         private fun identifyRole(accessToken: String): String {
             return JWT(accessToken)
                 .getClaim("role")
@@ -96,10 +128,18 @@ class LoginFragment : Fragment() {
                 ?: throw RuntimeException("Role identification error: can't get claim")
         }
 
+
+        /*
+         * Читает токены из постоянной памяти
+         */
         private fun readTokens() {
             tokens = MemoryManager.loadTokens(context)
         }
 
+
+        /*
+         * Записывает токены в постоянную память
+         */
         private fun writeTokens() {
             if (tokens == null)
                 throw RuntimeException("Write tokens error: tokens are null")
@@ -107,128 +147,22 @@ class LoginFragment : Fragment() {
             MemoryManager.saveTokens(context, tokens!!)
         }
 
+
+        /*
+         * Удаляет токены из постоянной памяти
+         */
         private fun deleteTokens() {
             MemoryManager.deleteTokens(context)
         }
-
-
-        /*fun executeRequest(requestBuilder: Request.Builder): Response {
-            val client = OkHttpClient()
-            val response = client.newCall(requestBuilder.build()).execute()
-            checkResponseCode(response.code)
-            return response
-        }
-
-        fun executeJwtRequest(requestBuilder: Request.Builder): Response {
-            val client = OkHttpClient()
-            var response: Response
-            requestBuilder.addHeader("Authorization", loginTokens!!.accessToken)
-
-            try {
-                response = client.newCall(requestBuilder.build()).execute()
-                checkResponseCode(response.code)
-            }
-            catch (e: UpgradeRequiredException) {
-                try {
-                    executeRefresh()
-                }
-                catch (e: UnauthorizedException) {
-                    executeLogin()
-                }
-                requestBuilder.removeHeader("Authorization").addHeader("Authorization", loginTokens!!.accessToken)
-                response = client.newCall(requestBuilder.build()).execute()
-                checkResponseCode(response.code)
-            }
-
-            return response
-        }
-
-        private fun executeRefresh(): Response {
-            if (loginTokens == null) {
-                throw NoDataException("Refresh token is missing")
-            }
-            val client = OkHttpClient()
-
-            val body = AuthRefreshData(loginTokens!!.refrashToken)
-
-            val requestBody = GsonBuilder().create().toJson(body).toRequestBody()
-
-            val request = Request.Builder().method("POST", requestBody).url(refreshUrl).build()
-
-            val response = client.newCall(request).execute()
-            checkResponseCode(response.code)
-
-            loginTokens = GsonBuilder().create().fromJson(response.body!!.string(), Tokens::class.java)
-
-            return response
-        }
-
-        fun executeLogin(): Response {
-            if (loginEmail == null || loginPassword == null) {
-                throw NoDataException("Login data is missing")
-            }
-            val client = OkHttpClient()
-
-            //val url = "https://4b7af1df-c62e-49e5-b0a5-929837fb7e36.mock.pstmn.io/api/auth/login"
-            val body = AuthLoginData(loginEmail!!, loginPassword!!)
-
-            val requestBody = GsonBuilder().create().toJson(body).toRequestBody()
-
-            val request = Request.Builder().method("POST", requestBody).url(loginUrl).build()
-
-            val response = client.newCall(request).execute()
-            checkResponseCode(response.code)
-
-            loginTokens = GsonBuilder().create().fromJson(response.body!!.string(), Tokens::class.java)
-            val jwt = JWT(loginTokens!!.accessToken)
-            loginRole = jwt.getClaim("role").asString()!!
-
-            return response
-        }
-
-        fun executeLogout(): Response {
-            if (loginTokens == null) {
-                throw NoDataException("Refresh token is missing")
-            }
-            val client = OkHttpClient()
-
-            val body = AuthRefreshData(loginTokens!!.refrashToken)
-
-            val requestBody = GsonBuilder().create().toJson(body).toRequestBody()
-
-            val request = Request.Builder().method("POST", requestBody).url(logoutUrl).build()
-
-            val response = client.newCall(request).execute()
-            checkResponseCode(response.code)
-
-            return response
-        }*/
-
-
-
-        private fun checkResponseCode(code: Int) {
-            if (code in 100..399) return
-            throw when (code) {
-                400 -> BadRequestException("плохой запрос ($code)")
-                401 -> UnauthorizedException("не авторизован ($code)")
-                426 -> UpgradeRequiredException("необходимо обновление ($code)")
-                500 -> InternalServerErrorException("внутренняя ошибка сервера ($code)")
-                502 -> BadGatewayException("плохой шлюз ($code)")
-                else -> RequestCodeException("код $code")
-            }
-        }
-
-        open class RequestCodeException(message: String) : Exception(message) // родительский класс ошибок запросов
-        class BadRequestException(message: String) : RequestCodeException(message) // 400
-        class UnauthorizedException(message: String) : RequestCodeException(message) // 401
-        class UpgradeRequiredException(message: String) : RequestCodeException(message)// 426
-        class InternalServerErrorException(message: String) : RequestCodeException(message) // 500
-        class BadGatewayException(message: String) : RequestCodeException(message) // 502
     }
 
     private var emailValidity: String? = null
     private var passwordValidity: String? = null
 
+
+    /*
+     * Заполнение фрагмента
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -237,6 +171,10 @@ class LoginFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_login, container, false)
     }
 
+
+    /*
+     * Инициализация элементов интерфейса
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -286,6 +224,10 @@ class LoginFragment : Fragment() {
         onHiddenChanged(false)
     }
 
+
+    /*
+     * Управление видимостию панели действий
+     */
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
         if (!hidden) {
@@ -293,11 +235,19 @@ class LoginFragment : Fragment() {
         }
     }
 
+
+    /*
+     * Очистка мусора, потенциально генерируемого запросами
+     */
     override fun onDestroy() {
         compositeDisposable.clear()
         super.onDestroy()
     }
 
+
+    /*
+     * Вызывается при успешной авторизации
+     */
     private fun onLogInSuccess() {
         val mainActivity = getAppCompatActivity<MainActivity>()
         if (mainActivity != null) {
@@ -312,6 +262,10 @@ class LoginFragment : Fragment() {
         loginBn.revertAnimation()
     }
 
+
+    /*
+     * Вызывается при ошибке авторизации
+     */
     private fun onLogInError(e: Throwable) {
         loginBn.revertAnimation()
         /*val errorMessage = when (e) {
@@ -323,17 +277,29 @@ class LoginFragment : Fragment() {
         Toast.makeText(Companion.context, "LogIn error: $e", Toast.LENGTH_LONG).show()
     }
 
+
+    /*
+     * Проверяет почту
+     */
     private fun validateEmail(email: String): String {
         if (email.isEmpty()) return "Поле не должно быть пустым"
         //if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) return "Неверый формат"
         return ""
     }
 
+
+    /*
+     * Проверяет пароль
+     */
     private fun validatePassword(password: String): String {
         if (password.isEmpty()) return "Поле не должно быть пустым"
         return ""
     }
 
+
+    /*
+     * Обработчик события нажатия на кнопку авторизации
+     */
     private fun onLoginButtonClick() {
         val login = emailEt.text.toString()
         val password = passwordEt.text.toString()
@@ -369,6 +335,10 @@ class LoginFragment : Fragment() {
         }
     }
 
+
+    /*
+     * Обработчик события нажатия на кнопку перехода к регистрации
+     */
     private fun onRegistrationTextViewClick() {
         getAppCompatActivity<MainActivity>()?.switchUp(RegistrationFragment::class.java)
     }

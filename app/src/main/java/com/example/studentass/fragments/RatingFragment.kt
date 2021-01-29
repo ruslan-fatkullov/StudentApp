@@ -10,10 +10,16 @@ import com.example.studentass.R
 import com.example.studentass.getAppCompatActivity
 import kotlinx.android.synthetic.main.fragment_rating.*
 
+
+/*
+ * Фрагмент с рейтингом студента
+ */
 class RatingFragment : Fragment() {
+    /*
+     * Инициализация элементов интерфейса
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
         setRatingGroupValue(35, 50)
         setRatingDepartmentValue(50, 120)
@@ -24,6 +30,10 @@ class RatingFragment : Fragment() {
         onHiddenChanged(false)
     }
 
+
+    /*
+     * Наполнение фрагмента
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -32,6 +42,10 @@ class RatingFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_rating, container, false)
     }
 
+
+    /*
+     * Управление заголовком страницы
+     */
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
 
@@ -40,6 +54,10 @@ class RatingFragment : Fragment() {
         }
     }
 
+
+    /*
+     * Устанавливает рейтинг по группе
+     */
     private fun setRatingGroupValue(value: Int, maxValue: Int) {
         ratingGroupPb.max = maxValue
         ratingGroupPb.progress = value
@@ -47,6 +65,10 @@ class RatingFragment : Fragment() {
         ratingGroupTv.text = tvText
     }
 
+
+    /*
+     * Устанавливает рейтинг по факультету
+     */
     private fun setRatingDepartmentValue(value: Int, maxValue: Int) {
         ratingDepartmentPb.max = maxValue
         ratingDepartmentPb.progress = value
@@ -54,6 +76,10 @@ class RatingFragment : Fragment() {
         ratingDepartmentTv.text = tvText
     }
 
+
+    /*
+     * Устанавливает рейтинг по университету
+     */
     private fun setRatingUniversityValue(value: Int, maxValue: Int) {
         ratingUniversityPb.max = maxValue
         ratingUniversityPb.progress = value
@@ -61,12 +87,19 @@ class RatingFragment : Fragment() {
         ratingUniversityTv.text = tvText
     }
 
+
+    /*
+     * Устанавливает посещаемость лекций
+     */
     private fun setAttendanceLectionsValue(value: Int) {
         attendanceLectionsGg.value = value
         val tvText = "$value%"
         attendanceLectionsTv.text = tvText
     }
 
+    /*
+     * Устанавливает посещаемость практик
+     */
     private fun setAttendancePracticesValue(value: Int) {
         attendancePracticesGg.value = value
         val tvText = "$value%"

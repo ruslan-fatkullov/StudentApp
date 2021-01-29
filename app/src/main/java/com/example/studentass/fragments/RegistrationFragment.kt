@@ -16,7 +16,14 @@ import com.example.studentass.R
 import com.example.studentass.getAppCompatActivity
 import kotlinx.android.synthetic.main.fragment_registration.*
 
+
+/*
+ * Фрагмент регистрации
+ */
 class RegistrationFragment : Fragment() {
+    /*
+     * Наполнение фрагмента элементами интерфейса
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -29,6 +36,10 @@ class RegistrationFragment : Fragment() {
     var groupValidity: String? = null
     var emailRegValidity: String? = null
 
+
+    /*
+     * Инициализация элементов интерфейса
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -82,6 +93,10 @@ class RegistrationFragment : Fragment() {
         onHiddenChanged(false)
     }
 
+
+    /*
+     * Управление видимостью панели действий
+     */
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
         if (!hidden) {
@@ -89,22 +104,38 @@ class RegistrationFragment : Fragment() {
         }
     }
 
+
+    /*
+     * Проверка правильности имени
+     */
     private fun validateName(name: String): String {
         if (name.isEmpty()) return "Поле не должно быть пустым"
         return ""
     }
 
+
+    /*
+     * Проверка правильности группы
+     */
     private fun validateGroup(group: String): String {
         if (group.isEmpty()) return "Поле не должно быть пустым"
         return ""
     }
 
+
+    /*
+     * Проверка правильности почты
+     */
     private fun validateEmailReg(emailReg: String): String {
         if (emailReg.isEmpty()) return "Поле не должно быть пустым"
         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(emailReg).matches()) return "Неверый формат"
         return ""
     }
 
+
+    /*
+     * Обработчик нажатия на кнопку регистрации
+     */
     private fun onSignupButtonClick() {
         if (nameValidity == null) nameValidity = validateName(nameEt.text.toString())
         if (groupValidity == null) groupValidity = validateGroup(groupEt.text.toString())
@@ -138,6 +169,10 @@ class RegistrationFragment : Fragment() {
         }
     }
 
+
+    /*
+     * Обработчик на кнопку возвращения к авторизации
+     */
     private fun onLoginTextViewClick() {
         getAppCompatActivity<MainActivity>()?.switchDown()
     }

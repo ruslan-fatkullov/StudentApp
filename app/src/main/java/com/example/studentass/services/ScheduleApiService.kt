@@ -8,8 +8,17 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
+
+/*
+ * Интерфейс сервиса расписания
+ */
 interface ScheduleApiService {
     companion object Factory {
+
+
+        /*
+         * Сборщик реализации интерфейса
+         */
         fun create(): ScheduleApiService {
             val retrofit = Retrofit.Builder()
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -20,9 +29,17 @@ interface ScheduleApiService {
         }
     }
 
+
+    /*
+     * Получение списка групп
+     */
     @GET("api/schedule/group-list")
     fun getGroupList(): Observable<Array<String>>
 
+
+    /*
+     * Получение расписание группы
+     */
     @GET("api/schedule/group")
     fun getGroupSchedule(@Query("nameGroup") groupName: String): Observable<Schedule>
 }

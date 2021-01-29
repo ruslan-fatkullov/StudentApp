@@ -9,8 +9,17 @@ import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
 
+
+/*
+ * Интерфейс сервиса авторизации
+ */
 interface AuthApiService {
     companion object Factory {
+
+
+        /*
+         * Сборщик реализации интерфейса
+         */
         fun create(): AuthApiService {
             val retrofit = Retrofit.Builder()
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -21,15 +30,27 @@ interface AuthApiService {
         }
     }
 
+
+    /*
+     * Авторизация
+     */
     @FormUrlEncoded
     @POST("api/auth/login")
     fun logIn(@Field("login") login: String,
               @Field("password") password: String): Observable<Tokens>
 
+
+    /*
+     * Обновление токенов
+     */
     @FormUrlEncoded
     @POST("api/auth/refrash")
     fun refresh(@Field("refrashToken") refreshToken: String): Observable<Tokens>
 
+
+    /*
+     * Выход
+     */
     @POST("api/auth/logout")
     fun logOut(): Observable<Unit>
 }

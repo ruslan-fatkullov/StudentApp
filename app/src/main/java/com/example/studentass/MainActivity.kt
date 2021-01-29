@@ -15,21 +15,31 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.properties.Delegates
 
 
+/*
+ * Нужно для удобного получения экземпляра MainActivity из фрагментов
+ */
 @Suppress("UNCHECKED_CAST")
 fun <T : AppCompatActivity> Fragment.getAppCompatActivity(): T? {
     return activity as T?
 }
 
+
+/*
+ * Единственная активити в приложении
+ */
 class MainActivity : AppCompatActivity() {
     lateinit var fragmentManager: FragmentManager
     lateinit var actionBar: ActionBar
 
-    private var fragmentLayersDepth = -1
+    private var fragmentLayersDepth = -1                                                    // Номер текущего слоя (фрагмента) в контейнере активити
     private val fragmentLayersMaxDepth = 32
-    private val fragmentLayers = arrayOfNulls<Fragment?>(fragmentLayersMaxDepth)
-    private var fragmentsMainContainerId by Delegates.notNull<Int>()
+    private val fragmentLayers = arrayOfNulls<Fragment?>(fragmentLayersMaxDepth)            // Список слоёв (фргментов) в контейнере активити
+    private var fragmentsMainContainerId by Delegates.notNull<Int>()                        // ID контейнера активити
 
-    // create an action bar button
+
+    /*
+     * Создаёт панель действий
+     */
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         // R.menu.mymenu is a reference to an xml file named mymenu.xml which should be inside your res/menu directory.
         // If you don't have res/menu, just create a directory named "menu" inside res
@@ -37,7 +47,10 @@ class MainActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-    // handle button activities
+
+    /*
+     * Обрабатывает нажатия на кнопки панели действий
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.ab_exit -> {
@@ -54,6 +67,10 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+
+    /*
+     * Обрабытывает нажатие на кнопку "назад"
+     */
     override fun onBackPressed() {
         if (fragmentLayersDepth < 1) {
             finishAffinity()
@@ -63,6 +80,9 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    /*
+     * Обрабытывает нажатие на кнопку "назад"
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -82,6 +102,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
+    /*
+     * Перемещение на слой (фрагментов) выше. Прячет текущий фрагмент, создавая новый
+     */
     fun <T : Fragment> switchUp(toEntityClass: Class<T>) {
         if (fragmentLayersDepth < -1) {
             throw RuntimeException("SwitchUp error: fragment layers depth is below -1")
@@ -98,6 +122,10 @@ class MainActivity : AppCompatActivity() {
         fragmentLayers[++fragmentLayersDepth] = newFragment
     }
 
+
+    /*
+     * Перемещение на слой (фрагментов) ниже. Удаляет текущий фрагмент, показывая старый
+     */
     fun switchDown() {
         if (fragmentLayersDepth < 1) {
             throw RuntimeException("SwitchDown error: fragment layers depth is below 1")
@@ -113,6 +141,10 @@ class MainActivity : AppCompatActivity() {
         fragmentManager.beginTransaction().show(newFragment).commit()
     }
 
+
+    /*
+     * Перемещение на слой (фрагментов) вбок. Удаляет текущий фрагмент и создаёт новый на том же слое
+     */
     fun <T : Fragment> switchSideways(toEntityClass: Class<T>) {
         if (fragmentLayersDepth < 0) {
             throw RuntimeException("SwitchSideways error: fragment layers depth is below 0")
