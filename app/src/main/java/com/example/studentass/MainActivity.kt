@@ -8,6 +8,7 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.example.studentass.common.MemoryManager
 import com.example.studentass.fragments.AboutProgramFragment
 import com.example.studentass.fragments.LoginFragment
 import com.example.studentass.fragments.MainFragment
@@ -55,10 +56,11 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.ab_exit -> {
                 switchSideways(LoginFragment::class.java)
-                LoginFragment.logOut().subscribe(
-                    { },
-                    { e -> Toast.makeText(this, "LogOut error: $e", Toast.LENGTH_LONG).show() }
-                )
+                LoginFragment.logOut()
+//                    .subscribe(
+//                    { MemoryManager.deleteTokens(this)},
+//                    { e -> Toast.makeText(this, "LogOut error: $e", Toast.LENGTH_LONG).show() }
+//                )
             }
             R.id.ab_about_program -> {
                 switchUp(AboutProgramFragment::class.java)
@@ -95,7 +97,7 @@ class MainActivity : AppCompatActivity() {
         fragmentsMainContainerId = main_activity_fragment_container.id
 
         LoginFragment.init(this)
-        if (LoginFragment.tokens == null) {
+        if (LoginFragment.token == null) {
             switchUp(LoginFragment::class.java)
         } else {
             switchUp(MainFragment::class.java)
@@ -158,4 +160,6 @@ class MainActivity : AppCompatActivity() {
         fragmentManager.beginTransaction().add(fragmentsMainContainerId, newFragment).commit()
         fragmentLayers[fragmentLayersDepth] = newFragment
     }
+
+
 }

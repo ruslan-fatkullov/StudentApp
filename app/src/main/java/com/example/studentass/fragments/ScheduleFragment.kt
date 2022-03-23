@@ -11,14 +11,17 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.studentass.MainActivity
 import com.example.studentass.R
+import com.example.studentass.adapters.NotificationsRvAdapter
 import com.example.studentass.adapters.SchedulePairsRvAdapter
 import com.example.studentass.getAppCompatActivity
+import com.example.studentass.models.NotificationsItem
 import com.example.studentass.models.Schedule
 import com.example.studentass.models.ScheduleDayCouple
 import com.example.studentass.services.ScheduleApiService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.fragment_notifications.*
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import kotlinx.android.synthetic.main.schedule_days_layout_item.view.*
 import java.util.*
@@ -136,6 +139,11 @@ class ScheduleFragment : Fragment() {
                 )
             compositeDisposable.add(disposableGroupScheduleRx)
         }
+
+
+        val adapter = schedulePairsRv.adapter as SchedulePairsRvAdapter
+        adapter.notifyDataSetChanged()
+
 
         onHiddenChanged(false)
     }

@@ -37,15 +37,6 @@ class NotificationsFragment : Fragment() {
         val data = arrayListOf<NotificationsItem>()
         data.add(NotificationsItem(1,1,"Изменения в расписании", "Вы отчислены и можете не идти на пары"))
         data.add(NotificationsItem(1, 0,"Сообщение от Беляева И.В:", "Тебя ешё не отчислили?"))
-        data.add(NotificationsItem(1, 0,"Сообщение от Беляева И.В:", "Тебя ешё не отчислили?"))
-        data.add(NotificationsItem(0, 0,"Сообщение от Беляева И.В:", "Тебя ешё не отчислили?"))
-        data.add(NotificationsItem(0, 0,"Сообщение от Беляева И.В:", "Тебя ешё не отчислили?"))
-        data.add(NotificationsItem(0, 0,"Сообщение от Беляева И.В:", "Тебя ешё не отчислили?"))
-        data.add(NotificationsItem(0, 0,"Сообщение от Беляева И.В:", "Тебя ешё не отчислили?"))
-        data.add(NotificationsItem(0, 0,"Сообщение от Беляева И.В:", "Тебя ешё не отчислили?"))
-        data.add(NotificationsItem(0, 0,"Сообщение от Беляева И.В:", "Тебя ешё не отчислили?"))
-        data.add(NotificationsItem(0, 0,"Сообщение от Беляева И.В:", "Тебя ешё не отчислили?"))
-        data.add(NotificationsItem(0, 0,"Сообщение от Беляева И.В:", "Тебя ешё не отчислили?"))
         data.add(NotificationsItem(0, 0,"Сообщение от Беляева И.В:", "Тебя ешё не отчислили?"))
 
         val adapter = notificationsRv.adapter as NotificationsRvAdapter

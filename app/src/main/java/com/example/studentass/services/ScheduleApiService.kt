@@ -23,7 +23,7 @@ interface ScheduleApiService {
             val retrofit = Retrofit.Builder()
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl("https://4b7af1df-c62e-49e5-b0a5-929837fb7e36.mock.pstmn.io/")
+                .baseUrl("http://192.168.43.5:8080")
                 .build()
             return retrofit.create(ScheduleApiService::class.java)
         }
@@ -33,13 +33,15 @@ interface ScheduleApiService {
     /*
      * Получение списка групп
      */
-    @GET("api/schedule/group-list")
+    @GET("schedule/list")
     fun getGroupList(): Observable<Array<String>>
 
 
     /*
      * Получение расписание группы
      */
-    @GET("api/schedule/group")
+    @GET("schedule")
     fun getGroupSchedule(@Query("nameGroup") groupName: String): Observable<Schedule>
+
+
 }

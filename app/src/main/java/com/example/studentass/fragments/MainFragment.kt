@@ -32,6 +32,9 @@ class MainFragment : Fragment() {
         val scheduleFragment = ScheduleFragment()
         val subjectsFragment = SubjectsFragment()
         val notificationsFragment = NotificationsFragment()
+        //
+//        val subjectInfoFragment = SubjectInfoFragment()
+        //
 
         sfm.beginTransaction().add(fragment_container.id, scheduleFragment).commit()
         sfm.beginTransaction().hide(scheduleFragment).commit()
@@ -44,6 +47,7 @@ class MainFragment : Fragment() {
 
         sfm.beginTransaction().add(fragment_container.id, notificationsFragment).commit()
         sfm.beginTransaction().hide(notificationsFragment).commit()
+
 
         currentFragment = scheduleFragment
         sfm.beginTransaction().show(currentFragment).commit()

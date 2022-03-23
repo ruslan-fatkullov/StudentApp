@@ -73,7 +73,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:singleLine="true"
-            android:text="Содержание, которое настолько, мать его, большое, что не помещается" />
+            android:text="Содержание сообщения" />
     </LinearLayout>
 
 </LinearLayout>

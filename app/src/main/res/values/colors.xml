@@ -33,4 +33,6 @@
 
     <color name="colorNotificationBackground">#FFFFFF</color>
     <color name="colorNotificationNewBackground">#ebf2ff</color>
+
+    <color name="colorSubjectBackgroundDefault">#F2F7FF</color>
 </resources>

@@ -2,12 +2,14 @@ package com.example.studentass.services
 
 import com.example.studentass.models.Tokens
 import io.reactivex.Observable
+import okhttp3.RequestBody
+import okhttp3.ResponseBody
+import org.json.JSONObject
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
+import retrofit2.http.*
 
 
 /*
@@ -20,24 +22,35 @@ interface AuthApiService {
         /*
          * Сборщик реализации интерфейса
          */
+
         fun create(): AuthApiService {
             val retrofit = Retrofit.Builder()
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl("https://4b7af1df-c62e-49e5-b0a5-929837fb7e36.mock.pstmn.io/")
+                .baseUrl("http://192.168.43.5:8080")
                 .build()
+
             return retrofit.create(AuthApiService::class.java)
         }
-    }
 
+    }
 
     /*
      * Авторизация
      */
-    @FormUrlEncoded
-    @POST("api/auth/login")
-    fun logIn(@Field("login") login: String,
-              @Field("password") password: String): Observable<Tokens>
+    @POST("login")
+    fun logIn(@Body requestBody: RequestBody):Observable<ResponseBody>
+//    /*
+//     * Авторизация
+//     */
+//    @FormUrlEncoded
+//    @POST("login")
+//    fun logIn(
+//        @Field("login") login: String,
+//        @Field("password") password: String
+//    ):Observable<Tokens>
+
+
 
 
     /*
@@ -48,9 +61,13 @@ interface AuthApiService {
     fun refresh(@Field("refrashToken") refreshToken: String): Observable<Tokens>
 
 
+
     /*
      * Выход
      */
     @POST("api/auth/logout")
     fun logOut(): Observable<Unit>
+
+
+
 }

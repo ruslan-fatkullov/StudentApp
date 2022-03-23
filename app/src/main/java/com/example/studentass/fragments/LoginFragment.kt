@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.text.method.PasswordTransformationMethod
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,11 +21,18 @@ import com.example.studentass.common.MemoryManager
 import com.example.studentass.getAppCompatActivity
 import com.example.studentass.models.Tokens
 import com.example.studentass.services.AuthApiService
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonParser
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_login.*
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.ResponseBody
+import org.json.JSONObject
+import retrofit2.Response
 import kotlin.concurrent.thread
 
 
@@ -36,8 +44,9 @@ class LoginFragment : Fragment() {
         private val authApiService = AuthApiService.create()
         private val compositeDisposable = CompositeDisposable()
         private lateinit var context: Context                       // Статичные методы не имеют контекста, поэтому его нужно им передавать
-        var tokens: Tokens? = null                                  // Токены доступа и обновления
-            private set
+        var token: String? = null
+        //        var tokens: Tokens? = null                                  // Токены доступа и обновления
+//            private set
         var role: String? = null                                    // Роль, извлекается из токенов
             private set
 
@@ -50,22 +59,33 @@ class LoginFragment : Fragment() {
         /*
          * Возвращает поток с токенами, запрос не выполняется до вызова термиального оператора
          */
-        fun logIn(login: String, password: String): Observable<Tokens> {
-            return authApiService.logIn(login, password)
+        fun logIn(login: String, password: String) : Observable<ResponseBody> {
+
+            val jsonObject = JSONObject()
+            jsonObject.put("login", login)
+            jsonObject.put("password", password)
+            val jsonObjectString = jsonObject.toString()
+            val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
+            val responseBody = authApiService.logIn(requestBody)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .map { t -> onLogInMap(t) }
+            return responseBody
         }
 
 
         /*
          * Нужно для автоматического сохранения данных авторизации
          */
-        private fun onLogInMap(r: Tokens): Tokens {
-            tokens = r
-            role = identifyRole(r.accessToken)
+        private fun onLogInMap(r: ResponseBody): ResponseBody {
+            val dsf = r.string()
+            val parts = dsf.split('"')
+            //Toast.makeText(Companion.context, "${parts[3]}", Toast.LENGTH_LONG).show()
+            // Токены доступа и обновления
+            token = parts[3]
+            role = identifyRole(parts[3])
             thread {
-                writeTokens()
+                writeTokens(parts[3])
             }
             return r
         }
@@ -74,12 +94,16 @@ class LoginFragment : Fragment() {
         /*
          * Возвращает пустой поток, запрос не выполняется до вызова термиального оператора
          */
-        fun logOut(): Observable<Unit> {
-            return authApiService.logOut()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .map { onLogOutMap() }
+        fun logOut() {
+            thread {
+                deleteTokens()
+            }
         }
+//            return authApiService.logOut()
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribeOn(Schedulers.io())
+//                .map { onLogOutMap() }
+
 
 
         /*
@@ -95,37 +119,40 @@ class LoginFragment : Fragment() {
         /*
          * Возвращает поток токенов, запрос не выполняется до вызова термиального оператора
          */
-        fun refreshTokens(): Observable<Tokens> {
-            if (tokens == null)
-                throw RuntimeException("Refresh error: tokens are null")
-
-            return authApiService.refresh(tokens!!.refrashToken)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .map { t -> onRefreshTokensMap(t) }
-        }
+//        fun refreshTokens(): Observable<Tokens> {
+//            if (tokens == null)
+//                throw RuntimeException("Refresh error: tokens are null")
+//
+//            return authApiService.refresh(tokens!!.refrashToken)
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribeOn(Schedulers.io())
+//                .map { t -> onRefreshTokensMap(t) }
+//        }
 
 
         /*
          * Нужно для автоматической перезаписи данных авторизации
          */
-        private fun onRefreshTokensMap(r: Tokens): Tokens {
-            tokens = r
-            thread {
-                writeTokens()
-            }
-            return r
-        }
+//        private fun onRefreshTokensMap(r: Tokens): Tokens {
+//            tokens = r
+//            thread {
+//                writeTokens()
+//            }
+//            return r
+//        }
 
 
         /*
          * Извлекает роль из токена доступа
          */
         private fun identifyRole(accessToken: String): String {
-            return JWT(accessToken)
+            val role = JWT(accessToken)
                 .getClaim("role")
                 .asString()
                 ?: throw RuntimeException("Role identification error: can't get claim")
+
+            Toast.makeText(Companion.context, "id $role", Toast.LENGTH_LONG).show()
+            return role
         }
 
 
@@ -133,18 +160,18 @@ class LoginFragment : Fragment() {
          * Читает токены из постоянной памяти
          */
         private fun readTokens() {
-            tokens = MemoryManager.loadTokens(context)
+            token = MemoryManager.loadTokens(context)
         }
 
 
         /*
          * Записывает токены в постоянную память
          */
-        private fun writeTokens() {
-            if (tokens == null)
+        private fun writeTokens(token: String) {
+            if (token == null)
                 throw RuntimeException("Write tokens error: tokens are null")
 
-            MemoryManager.saveTokens(context, tokens!!)
+            MemoryManager.saveTokens(context, token!!)
         }
 
 
@@ -251,8 +278,10 @@ class LoginFragment : Fragment() {
     private fun onLogInSuccess() {
         val mainActivity = getAppCompatActivity<MainActivity>()
         if (mainActivity != null) {
+              //mainActivity.switchSideways(MainFragment::class.java)
             when (role) {
-                "student" -> mainActivity.switchSideways(MainFragment::class.java)
+                "USER" -> mainActivity.switchSideways(MainFragment::class.java)
+                "TEACHER" -> mainActivity.switchSideways(MainFragment::class.java)
                 else -> {
                     Toast.makeText(context, "Invalid role: $role", Toast.LENGTH_LONG).show()
                     return
@@ -319,7 +348,6 @@ class LoginFragment : Fragment() {
 
         if (validData) {
             loginBn.startAnimation()
-
             compositeDisposable.add(
                 logIn(login, password)
                     .subscribe (
@@ -342,4 +370,7 @@ class LoginFragment : Fragment() {
     private fun onRegistrationTextViewClick() {
         getAppCompatActivity<MainActivity>()?.switchUp(RegistrationFragment::class.java)
     }
+
+
+
 }
