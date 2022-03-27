@@ -1,21 +1,17 @@
 package com.example.studentass.fragments
 
+import android.graphics.Color.red
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.fragment.app.Fragment
 import com.example.studentass.MainActivity
 import com.example.studentass.R
-import com.example.studentass.adapters.SubjectsRvAdapter
 import com.example.studentass.getAppCompatActivity
-import com.example.studentass.models.AnswerOfWorks
-import com.example.studentass.models.SubjectOverview
-import com.example.studentass.adapters.SubjectInfoRvAdapter
 import kotlinx.android.synthetic.main.fragment_subject_info.*
-import kotlinx.android.synthetic.main.fragment_subjects.*
+import kotlinx.android.synthetic.main.fragment_subject_info.view.*
 
 
 class SubjectInfoFragment : Fragment() {
@@ -23,26 +19,30 @@ class SubjectInfoFragment : Fragment() {
         var selected_item: String? = null
     }
 
+
     /*
      * Инициализация элементов интерфейса
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val bookIv = view.bookIv
+        bookIv.setColorFilter(R.color.black)
 
         subjectLiteratureLayout.setOnClickListener(){
             // to Literature page
             selected_item = "Literature"
-            getAppCompatActivity<MainActivity>()?.switchUp(LiteratureFragment::class.java)
+            getAppCompatActivity<MainActivity>()?.switchUp(LitertTaskTestFragment::class.java)
         }
         subjectTaskLayout.setOnClickListener(){
             // to Task page
-            //getAppCompatActivity<MainActivity>()?.switchUp(TaskFragment::class.java)
+            selected_item = "Task"
+            getAppCompatActivity<MainActivity>()?.switchUp(LitertTaskTestFragment::class.java)
         }
         subjectTestLayout.setOnClickListener(){
             // to Test page
             selected_item = "Test"
-            getAppCompatActivity<MainActivity>()?.switchUp(LiteratureFragment::class.java)
+            getAppCompatActivity<MainActivity>()?.switchUp(LitertTaskTestFragment::class.java)
         }
         super.onHiddenChanged(false)
     }
@@ -67,8 +67,11 @@ class SubjectInfoFragment : Fragment() {
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
 
+//        getAppCompatActivity<MainActivity>()?.actionBar?.setBackgroundDrawable(ColorDrawable(R.drawable.task_background))
+//        getAppCompatActivity<MainActivity>()?.actionBar?.show()
+
         if (!hidden) {
-            getAppCompatActivity<MainActivity>()?.actionBar?.title = SubjectsFragment.subName
+            getAppCompatActivity<MainActivity>()?.actionBar?.title = SubjectsFragment.curSub?.name
         }
     }
 

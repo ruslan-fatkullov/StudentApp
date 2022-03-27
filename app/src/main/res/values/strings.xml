@@ -10,4 +10,17 @@
     <string name="url_logout">api/auth/logout</string>
     <string name="url_get_group_list">api/schedule/group-list</string>
     <string name="url_get_group_schedule">api/schedule/group</string>
+    <string name="typeOfWorkTitle">Тип работы</string>
+    <string name="taskDescriptionTitle">Описание</string>
+    <string name="taskTitle">Заголовок</string>
+    <string name="about_programm_string">О программе</string>
+    <string name="exit_from_app_string">Выйти</string>
+    <string name="delimiter">/</string>
+    <string name="questionTitle">Вопрос</string>
+    <string name="answer_choice">Вариант ответа</string>
+    <string name="test_name_title">название теста</string>
+    <string name="test_description">Описание теста</string>
+    <string name="Question">Вопрос</string>
+    <string name="Back">Назад</string>
+    <string name="Forward">Далее</string>
 </resources>

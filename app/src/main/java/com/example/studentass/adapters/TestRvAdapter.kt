@@ -6,21 +6,37 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studentass.R
+import com.example.studentass.models.LiteratureData
 import com.example.studentass.models.TestThemesData
 import kotlinx.android.synthetic.main.literature_layout_item.view.*
+import kotlinx.android.synthetic.main.task_layout_item.view.*
+import kotlinx.android.synthetic.main.test_layout_item.view.*
 
-class TestRvAdapter (private val context: Context) : RecyclerView.Adapter<TestRvAdapter.ViewHolder>() {
-    class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
-        val type = view.typeOfLiterature
-        val name = view.nameOfLiterature
-        val aut = view.authorOfLiterature
-        val desc = view.descriptionOfLiterature
+class TestRvAdapter(private val context: Context) : RecyclerView.Adapter<TestRvAdapter.ViewHolder>() {
+
+
+    private lateinit var mListner: onItemClickListener
+    class ViewHolder(view: View, var mListner: onItemClickListener): RecyclerView.ViewHolder(view), View.OnClickListener {
+
+        val nameOfTestV = view.nameOfTestV
+        val descriptionOfTest = view.descriptionOfTest
+
+        //val typeOfTask = when(itemView.)
+
 
         fun bind(itemData: TestThemesData, context: Context) {
-            type.text = "fsd"
-            name.text = itemData.name
-            desc.text = itemData.decryption
-            aut.text = itemData.createdAt.toString()
+            nameOfTestV.text = itemData.name
+            descriptionOfTest.text = itemData.decryption
+        }
+
+        init {
+            itemView.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            if (mListner != null){
+                mListner.setOnClickListener(adapterPosition)
+            }
         }
     }
 
@@ -32,7 +48,7 @@ class TestRvAdapter (private val context: Context) : RecyclerView.Adapter<TestRv
         viewType: Int
     ): TestRvAdapter.ViewHolder {
         val inflater = LayoutInflater.from(context)
-        return TestRvAdapter.ViewHolder(inflater.inflate(R.layout.literature_layout_item, parent, false))
+        return TestRvAdapter.ViewHolder(inflater.inflate(R.layout.test_layout_item, parent, false), mListner)
     }
 
 
@@ -41,6 +57,13 @@ class TestRvAdapter (private val context: Context) : RecyclerView.Adapter<TestRv
     override fun onBindViewHolder(holder: TestRvAdapter.ViewHolder, position: Int) {
         val itemData = dataList[position]
         holder.bind(itemData, context)
+        holder.itemView.setOnClickListener(object : View.OnClickListener{
+            override fun onClick(v: View?) {
+                if (mListner != null){
+                    mListner.setOnClickListener(holder.getAdapterPosition())
+                }
+            }
+        })
 
 
     }
@@ -48,4 +71,11 @@ class TestRvAdapter (private val context: Context) : RecyclerView.Adapter<TestRv
 
 
     override fun getItemCount(): Int = dataList.size
+    interface onItemClickListener{
+        fun setOnClickListener(position: Int)
+    }
+    fun setOnItemClickListener(mListner: onItemClickListener) {
+        this.mListner = mListner
+    }
+
 }

@@ -24,8 +24,8 @@ class RatingFragment : Fragment() {
         setRatingGroupValue(35, 50)
         setRatingDepartmentValue(50, 120)
         setRatingUniversityValue(100, 1445)
-        setAttendanceLectionsValue(33)
-        setAttendancePracticesValue(75)
+//        setAttendanceLectionsValue(33)
+//        setAttendancePracticesValue(75)
 
         onHiddenChanged(false)
     }
@@ -91,18 +91,18 @@ class RatingFragment : Fragment() {
     /*
      * Устанавливает посещаемость лекций
      */
-    private fun setAttendanceLectionsValue(value: Int) {
-        attendanceLectionsGg.value = value
-        val tvText = "$value%"
-        attendanceLectionsTv.text = tvText
-    }
+//    private fun setAttendanceLectionsValue(value: Int) {
+//        attendanceLectionsGg.value = value
+//        val tvText = "$value%"
+//        attendanceLectionsTv.text = tvText
+//    }
 
     /*
      * Устанавливает посещаемость практик
      */
-    private fun setAttendancePracticesValue(value: Int) {
-        attendancePracticesGg.value = value
-        val tvText = "$value%"
-        attendancePracticesTv.text = tvText
-    }
+//    private fun setAttendancePracticesValue(value: Int) {
+//        attendancePracticesGg.value = value
+//        val tvText = "$value%"
+//        attendancePracticesTv.text = tvText
+//    }
 }

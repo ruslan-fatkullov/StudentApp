@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.text.method.PasswordTransformationMethod
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,10 +18,7 @@ import com.example.studentass.MainActivity
 import com.example.studentass.R
 import com.example.studentass.common.MemoryManager
 import com.example.studentass.getAppCompatActivity
-import com.example.studentass.models.Tokens
 import com.example.studentass.services.AuthApiService
-import com.google.gson.GsonBuilder
-import com.google.gson.JsonParser
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -32,7 +28,6 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.ResponseBody
 import org.json.JSONObject
-import retrofit2.Response
 import kotlin.concurrent.thread
 
 

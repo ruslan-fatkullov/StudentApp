@@ -33,7 +33,7 @@ class TaskFragment : Fragment() {
         literatureRv.adapter = LiteratureRvAdapter(context!!)
 
         val requestBody = "Bearer " + LoginFragment.token
-        val subjectId = SubjectsFragment.subID?.toLong()
+        val subjectId = SubjectsFragment.curSub?.id?.toLong()
         val userId = 2
         val adapter = literatureRv.adapter as LiteratureRvAdapter
         val disposableSubjectListRx = literatureApiService

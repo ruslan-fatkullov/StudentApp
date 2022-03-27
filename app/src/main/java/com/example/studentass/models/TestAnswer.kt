@@ -1,6 +1,7 @@
 package com.example.studentass.models
 
-class TestAnswer (
+class TestAnswer(
     val id: Long,
-    val answer: String
+    var answer: String,
+    val fileid: Long?,
 )

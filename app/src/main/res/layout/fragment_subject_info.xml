@@ -229,9 +229,9 @@
 
             <ImageView
                 android:id="@+id/bookIv"
-                android:layout_width="wrap_content"
+                android:layout_width="65dp"
                 android:layout_height="65dp"
-                android:background="@mipmap/ic_subject_literature" />
+                android:background="@drawable/ic_subject_literature" />
 
             <TextView
                 android:id="@+id/literatureTv"
@@ -272,9 +272,9 @@
 
             <ImageView
                 android:id="@+id/bookIv"
-                android:layout_width="wrap_content"
-                android:layout_height="65dp"
-                android:background="@mipmap/ic_subject_literature" />
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/ic_subject_task" />
 
             <TextView
                 android:id="@+id/literatureTv"
@@ -315,9 +315,9 @@
 
             <ImageView
                 android:id="@+id/bookIv"
-                android:layout_width="wrap_content"
+                android:layout_width="65dp"
                 android:layout_height="65dp"
-                android:background="@mipmap/ic_subject_literature" />
+                android:background="@drawable/ic_subject_test" />
 
             <TextView
                 android:id="@+id/literatureTv"

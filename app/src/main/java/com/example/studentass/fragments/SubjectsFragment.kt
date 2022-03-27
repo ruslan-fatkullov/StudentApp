@@ -31,8 +31,7 @@ class SubjectsFragment : Fragment() {
 
 
     companion object{
-        var subID: Long? = null
-        var subName: String? = null
+        var curSub: Subject? = null
     }
 
 
@@ -61,13 +60,15 @@ class SubjectsFragment : Fragment() {
 
         adapter.setOnItemClickListener(object: SubjectsRvAdapter.onItemClickListener{
             override fun setOnClickListener(position: Int) {
-                subID = adapter.dataList[position].id
-                subName = adapter.dataList[position].name
-                getAppCompatActivity<MainActivity>()?.actionBar?.title = subName
+//                subID = adapter.dataList[position].id
+//                subName = adapter.dataList[position].name
+                curSub = adapter.dataList[position]
+                getAppCompatActivity<MainActivity>()?.actionBar?.title = curSub!!.name
                 getAppCompatActivity<MainActivity>()?.switchUp(SubjectInfoFragment::class.java)
             }
 
         })
+
         adapter.notifyDataSetChanged()
 
 

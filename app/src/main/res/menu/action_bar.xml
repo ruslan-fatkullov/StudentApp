@@ -4,9 +4,9 @@
 
     <item android:id="@+id/ab_about_program"
         app:showAsAction="never"
-        android:title="О программе"/>
+        android:title="@string/about_programm_string"/>
     <item android:id="@+id/ab_exit"
         app:showAsAction="never"
-        android:title="Выйти"/>
+        android:title="@string/exit_from_app_string"/>
 
 </menu>

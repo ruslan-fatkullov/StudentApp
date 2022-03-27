@@ -1,10 +1,10 @@
 package com.example.studentass.models
 
-class TestQuestion (
+class TestQuestionModel (
     val id: Long,
     val question: String,
     val questionType: String,
     val complexity: Long,
-    val fileIds: List<Long>,
-    val answers: List<TestAnswer>
+    val fileIds: ArrayList<Long>,
+    val answers: ArrayList<Any>
 )

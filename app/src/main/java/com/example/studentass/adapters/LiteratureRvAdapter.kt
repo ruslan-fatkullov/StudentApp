@@ -11,7 +11,9 @@ import kotlinx.android.synthetic.main.literature_layout_item.view.*
 
 class LiteratureRvAdapter(private val context: Context) : RecyclerView.Adapter<LiteratureRvAdapter.ViewHolder>() {
 
-    class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
+
+    private lateinit var mListner: onItemClickListener
+    class ViewHolder(view: View, var mListner: onItemClickListener): RecyclerView.ViewHolder(view), View.OnClickListener {
 
         val typeOfLiterature = view.typeOfLiterature
         val nameOfLiterature = view.nameOfLiterature
@@ -29,6 +31,16 @@ class LiteratureRvAdapter(private val context: Context) : RecyclerView.Adapter<L
             authorOfLiterature.text = "Автор: ${itemData.authors}"
             descriptionOfLiterature.text = "Описание: ${itemData.description}"
         }
+
+        init {
+            itemView.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            if (mListner != null){
+                mListner.setOnClickListener(adapterPosition)
+            }
+        }
     }
 
     var dataList = ArrayList<LiteratureData>()
@@ -39,7 +51,7 @@ class LiteratureRvAdapter(private val context: Context) : RecyclerView.Adapter<L
         viewType: Int
     ): LiteratureRvAdapter.ViewHolder {
         val inflater = LayoutInflater.from(context)
-        return LiteratureRvAdapter.ViewHolder(inflater.inflate(R.layout.literature_layout_item, parent, false))
+        return LiteratureRvAdapter.ViewHolder(inflater.inflate(R.layout.literature_layout_item, parent, false), mListner)
     }
 
 
@@ -48,6 +60,13 @@ class LiteratureRvAdapter(private val context: Context) : RecyclerView.Adapter<L
     override fun onBindViewHolder(holder: LiteratureRvAdapter.ViewHolder, position: Int) {
         val itemData = dataList[position]
         holder.bind(itemData, context)
+        holder.itemView.setOnClickListener(object : View.OnClickListener{
+            override fun onClick(v: View?) {
+                if (mListner != null){
+                    mListner.setOnClickListener(holder.getAdapterPosition())
+                }
+            }
+        })
 
 
     }
@@ -55,5 +74,11 @@ class LiteratureRvAdapter(private val context: Context) : RecyclerView.Adapter<L
 
 
     override fun getItemCount(): Int = dataList.size
+    interface onItemClickListener{
+        fun setOnClickListener(position: Int)
+    }
+    fun setOnItemClickListener(mListner: onItemClickListener) {
+        this.mListner = mListner
+    }
 
 }

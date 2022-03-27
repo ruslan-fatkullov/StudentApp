@@ -4,15 +4,9 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studentass.R
-import com.example.studentass.fragments.SubjectInfoFragment
-import com.example.studentass.getAppCompatActivity
-import com.example.studentass.models.ScheduleDayCouple
 import com.example.studentass.models.Subject
-import com.example.studentass.models.SubjectOverview
 import kotlinx.android.synthetic.main.subjects_overview_item.view.*
 
 class SubjectsRvAdapter (private val context: Context) : RecyclerView.Adapter<SubjectsRvAdapter.ViewHolder>() {

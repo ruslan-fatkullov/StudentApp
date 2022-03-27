@@ -14,10 +14,14 @@
         android:id="@+id/bnv_rating"
         android:icon="@drawable/ic_bnv_rating"
         android:title="Рейтинг" />
+<!--    <item-->
+<!--        android:id="@+id/bnv_notifications"-->
+<!--        android:icon="@drawable/ic_bnv_notifications"-->
+<!--        android:title="Уведомления" />-->
     <item
-        android:id="@+id/bnv_notifications"
-        android:icon="@drawable/ic_bnv_notifications"
-        android:title="Уведомления" />
+        android:id="@+id/bnv_account"
+        android:icon="@drawable/ic_bnv_account"
+        android:title="Аккаунт" />
 
 
 </menu>

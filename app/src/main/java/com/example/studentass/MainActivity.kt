@@ -3,17 +3,17 @@ package com.example.studentass
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.example.studentass.common.MemoryManager
 import com.example.studentass.fragments.AboutProgramFragment
 import com.example.studentass.fragments.LoginFragment
 import com.example.studentass.fragments.MainFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.properties.Delegates
+import kotlin.reflect.KClass
+import kotlin.reflect.KProperty1
 
 
 /*
@@ -37,7 +37,6 @@ class MainActivity : AppCompatActivity() {
     private val fragmentLayers = arrayOfNulls<Fragment?>(fragmentLayersMaxDepth)            // Список слоёв (фргментов) в контейнере активити
     private var fragmentsMainContainerId by Delegates.notNull<Int>()                        // ID контейнера активити
 
-
     /*
      * Создаёт панель действий
      */
@@ -57,10 +56,6 @@ class MainActivity : AppCompatActivity() {
             R.id.ab_exit -> {
                 switchSideways(LoginFragment::class.java)
                 LoginFragment.logOut()
-//                    .subscribe(
-//                    { MemoryManager.deleteTokens(this)},
-//                    { e -> Toast.makeText(this, "LogOut error: $e", Toast.LENGTH_LONG).show() }
-//                )
             }
             R.id.ab_about_program -> {
                 switchUp(AboutProgramFragment::class.java)
@@ -160,6 +155,8 @@ class MainActivity : AppCompatActivity() {
         fragmentManager.beginTransaction().add(fragmentsMainContainerId, newFragment).commit()
         fragmentLayers[fragmentLayersDepth] = newFragment
     }
+
+
 
 
 }
