@@ -7,22 +7,22 @@
 
 
     <LinearLayout
-        android:id="@+id/selectLL"
+        android:id="@+id/sequenceLL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         tools:ignore="MissingConstraints">
 
         <TextView
-            android:id="@+id/selectTvTitle"
+            android:id="@+id/sequenceTvTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10sp"
-            android:text="@string/choseRightVariant"
-            android:textSize="18sp" />
+            android:text="@string/rightSequence"
+            android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/selectTV"
+            android:id="@+id/sequenceTV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="25sp"
@@ -31,12 +31,12 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/select_item_RV"
+        android:id="@+id/sequence_item_RV"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/selectLL" />
+        app:layout_constraintTop_toBottomOf="@id/sequenceLL" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

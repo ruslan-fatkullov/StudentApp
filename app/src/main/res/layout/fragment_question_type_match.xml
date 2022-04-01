@@ -1,39 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
-    <FrameLayout
-        android:id="@+id/match_questionRv"
+    <LinearLayout
+        android:id="@+id/matchLL"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
 
-        android:layout_alignParentBottom="true">
-
+        <TextView
+            android:id="@+id/matchTvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10sp"
+            android:text="@string/matchVariants"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/matchTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/match_aCCL"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="25dp">
+            android:layout_height="wrap_content"
+            android:padding="25sp"
+            android:text="@string/questionTitle"
+            android:textSize="24sp" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
-    </FrameLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/match_item_RV"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/matchLL" />
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

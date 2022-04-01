@@ -10,13 +10,13 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studentass.R
+import com.example.studentass.fragments.QuestionTypeSelectFragment
 import com.example.studentass.models.TestAnswer
 import kotlinx.android.synthetic.main.select_question_item.view.*
 
 class QuestionSelectRvAdapter(private val context: Context) : RecyclerView.Adapter<QuestionSelectRvAdapter.ViewHolder>() {
 
-    private lateinit var mListner: onItemClickListener
-    class ViewHolder(view: View, var mListner: QuestionSelectRvAdapter.onItemClickListener): RecyclerView.ViewHolder(view), View.OnClickListener {
+    class ViewHolder(view: View): RecyclerView.ViewHolder(view){
         val select_item = view.select_item
         val jopa = view.answer_text
         fun bind(itemData: TestAnswer, context: Context, clicked: Boolean) {
@@ -31,14 +31,7 @@ class QuestionSelectRvAdapter(private val context: Context) : RecyclerView.Adapt
             select_item.background = drawable
 
         }
-        init {
-            itemView.setOnClickListener(this)
-        }
-        override fun onClick(v: View?) {
-            if (mListner != null){
-                mListner.setOnClickListener(adapterPosition)
-            }
-        }
+
     }
 
     var dataList = ArrayList<TestAnswer>()
@@ -51,21 +44,23 @@ class QuestionSelectRvAdapter(private val context: Context) : RecyclerView.Adapt
         viewType: Int
     ): QuestionSelectRvAdapter.ViewHolder {
         val inflater = LayoutInflater.from(context)
-        return QuestionSelectRvAdapter.ViewHolder(inflater.inflate(R.layout.select_question_item, parent, false), mListner)
+        return QuestionSelectRvAdapter.ViewHolder(inflater.inflate(R.layout.select_question_item, parent, false))
     }
 
     override fun onBindViewHolder(holder: QuestionSelectRvAdapter.ViewHolder, position: Int) {
         val itemData = dataList[position]
         val cl = clicked[position]
         holder.bind(itemData, context, cl)
-        holder.select_item.setOnClickListener(object : View.OnClickListener{
-            override fun onClick(v: View?) {
-                if (mListner != null){
-                    mListner.setOnClickListener(holder.getAdapterPosition())
-                }
-                //
+        holder.select_item.setOnClickListener {
+            if (cl) {
+                QuestionTypeSelectFragment.answ.remove(dataList[holder.adapterPosition].id)
+                clicked[holder.adapterPosition] = false
+            } else {
+                QuestionTypeSelectFragment.answ.add(dataList[holder.adapterPosition].id)
+                clicked[holder.adapterPosition] = true
             }
-        })
+            notifyItemChanged(holder.adapterPosition)
+        }
 
 
     }
@@ -74,11 +69,6 @@ class QuestionSelectRvAdapter(private val context: Context) : RecyclerView.Adapt
 
     override fun getItemCount(): Int = dataList.size
 
-    interface onItemClickListener{
-        fun setOnClickListener(position: Int)
-    }
-    fun setOnItemClickListener(mListner:onItemClickListener){
-        this.mListner = mListner
-    }
+
 
 }

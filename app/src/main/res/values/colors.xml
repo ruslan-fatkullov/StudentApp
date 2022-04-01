@@ -40,5 +40,6 @@
     <color name="colorSubjectBackgroundDefault">#F2F7FF</color>
     <color name="colorGreen">#27FF00</color>
     <color name="white">#FFFFFF</color>
+    <color name="testGreenColor">#63C060</color>
 
 </resources>

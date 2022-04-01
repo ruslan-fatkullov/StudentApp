@@ -33,8 +33,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorPrimaryDark">
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/questionTitleTv"
@@ -99,10 +98,9 @@
         android:layout_alignParentBottom="true"
         android:padding="16dp">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_height="match_parent">
 
             <Button
                 android:id="@+id/previousQuestionBtn"
@@ -111,18 +109,23 @@
                 android:layout_marginHorizontal="2dp"
                 android:background="@color/colorPrimary"
                 android:text="@string/Back"
-                style="?android:attr/buttonBarButtonStyle" />
+                android:paddingHorizontal="5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/nextQuestionBtn"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="2dp"
-                android:layout_weight="1"
+                android:paddingHorizontal="5dp"
                 android:background="@color/colorPrimary"
                 android:text="@string/Forward"
-                style="?android:attr/buttonBarButtonStyle" />
-        </LinearLayout>
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </FrameLayout>
 

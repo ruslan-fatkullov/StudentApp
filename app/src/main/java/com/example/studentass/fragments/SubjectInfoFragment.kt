@@ -1,11 +1,11 @@
 package com.example.studentass.fragments
 
-import android.graphics.Color.red
-import android.graphics.drawable.ColorDrawable
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.example.studentass.MainActivity
 import com.example.studentass.R
@@ -23,11 +23,21 @@ class SubjectInfoFragment : Fragment() {
     /*
      * Инициализация элементов интерфейса
      */
+    @RequiresApi(Build.VERSION_CODES.R)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val bookIv = view.bookIv
-        bookIv.setColorFilter(R.color.black)
+        val wm = context!!.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        val display = wm.defaultDisplay
+        val width: Int = display.width
+        val subjectTaskLayout = view.subjectTaskLayout
+        val subjectLiteratureLayout = view.subjectLiteratureLayout
+        val subjectTestLayout = view.subjectTestLayout
+
+        subjectTaskLayout.layoutParams.width = width / 3
+        subjectLiteratureLayout.layoutParams.width = width / 3
+        subjectTestLayout.layoutParams.width = width / 3
+
 
         subjectLiteratureLayout.setOnClickListener(){
             // to Literature page

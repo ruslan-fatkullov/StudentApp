@@ -1,15 +1,16 @@
 package com.example.studentass.adapters
 
 import android.content.Context
+import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studentass.R
-import com.example.studentass.models.LiteratureData
 import com.example.studentass.models.TestThemesData
-import kotlinx.android.synthetic.main.literature_layout_item.view.*
-import kotlinx.android.synthetic.main.task_layout_item.view.*
+import kotlinx.android.synthetic.main.fragment_test.view.*
 import kotlinx.android.synthetic.main.test_layout_item.view.*
 
 class TestRvAdapter(private val context: Context) : RecyclerView.Adapter<TestRvAdapter.ViewHolder>() {
@@ -18,19 +19,31 @@ class TestRvAdapter(private val context: Context) : RecyclerView.Adapter<TestRvA
     private lateinit var mListner: onItemClickListener
     class ViewHolder(view: View, var mListner: onItemClickListener): RecyclerView.ViewHolder(view), View.OnClickListener {
 
+        val test_item = view.test_item
         val nameOfTestV = view.nameOfTestV
         val descriptionOfTest = view.descriptionOfTest
+        val button2 = view.button2
+        val numberOfTest = view.numberOfTest
 
         //val typeOfTask = when(itemView.)
 
 
-        fun bind(itemData: TestThemesData, context: Context) {
+        fun bind(itemData: TestThemesData, context: Context, position: Int) {
+            var drawable = DrawableCompat.wrap(ContextCompat.getDrawable(context, R.drawable.select_answer_item_background)!!)
+            DrawableCompat.setTintMode(drawable, PorterDuff.Mode.SRC_ATOP);
+            test_item.background = drawable
+
             nameOfTestV.text = itemData.name
             descriptionOfTest.text = itemData.decryption
+            numberOfTest.text = "#${(position+1).toString()}"
+
+            var drawable1 = DrawableCompat.wrap(ContextCompat.getDrawable(context, R.drawable.button_green_background)!!)
+            DrawableCompat.setTintMode(drawable, PorterDuff.Mode.SRC_ATOP);
+            button2.background = drawable1
         }
 
         init {
-            itemView.setOnClickListener(this)
+            button2.setOnClickListener(this)
         }
 
         override fun onClick(v: View?) {
@@ -56,8 +69,8 @@ class TestRvAdapter(private val context: Context) : RecyclerView.Adapter<TestRvA
 
     override fun onBindViewHolder(holder: TestRvAdapter.ViewHolder, position: Int) {
         val itemData = dataList[position]
-        holder.bind(itemData, context)
-        holder.itemView.setOnClickListener(object : View.OnClickListener{
+        holder.bind(itemData, context, position)
+        holder.button2.setOnClickListener(object : View.OnClickListener{
             override fun onClick(v: View?) {
                 if (mListner != null){
                     mListner.setOnClickListener(holder.getAdapterPosition())

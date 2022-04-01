@@ -23,4 +23,9 @@
     <string name="Question">Вопрос</string>
     <string name="Back">Назад</string>
     <string name="Forward">Далее</string>
+    <string name="choseRightVariant">Выберете правильные варианты</string>
+    <string name="matchVariants">Соотнесите варианты</string>
+    <string name="rightSequence">Постройте правильную последовательность</string>
+    <string name="match_value">Значение</string>
+    <string name="match_key">Ключ</string>
 </resources>

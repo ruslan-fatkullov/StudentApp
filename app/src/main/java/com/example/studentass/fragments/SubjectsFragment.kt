@@ -46,7 +46,7 @@ class SubjectsFragment : Fragment() {
 
 
         val requestBody = "Bearer " + token
-        val userId = 56
+//        val userId = 56
         val adapter = subjectsRv.adapter as SubjectsRvAdapter
         val disposableSubjectListRx = subjectApiService
             .getIdSubject(requestBody)
@@ -60,8 +60,6 @@ class SubjectsFragment : Fragment() {
 
         adapter.setOnItemClickListener(object: SubjectsRvAdapter.onItemClickListener{
             override fun setOnClickListener(position: Int) {
-//                subID = adapter.dataList[position].id
-//                subName = adapter.dataList[position].name
                 curSub = adapter.dataList[position]
                 getAppCompatActivity<MainActivity>()?.actionBar?.title = curSub!!.name
                 getAppCompatActivity<MainActivity>()?.switchUp(SubjectInfoFragment::class.java)

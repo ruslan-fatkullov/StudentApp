@@ -5,15 +5,10 @@
     android:id="@+id/subjectLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="16dp"
-    android:layout_marginTop="5dp"
-    android:layout_marginRight="16dp"
-    android:layout_marginBottom="5dp"
-    android:background="@color/colorSubjectBackgroundDefault"
-    android:paddingLeft="32dp"
-    android:paddingTop="16dp"
-    android:paddingRight="16dp"
-    android:paddingBottom="16dp"
+    android:layout_marginLeft="15dp"
+    android:layout_marginTop="15dp"
+    android:layout_marginRight="15dp"
+    android:padding="15dp"
     >
 
     <TextView
@@ -21,47 +16,35 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Название предмета"
+        android:textSize="18sp"
+        android:padding="14dp"
+        android:layout_marginStart="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/view7"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="15dp" />
+
+    <View
+        android:id="@+id/view7"
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/numberOfSubject"
+        android:layout_marginStart="15dp"
+        android:background="#878993"
+        android:layout_marginLeft="15dp" />
+
+    <TextView
+        android:id="@+id/numberOfSubject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="#4"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/teacherIv"
-        android:layout_width="18dp"
-        android:layout_height="18dp"
-        app:srcCompat="@drawable/ic_im_schedule_pair_ico_teacher"
-        tools:layout_editor_absoluteX="206dp"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="14dp"
-        app:layout_constraintTop_toBottomOf="@+id/subjectNameTv"
-        />
-
-    <TextView
-        android:id="@+id/teacherTv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Имя преподавателя"
-        android:layout_marginStart="7dp"
-        android:layout_marginLeft="7dp"
-        app:layout_constraintBottom_toBottomOf="@+id/teacherIv"
-        app:layout_constraintStart_toEndOf="@+id/teacherIv"/>
-
-    <ImageView
-        android:id="@+id/progressIv"
-        android:layout_width="18dp"
-        android:layout_height="18dp"
-        android:layout_marginTop="14dp"
-        app:srcCompat="@android:drawable/ic_menu_sort_by_size"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/teacherIv"/>
-
-    <TextView
-        android:id="@+id/progressTv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Прогресс"
-        android:layout_marginStart="7dp"
-        android:layout_marginLeft="7dp"
-        app:layout_constraintBottom_toBottomOf="@+id/progressIv"
-        app:layout_constraintStart_toEndOf="@+id/progressIv" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

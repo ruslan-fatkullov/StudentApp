@@ -1,6 +1,7 @@
 package com.example.studentass.adapters
 
 import android.content.Context
+import android.graphics.Color
 import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.View
@@ -31,19 +32,24 @@ class TaskRvAdapter(private val context: Context) : RecyclerView.Adapter<TaskRvA
 
         fun bind(itemData: TaskModel, context: Context) {
 
-            val drawable = DrawableCompat.wrap(ContextCompat.getDrawable(context, R.drawable.task_background)!!)
-            DrawableCompat.setTint(drawable, ContextCompat.getColor(context, when (itemData.type) {
-                "LAB" -> R.color.colorTaskLaboratoryBackground
-                else -> R.color.colorTaskPracticeBackground
-            }))
+            val taskTypeBackground = when (itemData.type) {
+                "LAB" -> R.drawable.task_item_lab_background
+                else -> R.drawable.task_item_practice_background
+            }
+
+
+            val drawable = DrawableCompat.wrap(ContextCompat.getDrawable(context, taskTypeBackground)!!)
             DrawableCompat.setTintMode(drawable, PorterDuff.Mode.SRC_ATOP);
             mainTaskLayout.background = drawable
 
 
-            val taskTypeColor = when (itemData.type) {
-                "LAB" -> R.color.colorTaskLaboratoryBackground
-                else -> R.color.colorTaskPracticeBackground
-            }
+            var drawable1 = DrawableCompat.wrap(ContextCompat.getDrawable(context, when (itemData.type) {
+                "LAB" -> R.drawable.task_type_laboratory
+                else -> R.drawable.task_type_practice
+            })!!)
+            DrawableCompat.setTintMode(drawable1, PorterDuff.Mode.SRC_ATOP);
+            typeTask.background = drawable1
+
 
             titleTask.text = itemData.title
             descriptionTask.text = itemData.description
@@ -52,18 +58,9 @@ class TaskRvAdapter(private val context: Context) : RecyclerView.Adapter<TaskRvA
                 "PRACTICE" -> "Практика"
                 else -> ({}).toString()
             }
-            typeTask.setTextColor(ContextCompat.getColor(context, taskTypeColor))
+
         }
 
-//        init {
-//            itemView.setOnClickListener(this)
-//        }
-//
-//        override fun onClick(v: View?) {
-//            if (mListner != null){
-//                mListner.setOnClickListener(adapterPosition)
-//            }
-//        }
     }
 
     var dataList = ArrayList<TaskModel>()
@@ -83,26 +80,10 @@ class TaskRvAdapter(private val context: Context) : RecyclerView.Adapter<TaskRvA
     override fun onBindViewHolder(holder: TaskRvAdapter.ViewHolder, position: Int) {
         val itemData = dataList[position]
         holder.bind(itemData, context)
-//        holder.itemView.setOnClickListener(object : View.OnClickListener{
-//            override fun onClick(v: View?) {
-//                if (mListner != null){
-//                    mListner.setOnClickListener(holder.getAdapterPosition())
-//                }
-//            }
-//        })
-
 
     }
 
     override fun getItemCount(): Int = dataList.size
 
-
-//    override fun getItemCount(): Int = dataList.size
-//    interface onItemClickListener{
-//        fun setOnClickListener(position: Int)
-//    }
-//    fun setOnItemClickListener(mListner: onItemClickListener) {
-//        this.mListner = mListner
-//    }
 
 }

@@ -3,9 +3,13 @@ package com.example.studentass.services
 
 import com.example.studentass.models.Subject
 import com.example.studentass.models.TaskModel
+import com.example.studentass.models.TestQuestion
 import com.example.studentass.models.TestThemesData
+import com.example.studentass.models.testResultModel.testResult
+import com.example.studentass.models.testResultModel.toCheckModel
 import io.reactivex.Observable
 import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -56,6 +60,15 @@ interface SubjectApiService  {
      */
     @POST("/task/criteria-search")
     fun getIdTask(@Header("Authorization") auth: String?, @Body requestBody: RequestBody): Observable<List<TaskModel>>
+
+    @GET("/testing/new/test")
+    fun getTestByThemeId(@Header("Authorization") auth: String?, @Query("theme_id") theme_id: Long?, @Query("limit") limit: Long?): Observable<List<TestQuestion>>
+
+    /*
+         * Проверка теста
+         */
+    @POST("/testing/new/test/check")
+    fun checkTest(@Header("Authorization") auth: String?, @Body requestBody: RequestBody): Observable<testResult>
 
 
 }
