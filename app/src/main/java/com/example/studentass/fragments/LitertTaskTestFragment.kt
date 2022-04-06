@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.studentass.MainActivity
@@ -20,6 +22,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_literature.*
+import kotlinx.android.synthetic.main.fragment_schedule.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
@@ -28,22 +31,23 @@ import java.util.ArrayList
 class LitertTaskTestFragment : Fragment() {
     private val compositeDisposable = CompositeDisposable()
     private var literatureList: List<LiteratureData>? = null
-    private var themesListOf: List<TestThemesData>? = null
+    private var themesListOf: List<PassedTests>? = null
     private var taskListOf: List<TaskModel>? = null
     private val literatureApiService = LiteratureApiService.create()
     private val subService = SubjectApiService.create()
     public var currentLiterId: Long? = null
-    companion object{
-        var currentTest: TestThemesData? = null
+
+    companion object {
+        var currentTest: PassedTests? = null
     }
-
-
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        when(SubjectInfoFragment.selected_item){
+
+
+        when (SubjectInfoFragment.selected_item) {
             "Literature" -> loadLiterarute()
             "Test" -> loadThemes()
             "Task" -> loadTask()
@@ -63,8 +67,9 @@ class LitertTaskTestFragment : Fragment() {
         super.onHiddenChanged(hidden)
         getAppCompatActivity<MainActivity>()?.actionBar?.show()
         if (!hidden) {
-            when(SubjectInfoFragment.selected_item){
-                "Literature" -> getAppCompatActivity<MainActivity>()?.actionBar?.title = "Список литературы"
+            when (SubjectInfoFragment.selected_item) {
+                "Literature" -> getAppCompatActivity<MainActivity>()?.actionBar?.title =
+                    "Список литературы"
                 "Test" -> getAppCompatActivity<MainActivity>()?.actionBar?.title = "Тесты"
                 "Task" -> getAppCompatActivity<MainActivity>()?.actionBar?.title = "Задания"
             }
@@ -72,11 +77,14 @@ class LitertTaskTestFragment : Fragment() {
         }
     }
 
-    private fun onGetIdsLiterature(literatureLis: List<LiteratureData>, adapter: LiteratureRvAdapter){
+    private fun onGetIdsLiterature(
+        literatureLis: List<LiteratureData>,
+        adapter: LiteratureRvAdapter
+    ) {
         literatureList = literatureLis
         adapter.dataList = literatureList as ArrayList<LiteratureData>
 
-        adapter.setOnItemClickListener(object: LiteratureRvAdapter.onItemClickListener{
+        adapter.setOnItemClickListener(object : LiteratureRvAdapter.onItemClickListener {
             override fun setOnClickListener(position: Int) {
                 currentLiterId = (literatureList as ArrayList<LiteratureData>).get(position).id
                 Toast.makeText(context, currentLiterId.toString(), Toast.LENGTH_SHORT).show()
@@ -88,14 +96,30 @@ class LitertTaskTestFragment : Fragment() {
 
     }
 
-    private fun onGetThemes(themesList: List<TestThemesData>, adapter: TestRvAdapter){
+    private fun onGetThemes(
+        themesList: List<PassedTests>,
+        adapter: TestRvAdapter,
+        requestBody: String,
+        subjectId: Long?
+    ) {
+
         themesListOf = themesList
-        adapter.dataList = themesListOf as ArrayList<TestThemesData>
+        adapter.dataList = themesListOf as ArrayList<PassedTests>
 
+//        val disposablePassedTestsListRx = subService
+//            .getPassedTests(requestBody, subjectId, AccountFragment.currentUser.id)
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribeOn(Schedulers.io())
+//            .subscribe(
+//                {r -> onGetPassedTest(r, adapter)},
+//                {e -> Toast.makeText(context, "Get passed test error: $e", Toast.LENGTH_LONG).show()}
+//            )
+//        compositeDisposable.add(disposablePassedTestsListRx)
 
-        adapter.setOnItemClickListener(object: TestRvAdapter.onItemClickListener{
+        //перенести
+        adapter.setOnItemClickListener(object : TestRvAdapter.onItemClickListener {
             override fun setOnClickListener(position: Int) {
-                currentTest = (themesListOf  as ArrayList<TestThemesData>)[position]
+                currentTest = (themesListOf as ArrayList<PassedTests>)[position]
                 getAppCompatActivity<MainActivity>()?.actionBar?.hide()
                 getAppCompatActivity<MainActivity>()?.switchUp(TestFragment::class.java)
             }
@@ -104,19 +128,25 @@ class LitertTaskTestFragment : Fragment() {
         adapter.notifyDataSetChanged()
     }
 
-    private  fun onGetTask(taskList: List<TaskModel>){
-        if (taskList != null){
+    private fun onGetPassedTest(r: List<PassedTests>, adapter: TestRvAdapter) {
+        Toast.makeText(context, "Success", Toast.LENGTH_LONG).show()
+        adapter.notifyDataSetChanged()
+    }
+
+    private fun onGetTask(taskList: List<TaskModel>) {
+        if (taskList != null) {
             var adapter = literatureRv.adapter as TaskRvAdapter
             adapter.dataList = taskList as ArrayList<TaskModel>
             adapter.notifyDataSetChanged()
-        }else{
+        } else {
             Toast.makeText(context, "nol`", Toast.LENGTH_SHORT).show()
         }
 
     }
 
-    fun loadLiterarute(){
-        literatureRv.layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
+    fun loadLiterarute() {
+        literatureRv.layoutManager =
+            LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
         literatureRv.adapter = LiteratureRvAdapter(context!!)
 
         val requestBody = "Bearer " + LoginFragment.token
@@ -124,37 +154,45 @@ class LitertTaskTestFragment : Fragment() {
         val userId = 2
         val adapter = literatureRv.adapter as LiteratureRvAdapter
         val disposableLiteratureListRx = literatureApiService
-            .getIdLiterature(requestBody, subjectId , userId)
+            .getIdLiterature(requestBody, subjectId, userId)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe(
-                {r -> onGetIdsLiterature(r, adapter)},
-                {e -> Toast.makeText(context, "Get literature list error: $e", Toast.LENGTH_LONG).show()}
+                { r -> onGetIdsLiterature(r, adapter) },
+                { e ->
+                    Toast.makeText(context, "Get literature list error: $e", Toast.LENGTH_LONG)
+                        .show()
+                }
             )
         compositeDisposable.add(disposableLiteratureListRx)
 
     }
 
-    fun loadThemes(){
-        literatureRv.layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
+    fun loadThemes() {
+        literatureRv.layoutManager =
+            LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
         literatureRv.adapter = TestRvAdapter(context!!)
 
         val requestBody = "Bearer " + LoginFragment.token
         val subjectId = SubjectsFragment.curSub?.id?.toLong()
         val adapter = literatureRv.adapter as TestRvAdapter
         val disposableSubjectListRx = subService
-            .getIdThemes(requestBody, subjectId)
+            .getPassedTests(requestBody, subjectId, AccountFragment.currentUser.id)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe(
-                {r -> onGetThemes(r, adapter)},
-                {e -> Toast.makeText(context, "Get literature list error: $e", Toast.LENGTH_LONG).show()}
+                { r -> onGetThemes(r, adapter, requestBody, subjectId) },
+                { e ->
+                    Toast.makeText(context, "Get literature list error: $e", Toast.LENGTH_LONG)
+                        .show()
+                }
             )
         compositeDisposable.add(disposableSubjectListRx)
     }
 
-    fun loadTask(){
-        literatureRv.layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
+    fun loadTask() {
+        literatureRv.layoutManager =
+            LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
         literatureRv.adapter = TaskRvAdapter(context!!)
 
         val header = "Bearer " + LoginFragment.token
@@ -172,8 +210,11 @@ class LitertTaskTestFragment : Fragment() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe(
-                {r -> onGetTask(r)},
-                {e -> Toast.makeText(context, "Get literature list error: $e", Toast.LENGTH_LONG).show()}
+                { r -> onGetTask(r) },
+                { e ->
+                    Toast.makeText(context, "Get literature list error: $e", Toast.LENGTH_LONG)
+                        .show()
+                }
             )
         compositeDisposable.add(disposableSubjectListRx)
     }
@@ -185,13 +226,12 @@ class LitertTaskTestFragment : Fragment() {
         answers.add(3)
         answers.add("da")
         var dataOFQues = arrayListOf<TestQuestionModel>()
-        dataOFQues.add(TestQuestionModel(1, "Вопрос 1","WRITE", 1, fileIds, answers))
-        dataOFQues.add(TestQuestionModel(2, "Вопрос 2","SELECT",1, fileIds, answers))
-        dataOFQues.add(TestQuestionModel(3, "Вопрос 3","MATCH", 1, fileIds, answers))
+        dataOFQues.add(TestQuestionModel(1, "Вопрос 1", "WRITE", 1, fileIds, answers))
+        dataOFQues.add(TestQuestionModel(2, "Вопрос 2", "SELECT", 1, fileIds, answers))
+        dataOFQues.add(TestQuestionModel(3, "Вопрос 3", "MATCH", 1, fileIds, answers))
         return dataOFQues
 
     }
-
 
 
 }

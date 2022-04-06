@@ -22,7 +22,7 @@ import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studentass.R
 import com.example.studentass.models.ScheduleDayCouple
-import kotlinx.android.synthetic.main.schedule_pair_rv_item.view.*
+import kotlinx.android.synthetic.main.schedule_pair_rv_item_new.view.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -185,7 +185,7 @@ class SchedulePairsRvAdapter (private val context : Context) : RecyclerView.Adap
         viewType: Int
     ): ViewHolder {
         val inflater = LayoutInflater.from(context)
-        return  ViewHolder(inflater.inflate(R.layout.schedule_pair_rv_item, parent, false))
+        return  ViewHolder(inflater.inflate(R.layout.schedule_pair_rv_item_new, parent, false))
     }
 
     override fun getItemCount(): Int = dataList.size

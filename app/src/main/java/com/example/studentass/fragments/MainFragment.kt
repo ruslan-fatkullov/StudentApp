@@ -4,12 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.studentass.MainActivity
 import com.example.studentass.R
+import com.example.studentass.adapters.SubjectsRvAdapter
 import com.example.studentass.getAppCompatActivity
+import com.example.studentass.models.User
+import com.example.studentass.services.SubjectApiService
+import com.example.studentass.services.UserApiService
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_main.*
+import kotlinx.android.synthetic.main.fragment_subjects.*
 
 
 /*
@@ -18,6 +27,7 @@ import kotlinx.android.synthetic.main.fragment_main.*
 class MainFragment : Fragment() {
     private lateinit var sfm: FragmentManager
     private lateinit var currentFragment: Fragment
+
 
 
     /*
@@ -29,16 +39,13 @@ class MainFragment : Fragment() {
         sfm = getAppCompatActivity<MainActivity>()!!.fragmentManager
 
         val ratingFragment = RatingFragment()
-        val scheduleFragment = ScheduleFragment()
+        val scheduleFragmentNew = ScheduleFragmentNew()
         val subjectsFragment = SubjectsFragment()
         val notificationsFragment = NotificationsFragment()
         val accountFragment = AccountFragment()
-        //
-//        val testF = TestFragment()
-        //
 
-        sfm.beginTransaction().add(fragment_container.id, scheduleFragment).commit()
-        sfm.beginTransaction().hide(scheduleFragment).commit()
+        sfm.beginTransaction().add(fragment_container.id, scheduleFragmentNew).commit()
+        sfm.beginTransaction().hide(scheduleFragmentNew).commit()
 
         sfm.beginTransaction().add(fragment_container.id, subjectsFragment).commit()
         sfm.beginTransaction().hide(subjectsFragment).commit()
@@ -57,13 +64,13 @@ class MainFragment : Fragment() {
 //        sfm.beginTransaction().hide(testF).commit()
         ///
 
-        currentFragment = scheduleFragment
+        currentFragment = scheduleFragmentNew
         sfm.beginTransaction().show(currentFragment).commit()
 
         bottomNavigationView.setOnNavigationItemSelectedListener {
             sfm.beginTransaction().hide(currentFragment).commit()
             currentFragment = when (it.itemId) {
-                R.id.bnv_schedule -> scheduleFragment
+                R.id.bnv_schedule -> scheduleFragmentNew
                 R.id.bnv_subjects -> subjectsFragment
                 //R.id.bnv_subjects -> testF
                 R.id.bnv_rating -> ratingFragment
@@ -74,8 +81,12 @@ class MainFragment : Fragment() {
             true
         }
 
+
+
+
         onHiddenChanged(false)
     }
+
 
 
     /*

@@ -6,15 +6,29 @@
     android:layout_height="match_parent"
     tools:context=".fragments.SubjectsFragment">
 
+    <TextView
+        android:id="@+id/subjectAbsenceTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Предметов нет"
+        android:textColor="#567E7E7E"
+        android:textSize="24sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/subjectsRv"
+        app:layout_constraintEnd_toEndOf="@+id/subjectsRv"
+        app:layout_constraintStart_toStartOf="@+id/subjectsRv"
+        app:layout_constraintTop_toTopOf="@+id/subjectsRv"
+        app:layout_constraintVertical_bias="0.4" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/subjectsRv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="-1dp" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

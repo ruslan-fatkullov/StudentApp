@@ -173,9 +173,7 @@ class TestFragment : Fragment() {
             "SELECT" -> qFragment = QuestionTypeSelectFragment()
             "WRITE" -> qFragment = QuestionTypeWriteFragment()
             "SEQUENCE" -> qFragment = QuestionTypeSequenceFragment()
-            else -> {
-                getTest(context, questions)
-            }//qFragment = QuestionTypeMatchFragment()
+            else -> qFragment = QuestionTypeMatchFragment()
         }
         sfm = getAppCompatActivity<MainActivity>()!!.fragmentManager
         sfm.beginTransaction().add(questionFrame.id, qFragment!!).commit()
@@ -183,7 +181,7 @@ class TestFragment : Fragment() {
 
     private fun loadTest(limit: Long){
         val auth = "Bearer " + LoginFragment.token
-        val themeId: Long? = currentTest?.id
+        val themeId: Long? = currentTest?.theme?.id
         val disposableSubjectListRx = subjectApiService
             .getTestByThemeId(auth, themeId, limit)
             .observeOn(AndroidSchedulers.mainThread())

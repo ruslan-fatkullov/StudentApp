@@ -1,0 +1,6 @@
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/loading_rotate">
+    <target
+        android:name="logoGroup"
+        android:animation="@animator/loading_animation" />
+</animated-vector>

@@ -198,6 +198,8 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="5dp"
+
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -216,6 +218,20 @@
         app:layout_constraintStart_toStartOf="@+id/schedulePairsRv"
         app:layout_constraintTop_toTopOf="@+id/schedulePairsRv"
         app:layout_constraintVertical_bias="0.4" />
+
+
+    <ImageView
+        android:id="@+id/loadingImage"
+        android:layout_width="320dp"
+        android:layout_height="320dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/schedulePairsRv"
+        app:layout_constraintEnd_toEndOf="@+id/schedulePairsRv"
+        app:layout_constraintStart_toStartOf="@+id/schedulePairsRv"
+        app:layout_constraintTop_toTopOf="@+id/schedulePairsRv"
+        android:src="@drawable/loading_rotate" />
+
+
 
     <LinearLayout
         android:id="@+id/scheduleGroupLl"

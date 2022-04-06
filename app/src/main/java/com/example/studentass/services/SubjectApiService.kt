@@ -1,10 +1,7 @@
 package com.example.studentass.services
 
 
-import com.example.studentass.models.Subject
-import com.example.studentass.models.TaskModel
-import com.example.studentass.models.TestQuestion
-import com.example.studentass.models.TestThemesData
+import com.example.studentass.models.*
 import com.example.studentass.models.testResultModel.testResult
 import com.example.studentass.models.testResultModel.toCheckModel
 import io.reactivex.Observable
@@ -34,7 +31,6 @@ interface SubjectApiService  {
     /*
      * Получение списка предметов
      */
-    //@Headers({"Authorization", "Bearer "+ token})
     @GET("subject/all")
     fun getSubjectAll(@Header("Authorization") auth: String?): Observable<List<Subject>>
 
@@ -43,12 +39,6 @@ interface SubjectApiService  {
      */
     @GET("subject/learning")
     fun getIdSubject(@Header("Authorization") auth: String?): Observable<List<Subject>>
-//    /*
-//         * Получение списка предметов по id пользователя
-//         */
-//    @GET("subject/learning")
-//    fun getIdSubject(@Header("Authorization") auth: String?, @Query("userid") userid: Int): Observable<List<Subject>>
-
     /*
      * Получение списка тем тестов
      */
@@ -69,6 +59,9 @@ interface SubjectApiService  {
          */
     @POST("/testing/new/test/check")
     fun checkTest(@Header("Authorization") auth: String?, @Body requestBody: RequestBody): Observable<testResult>
+
+    @GET("/testing/new/test/passed-themes")
+    fun getPassedTests(@Header("Authorization") auth: String?, @Query("subj_id") subj_id: Long?, @Query("user_id") user_id: Long?): Observable<List<PassedTests>>
 
 
 }

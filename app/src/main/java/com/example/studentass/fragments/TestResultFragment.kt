@@ -26,7 +26,7 @@ class TestResultFragment : Fragment() {
         testResultPercent.text = "${TestFragment.ratingOfTest.toString()}%"
 
         backToTestBottom.setOnClickListener {
-            getAppCompatActivity<MainActivity>()?.switchDown()
+            getAppCompatActivity<MainActivity>()?.switchDown()//TestFragment::class.java
         }
     }
     override fun onCreateView(

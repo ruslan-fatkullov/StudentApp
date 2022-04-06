@@ -5,10 +5,12 @@ import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studentass.R
+import com.example.studentass.models.PassedTests
 import com.example.studentass.models.TestThemesData
 import kotlinx.android.synthetic.main.fragment_test.view.*
 import kotlinx.android.synthetic.main.test_layout_item.view.*
@@ -25,17 +27,26 @@ class TestRvAdapter(private val context: Context) : RecyclerView.Adapter<TestRvA
         val button2 = view.button2
         val numberOfTest = view.numberOfTest
 
+        val countOfTryes = view.countOfTryes
+        val resultOfTest = view.resultOfTest
+
         //val typeOfTask = when(itemView.)
 
 
-        fun bind(itemData: TestThemesData, context: Context, position: Int) {
+        fun bind(itemData: PassedTests, context: Context, position: Int) {
             var drawable = DrawableCompat.wrap(ContextCompat.getDrawable(context, R.drawable.select_answer_item_background)!!)
             DrawableCompat.setTintMode(drawable, PorterDuff.Mode.SRC_ATOP);
             test_item.background = drawable
 
-            nameOfTestV.text = itemData.name
-            descriptionOfTest.text = itemData.decryption
+            nameOfTestV.text = itemData.theme.name
+            descriptionOfTest.text = itemData.theme.decryption
             numberOfTest.text = "#${(position+1).toString()}"
+
+
+            val countTry = "Попыток: ${itemData.ratings.size}"
+            val maxResult = "Результат: ${itemData.ratings.maxOrNull()}%"
+            countOfTryes.text = countTry
+            resultOfTest.text = maxResult
 
             var drawable1 = DrawableCompat.wrap(ContextCompat.getDrawable(context, R.drawable.button_green_background)!!)
             DrawableCompat.setTintMode(drawable, PorterDuff.Mode.SRC_ATOP);
@@ -53,7 +64,8 @@ class TestRvAdapter(private val context: Context) : RecyclerView.Adapter<TestRvA
         }
     }
 
-    var dataList = ArrayList<TestThemesData>()
+    var dataList = ArrayList<PassedTests>()
+    //var passedTests = ArrayList<PassedTests>()
 
 
     override fun onCreateViewHolder(

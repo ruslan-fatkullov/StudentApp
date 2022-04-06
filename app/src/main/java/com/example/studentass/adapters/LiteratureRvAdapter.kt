@@ -12,11 +12,14 @@ import com.example.studentass.R
 import com.example.studentass.models.LiteratureData
 import kotlinx.android.synthetic.main.literature_layout_item.view.*
 
-class LiteratureRvAdapter(private val context: Context) : RecyclerView.Adapter<LiteratureRvAdapter.ViewHolder>() {
+class LiteratureRvAdapter(private val context: Context) :
+    RecyclerView.Adapter<LiteratureRvAdapter.ViewHolder>() {
 
 
     private lateinit var mListner: onItemClickListener
-    class ViewHolder(view: View, var mListner: onItemClickListener): RecyclerView.ViewHolder(view), View.OnClickListener {
+
+    class ViewHolder(view: View, var mListner: onItemClickListener) : RecyclerView.ViewHolder(view),
+        View.OnClickListener {
 
         val literature_item_Rv = view.literature_item_Rv
         val typeOfLiterature = view.typeOfLiterature
@@ -29,23 +32,33 @@ class LiteratureRvAdapter(private val context: Context) : RecyclerView.Adapter<L
             typeOfLiterature.text = when (itemData.type) {
                 "WORKBOOK" -> "Учебное пособие"
                 "BOOK" -> "Книга"
-                else -> {""}
+                else -> {
+                    ""
+                }
             }
             nameOfLiterature.text = itemData.title
             authorOfLiterature.text = "${itemData.authors}"
             descriptionOfLiterature.text = "${itemData.description}"
 
-            var drawable = DrawableCompat.wrap(ContextCompat.getDrawable(context, when (itemData.type) {
-                "WORKBOOK" -> R.drawable.select__item_blue
-                else -> R.drawable.select_answer_item_background
-            })!!)
+            var drawable = DrawableCompat.wrap(
+                ContextCompat.getDrawable(
+                    context, when (itemData.type) {
+                        "WORKBOOK" -> R.drawable.select__item_blue
+                        else -> R.drawable.select_answer_item_background
+                    }
+                )!!
+            )
             DrawableCompat.setTintMode(drawable, PorterDuff.Mode.SRC_ATOP);
             literature_item_Rv.background = drawable
 
-            var drawable1 = DrawableCompat.wrap(ContextCompat.getDrawable(context, when (itemData.type) {
-                "WORKBOOK" -> R.drawable.button_blue_background
-                else -> R.drawable.button_green_background
-            })!!)
+            var drawable1 = DrawableCompat.wrap(
+                ContextCompat.getDrawable(
+                    context, when (itemData.type) {
+                        "WORKBOOK" -> R.drawable.button_blue_background
+                        else -> R.drawable.button_green_background
+                    }
+                )!!
+            )
             DrawableCompat.setTintMode(drawable, PorterDuff.Mode.SRC_ATOP);
             typeOfLiterature.background = drawable1
         }
@@ -55,7 +68,7 @@ class LiteratureRvAdapter(private val context: Context) : RecyclerView.Adapter<L
         }
 
         override fun onClick(v: View?) {
-            if (mListner != null){
+            if (mListner != null) {
                 mListner.setOnClickListener(adapterPosition)
             }
         }
@@ -69,18 +82,22 @@ class LiteratureRvAdapter(private val context: Context) : RecyclerView.Adapter<L
         viewType: Int
     ): LiteratureRvAdapter.ViewHolder {
         val inflater = LayoutInflater.from(context)
-        return LiteratureRvAdapter.ViewHolder(inflater.inflate(R.layout.literature_layout_item, parent, false), mListner)
+        return LiteratureRvAdapter.ViewHolder(
+            inflater.inflate(
+                R.layout.literature_layout_item,
+                parent,
+                false
+            ), mListner
+        )
     }
-
-
 
 
     override fun onBindViewHolder(holder: LiteratureRvAdapter.ViewHolder, position: Int) {
         val itemData = dataList[position]
         holder.bind(itemData, context)
-        holder.itemView.setOnClickListener(object : View.OnClickListener{
+        holder.itemView.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                if (mListner != null){
+                if (mListner != null) {
                     mListner.setOnClickListener(holder.getAdapterPosition())
                 }
             }
@@ -90,11 +107,11 @@ class LiteratureRvAdapter(private val context: Context) : RecyclerView.Adapter<L
     }
 
 
-
     override fun getItemCount(): Int = dataList.size
-    interface onItemClickListener{
+    interface onItemClickListener {
         fun setOnClickListener(position: Int)
     }
+
     fun setOnItemClickListener(mListner: onItemClickListener) {
         this.mListner = mListner
     }

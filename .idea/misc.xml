@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.147" />
+        <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/account_data_background.xml" value="0.141" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/auth_field_background.xml" value="0.147" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/auth_login_button_background.xml" value="0.147" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/button_blue_background.xml" value="0.147" />
@@ -46,12 +47,14 @@
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/ic_schedule_weeks_background_default.xml" value="0.1" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/ic_schedule_weeks_next.xml" value="0.147" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/ic_schedule_weeks_prev.xml" value="0.113" />
+        <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/ic_splashscreen_logo_animated.xml" value="0.1405" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/ic_sub_task.xml" value="0.141" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/ic_subject_literature.xml" value="0.141" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/ic_subject_literature_background.xml" value="0.113" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/ic_subject_literature_foreground.xml" value="0.13333333333333333" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/ic_subject_task.xml" value="0.1" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/ic_subject_test.xml" value="0.141" />
+        <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/loading_rotate.xml" value="0.1405" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/notification_background.xml" value="0.147" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/rating_attendance_inner_circle.xml" value="0.147" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/rating_linear_pb.xml" value="0.147" />
@@ -75,7 +78,7 @@
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout/answer_of_works_item.xml" value="0.22" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout/fragment_LitTaskTest.xml" value="0.1" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout/fragment_about_program.xml" value="0.1796875" />
-        <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout/fragment_account.xml" value="0.1" />
+        <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout/fragment_account.xml" value="0.22" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout/fragment_item_list.xml" value="0.165625" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout/fragment_literature.xml" value="0.1796875" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout/fragment_login.xml" value="0.1796875" />
@@ -99,7 +102,8 @@
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout/question_item_layout.xml" value="0.1796875" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout/question_layout_item.xml" value="0.22" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout/question_layout_item_select.xml" value="0.14666666666666667" />
-        <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout/schedule_pair_rv_item.xml" value="0.4466666666666667" />
+        <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout/schedule_pair_rv_item.xml" value="0.3333333333333333" />
+        <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout/schedule_pair_rv_item_new.xml" value="0.3333333333333333" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout/select_question_item.xml" value="0.1796875" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout/sequence_question_item.xml" value="0.22" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout/subjects_overview_item.xml" value="0.22" />

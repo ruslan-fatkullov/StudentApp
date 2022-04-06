@@ -46,7 +46,6 @@ class SubjectsFragment : Fragment() {
 
 
         val requestBody = "Bearer " + token
-//        val userId = 56
         val adapter = subjectsRv.adapter as SubjectsRvAdapter
         val disposableSubjectListRx = subjectApiService
             .getIdSubject(requestBody)
@@ -101,14 +100,14 @@ class SubjectsFragment : Fragment() {
     * Вызывается при успешном получении списка предметов
     */
     private fun onGetIdsSubject(subjectList: List<Subject>, adapter: SubjectsRvAdapter) {
+        if (subjectList.isEmpty()){
+            subjectAbsenceTv.visibility = View.VISIBLE
+        }
         subjects = subjectList
         adapter.dataList = subjects as ArrayList<Subject>
     }
 
-    private fun onGetAllSubject(subjectList: List<Subject>, adapter: SubjectsRvAdapter){
-        subjects = subjectList
-        adapter.dataList = subjects as ArrayList<Subject>
-    }
+
 
 
 

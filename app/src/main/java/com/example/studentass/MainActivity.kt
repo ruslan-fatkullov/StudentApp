@@ -157,6 +157,30 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    /*
+     * Возврращение к тестам
+     */
+    fun backToTest() {
+        if (fragmentLayersDepth < 1) {
+            throw RuntimeException("SwitchDown error: fragment layers depth is below 1")
+        }
+
+        val currentFragment = fragmentLayers[fragmentLayersDepth]
+            ?: throw RuntimeException("SwitchDown error: current fragment is null")
+        fragmentManager.beginTransaction().remove(currentFragment).commit()
+        fragmentLayers[fragmentLayersDepth] = null
+
+        val newFragment = fragmentLayers[--fragmentLayersDepth]
+            ?: throw RuntimeException("SwitchDown error: new fragment is null")
+        ////
+        fragmentManager.beginTransaction().remove(newFragment).commit()
+        fragmentLayers[fragmentLayersDepth] = null
+        ////
+
+        fragmentManager.beginTransaction().add(fragmentsMainContainerId, newFragment).commit()
+        fragmentLayers[++fragmentLayersDepth] = newFragment
+    }
+
 
 
 }
