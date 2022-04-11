@@ -32,7 +32,6 @@ class LitertTaskTestFragment : Fragment() {
     private val compositeDisposable = CompositeDisposable()
     private var literatureList: List<LiteratureData>? = null
     private var themesListOf: List<PassedTests>? = null
-    private var taskListOf: List<TaskModel>? = null
     private val literatureApiService = LiteratureApiService.create()
     private val subService = SubjectApiService.create()
     public var currentLiterId: Long? = null
@@ -63,19 +62,6 @@ class LitertTaskTestFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_literature, container, false)
     }
 
-    override fun onHiddenChanged(hidden: Boolean) {
-        super.onHiddenChanged(hidden)
-        getAppCompatActivity<MainActivity>()?.actionBar?.show()
-        if (!hidden) {
-            when (SubjectInfoFragment.selected_item) {
-                "Literature" -> getAppCompatActivity<MainActivity>()?.actionBar?.title =
-                    "Список литературы"
-                "Test" -> getAppCompatActivity<MainActivity>()?.actionBar?.title = "Тесты"
-                "Task" -> getAppCompatActivity<MainActivity>()?.actionBar?.title = "Задания"
-            }
-
-        }
-    }
 
     private fun onGetIdsLiterature(
         literatureLis: List<LiteratureData>,
@@ -106,17 +92,6 @@ class LitertTaskTestFragment : Fragment() {
         themesListOf = themesList
         adapter.dataList = themesListOf as ArrayList<PassedTests>
 
-//        val disposablePassedTestsListRx = subService
-//            .getPassedTests(requestBody, subjectId, AccountFragment.currentUser.id)
-//            .observeOn(AndroidSchedulers.mainThread())
-//            .subscribeOn(Schedulers.io())
-//            .subscribe(
-//                {r -> onGetPassedTest(r, adapter)},
-//                {e -> Toast.makeText(context, "Get passed test error: $e", Toast.LENGTH_LONG).show()}
-//            )
-//        compositeDisposable.add(disposablePassedTestsListRx)
-
-        //перенести
         adapter.setOnItemClickListener(object : TestRvAdapter.onItemClickListener {
             override fun setOnClickListener(position: Int) {
                 currentTest = (themesListOf as ArrayList<PassedTests>)[position]

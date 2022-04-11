@@ -28,9 +28,11 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
 import java.util.ArrayList
 
-class TaskFragment : Fragment() {
+class LiteratureFragment : Fragment() {
     private val compositeDisposable = CompositeDisposable()
-    private val subService = SubjectApiService.create()
+    private var literatureList: List<LiteratureData>? = null
+    private val literatureApiService = LiteratureApiService.create()
+    public var currentLiterId: Long? = null
 
 
 
@@ -39,8 +41,7 @@ class TaskFragment : Fragment() {
 
 
 
-        loadTask()
-
+        loadLiterarute()
         onHiddenChanged(false)
     }
 
@@ -53,51 +54,49 @@ class TaskFragment : Fragment() {
     }
 
 
+    private fun onGetIdsLiterature(
+        literatureLis: List<LiteratureData>,
+        adapter: LiteratureRvAdapter
+    ) {
+        literatureList = literatureLis
+        adapter.dataList = literatureList as ArrayList<LiteratureData>
 
+        adapter.setOnItemClickListener(object : LiteratureRvAdapter.onItemClickListener {
+            override fun setOnClickListener(position: Int) {
+                currentLiterId = (literatureList as ArrayList<LiteratureData>).get(position).id
+                Toast.makeText(context, currentLiterId.toString(), Toast.LENGTH_SHORT).show()
+            }
 
+        })
 
-
-
-    private fun onGetTask(taskList: List<TaskModel>) {
-        if (taskList != null) {
-            var adapter = literatureRv.adapter as TaskRvAdapter
-            adapter.dataList = taskList as ArrayList<TaskModel>
-            adapter.notifyDataSetChanged()
-        } else {
-            Toast.makeText(context, "nol`", Toast.LENGTH_SHORT).show()
-        }
+        adapter.notifyDataSetChanged()
 
     }
 
-
-    fun loadTask() {
+    fun loadLiterarute() {
         literatureRv.layoutManager =
             LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
-        literatureRv.adapter = TaskRvAdapter(context!!)
+        literatureRv.adapter = LiteratureRvAdapter(context!!)
 
-        val header = "Bearer " + LoginFragment.token
-        val userId = SubjectsFragmentNew.curSub?.teacherIds?.get(0)
-        val jsonObject = JSONObject()
-        jsonObject.put("key", "userId")
-        jsonObject.put("operation", "==")
-        jsonObject.put("value", userId)
-        val jsonObjectString = "[$jsonObject]"
-        val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
-
-
-        val disposableSubjectListRx = subService
-            .getIdTask(header, requestBody)
+        val requestBody = "Bearer " + LoginFragment.token
+        val subjectId = SubjectsFragmentNew.curSub?.id?.toLong()
+        val userId = 2
+        val adapter = literatureRv.adapter as LiteratureRvAdapter
+        val disposableLiteratureListRx = literatureApiService
+            .getIdLiterature(requestBody, subjectId, userId)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe(
-                { r -> onGetTask(r) },
+                { r -> onGetIdsLiterature(r, adapter) },
                 { e ->
                     Toast.makeText(context, "Get literature list error: $e", Toast.LENGTH_LONG)
                         .show()
                 }
             )
-        compositeDisposable.add(disposableSubjectListRx)
+        compositeDisposable.add(disposableLiteratureListRx)
+
     }
+
 
 
 

@@ -36,6 +36,9 @@ class MainActivity : AppCompatActivity() {
     private val fragmentLayersMaxDepth = 32
     private val fragmentLayers = arrayOfNulls<Fragment?>(fragmentLayersMaxDepth)            // Список слоёв (фргментов) в контейнере активити
     private var fragmentsMainContainerId by Delegates.notNull<Int>()                        // ID контейнера активити
+    //private var fragmentsSubjectContainerId by Delegates.notNull<Int>()                        // ID контейнера активити
+
+    lateinit var fragmentManagerSubject: FragmentManager
 
     /*
      * Создаёт панель действий
@@ -156,30 +159,29 @@ class MainActivity : AppCompatActivity() {
         fragmentLayers[fragmentLayersDepth] = newFragment
     }
 
+    fun createFMforSubject() : FragmentManager{
+        fragmentManagerSubject = supportFragmentManager
+        return fragmentManagerSubject
+    }
+
 
     /*
-     * Возврращение к тестам
+     * Перемещение на слой (фрагментов) вбок. Удаляет текущий фрагмент и создаёт новый на том же слое
      */
-    fun backToTest() {
-        if (fragmentLayersDepth < 1) {
-            throw RuntimeException("SwitchDown error: fragment layers depth is below 1")
+    fun <T : Fragment> switchSidewaysLTT(toEntityClass: Class<T>, containerId: Int) {
+        if (fragmentLayersDepth < 0) {
+            throw RuntimeException("SwitchSideways error: fragment layers depth is below 0")
         }
 
         val currentFragment = fragmentLayers[fragmentLayersDepth]
-            ?: throw RuntimeException("SwitchDown error: current fragment is null")
-        fragmentManager.beginTransaction().remove(currentFragment).commit()
-        fragmentLayers[fragmentLayersDepth] = null
+            ?: throw RuntimeException("SwitchSideways error: current fragment is null")
+        fragmentManagerSubject.beginTransaction().remove(currentFragment).commit()
 
-        val newFragment = fragmentLayers[--fragmentLayersDepth]
-            ?: throw RuntimeException("SwitchDown error: new fragment is null")
-        ////
-        fragmentManager.beginTransaction().remove(newFragment).commit()
-        fragmentLayers[fragmentLayersDepth] = null
-        ////
-
-        fragmentManager.beginTransaction().add(fragmentsMainContainerId, newFragment).commit()
-        fragmentLayers[++fragmentLayersDepth] = newFragment
+        val newFragment = toEntityClass.newInstance()
+        fragmentManagerSubject.beginTransaction().add(containerId, newFragment).commit()
+        //fragmentLayers[fragmentLayersDepth] = newFragment
     }
+
 
 
 

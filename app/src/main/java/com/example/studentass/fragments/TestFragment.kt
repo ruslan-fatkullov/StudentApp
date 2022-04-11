@@ -3,7 +3,6 @@ package com.example.studentass.fragments
 import android.content.Context
 import android.graphics.PorterDuff
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +13,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.studentass.MainActivity
 import com.example.studentass.R
-import com.example.studentass.fragments.LitertTaskTestFragment.Companion.currentTest
 import com.example.studentass.fragments.QuestionTypeWriteFragment.Companion.anWindow
 import com.example.studentass.getAppCompatActivity
 import com.example.studentass.models.TestQuestion
@@ -181,7 +179,7 @@ class TestFragment : Fragment() {
 
     private fun loadTest(limit: Long){
         val auth = "Bearer " + LoginFragment.token
-        val themeId: Long? = currentTest?.theme?.id
+        val themeId: Long? = TestListFragment.currentTest?.theme?.id
         val disposableSubjectListRx = subjectApiService
             .getTestByThemeId(auth, themeId, limit)
             .observeOn(AndroidSchedulers.mainThread())
@@ -198,7 +196,6 @@ class TestFragment : Fragment() {
         val tok = "Bearer " + LoginFragment.token
         val dfs = requestToCheckTest?.dropLast(1)
         val stringRequest = "[${dfs}]"
-//        Toast.makeText(context, stringRequest, Toast.LENGTH_SHORT).show()
         val requestBody = stringRequest.toRequestBody("application/json".toMediaTypeOrNull())
         val res = subApi
             .checkTest(tok, requestBody)

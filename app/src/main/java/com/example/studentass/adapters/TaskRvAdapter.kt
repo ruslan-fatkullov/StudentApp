@@ -32,13 +32,14 @@ class TaskRvAdapter(private val context: Context) : RecyclerView.Adapter<TaskRvA
 
         fun bind(itemData: TaskModel, context: Context) {
 
-            val taskTypeBackground = when (itemData.type) {
-                "LAB" -> R.drawable.task_item_lab_background
-                else -> R.drawable.task_item_practice_background
-            }
+//            val taskTypeBackground = when (itemData.type) {
+//                "LAB" -> R.drawable.task_item_lab_background
+//                else -> R.drawable.task_item_practice_background
+//            }
 
 
-            val drawable = DrawableCompat.wrap(ContextCompat.getDrawable(context, taskTypeBackground)!!)
+            val drawable = DrawableCompat.wrap(ContextCompat.getDrawable(context, R.drawable.work_background_item_selector)!!)
+            DrawableCompat.setTint(drawable, ContextCompat.getColor(context, R.color.colorNotificationBackground))
             DrawableCompat.setTintMode(drawable, PorterDuff.Mode.SRC_ATOP);
             mainTaskLayout.background = drawable
 
@@ -52,10 +53,10 @@ class TaskRvAdapter(private val context: Context) : RecyclerView.Adapter<TaskRvA
 
 
             titleTask.text = itemData.title
-            descriptionTask.text = itemData.description
+            //descriptionTask.text = itemData.description
             typeTask.text = when(itemData.type){
-                "LAB" -> "Лабораторная"
-                "PRACTICE" -> "Практика"
+                "LAB" -> "Сдана"
+                "PRACTICE" -> "Не сдана"
                 else -> ({}).toString()
             }
 
@@ -71,7 +72,7 @@ class TaskRvAdapter(private val context: Context) : RecyclerView.Adapter<TaskRvA
         viewType: Int
     ): TaskRvAdapter.ViewHolder {
         val inflater = LayoutInflater.from(context)
-        return TaskRvAdapter.ViewHolder(inflater.inflate(R.layout.task_layout_item, parent, false))
+        return TaskRvAdapter.ViewHolder(inflater.inflate(R.layout.task_layout_item_second, parent, false))
     }
 
 

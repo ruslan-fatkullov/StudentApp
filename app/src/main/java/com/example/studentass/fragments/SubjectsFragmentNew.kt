@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.studentass.MainActivity
 import com.example.studentass.R
 import com.example.studentass.adapters.SubjectsRvAdapter
+import com.example.studentass.adapters.SubjectsRvAdapterNew
 import com.example.studentass.fragments.LoginFragment.Companion.token
 import com.example.studentass.getAppCompatActivity
 import com.example.studentass.models.Subject
@@ -17,21 +18,25 @@ import com.example.studentass.services.SubjectApiService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.fragment_subjects.*
+import kotlinx.android.synthetic.main.fragment_subjects.subjectAbsenceTv
+import kotlinx.android.synthetic.main.fragment_subjects_new.*
 import java.util.ArrayList
 
 
 /*
  * Фрагмент со списком предметов
  */
-class SubjectsFragment : Fragment() {
+class SubjectsFragmentNew : Fragment() {
     private val subjectApiService = SubjectApiService.create()
     private val compositeDisposable = CompositeDisposable()
-    private var subjects: List<Subject>? = null
+    //private var subjects: List<Subject>? = null
 
 
     companion object{
         var curSub: Subject? = null
+        var subjects: List<Subject>? = null
     }
 
 
@@ -41,31 +46,30 @@ class SubjectsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        subjectsRv.layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
-        subjectsRv.adapter = SubjectsRvAdapter(context!!)
+        //subject_viewPager.layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
+        //subject_viewPager.adapter = SubjectsRvAdapterNew(context!!)
 
 
         val requestBody = "Bearer " + token
-        val adapter = subjectsRv.adapter as SubjectsRvAdapter
+        //val adapter = subject_viewPager.adapter as SubjectsRvAdapterNew
         val disposableSubjectListRx = subjectApiService
             .getIdSubject(requestBody)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe(
-                {r -> onGetIdsSubject(r, adapter)},
+                {r -> onGetIdsSubject(r)},
                 {e -> Toast.makeText(context, "Get subject list error: $e", Toast.LENGTH_LONG).show()}
             )
         compositeDisposable.add(disposableSubjectListRx)
 
-        adapter.setOnItemClickListener(object: SubjectsRvAdapter.onItemClickListener{
-            override fun setOnClickListener(position: Int) {
-                curSub = adapter.dataList[position]
-                getAppCompatActivity<MainActivity>()?.switchUp(SubjectInfoFragment::class.java)
-            }
-
-        })
-
-        adapter.notifyDataSetChanged()
+//        adapter.setOnItemClickListener(object: SubjectsRvAdapterNew.onItemClickListener{
+//            override fun setOnClickListener(position: Int) {
+//
+//            }
+//
+//        })
+//
+//        adapter.notifyDataSetChanged()
 
 
         onHiddenChanged(false)
@@ -79,7 +83,7 @@ class SubjectsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_subjects, container, false)
+        return inflater.inflate(R.layout.fragment_subjects_new, container, false)
     }
 
 
@@ -98,12 +102,24 @@ class SubjectsFragment : Fragment() {
     /*
     * Вызывается при успешном получении списка предметов
     */
-    private fun onGetIdsSubject(subjectList: List<Subject>, adapter: SubjectsRvAdapter) {
+    private fun onGetIdsSubject(subjectList: List<Subject>) {
         if (subjectList.isEmpty()){
             subjectAbsenceTv.visibility = View.VISIBLE
+        }else{
+            subjects = subjectList
+
+            curSub = subjectList[0]
+            val subjectInfoFragmentNew = SubjectInfoFragmentNew()
+            val sfm = getAppCompatActivity<MainActivity>()!!.fragmentManager
+            sfm.beginTransaction().add(subject_frame_layout.id, subjectInfoFragmentNew).commit()
         }
-        subjects = subjectList
-        adapter.dataList = subjects as ArrayList<Subject>
+
+
+//        adapter.dataList = subjects as ArrayList<Subject>
+//        for (i in 0..adapter.dataList.size){
+//            getAppCompatActivity<MainActivity>()?.createFMforSubject()?.let { SubjectsRvAdapterNew.subFragmentManager.add(it) }
+//        }
+
     }
 
 

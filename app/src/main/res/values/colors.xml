@@ -34,8 +34,8 @@
     <color name="colorNotificationBackground">#FFFFFF</color>
     <color name="colorNotificationNewBackground">#ebf2ff</color>
 
-    <color name="colorTaskLaboratoryBackground">#62DCDE</color>
-    <color name="colorTaskPracticeBackground">#FFA45A</color>
+    <color name="colorTaskLaboratoryBackground">#1A62DCDE</color>
+    <color name="colorTaskPracticeBackground">#1AFFA45A</color>
 
     <color name="colorSubjectBackgroundDefault">#F2F7FF</color>
     <color name="colorGreen">#27FF00</color>

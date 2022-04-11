@@ -28,19 +28,20 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
 import java.util.ArrayList
 
-class TaskFragment : Fragment() {
+class TestListFragment : Fragment() {
     private val compositeDisposable = CompositeDisposable()
+    private var themesListOf: List<PassedTests>? = null
     private val subService = SubjectApiService.create()
 
+    companion object {
+        var currentTest: PassedTests? = null
+    }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-
-        loadTask()
-
+        loadThemes()
         onHiddenChanged(false)
     }
 
@@ -55,42 +56,44 @@ class TaskFragment : Fragment() {
 
 
 
+    private fun onGetThemes(
+        themesList: List<PassedTests>,
+        adapter: TestRvAdapter,
+        requestBody: String,
+        subjectId: Long?
+    ) {
 
+        themesListOf = themesList
+        adapter.dataList = themesListOf as ArrayList<PassedTests>
 
+        adapter.setOnItemClickListener(object : TestRvAdapter.onItemClickListener {
+            override fun setOnClickListener(position: Int) {
+                currentTest = (themesListOf as ArrayList<PassedTests>)[position]
+                getAppCompatActivity<MainActivity>()?.actionBar?.hide()
+                getAppCompatActivity<MainActivity>()?.switchUp(TestFragment::class.java)
+            }
 
-    private fun onGetTask(taskList: List<TaskModel>) {
-        if (taskList != null) {
-            var adapter = literatureRv.adapter as TaskRvAdapter
-            adapter.dataList = taskList as ArrayList<TaskModel>
-            adapter.notifyDataSetChanged()
-        } else {
-            Toast.makeText(context, "nol`", Toast.LENGTH_SHORT).show()
-        }
-
+        })
+        adapter.notifyDataSetChanged()
     }
 
 
-    fun loadTask() {
+
+    fun loadThemes() {
         literatureRv.layoutManager =
             LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
-        literatureRv.adapter = TaskRvAdapter(context!!)
+        literatureRv.adapter = TestRvAdapter(context!!)
 
-        val header = "Bearer " + LoginFragment.token
-        val userId = SubjectsFragmentNew.curSub?.teacherIds?.get(0)
-        val jsonObject = JSONObject()
-        jsonObject.put("key", "userId")
-        jsonObject.put("operation", "==")
-        jsonObject.put("value", userId)
-        val jsonObjectString = "[$jsonObject]"
-        val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
-
-
+        val requestBody = "Bearer " + LoginFragment.token
+        val subjectId = SubjectsFragmentNew.curSub?.id?.toLong()
+        //val subjectId: Long = 1
+        val adapter = literatureRv.adapter as TestRvAdapter
         val disposableSubjectListRx = subService
-            .getIdTask(header, requestBody)
+            .getPassedTests(requestBody, subjectId, AccountFragment.currentUser.id)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe(
-                { r -> onGetTask(r) },
+                { r -> onGetThemes(r, adapter, requestBody, subjectId) },
                 { e ->
                     Toast.makeText(context, "Get literature list error: $e", Toast.LENGTH_LONG)
                         .show()
