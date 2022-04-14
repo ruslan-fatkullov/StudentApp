@@ -4,26 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/testBackground"
     tools:context=".fragments.TestFragment">
 
 
-<!--    <FrameLayout-->
-<!--        android:id="@+id/nameOfTestFrame"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_alignParentTop="true">-->
-<!--        <TextView-->
-<!--            android:id="@+id/nameOfTest"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:padding="15dp"-->
-<!--            android:gravity="center_horizontal"-->
-<!--            android:textSize="25sp"-->
-<!--            android:text="Тема теста"-->
-<!--            android:background="@color/colorActionBar"-->
-<!--            android:textAlignment="center" />-->
+    <!--    <FrameLayout-->
+    <!--        android:id="@+id/nameOfTestFrame"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_alignParentTop="true">-->
+    <!--        <TextView-->
+    <!--            android:id="@+id/nameOfTest"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:padding="15dp"-->
+    <!--            android:gravity="center_horizontal"-->
+    <!--            android:textSize="25sp"-->
+    <!--            android:text="Тема теста"-->
+    <!--            android:background="@color/colorActionBar"-->
+    <!--            android:textAlignment="center" />-->
 
-<!--    </FrameLayout>-->
+    <!--    </FrameLayout>-->
 
     <FrameLayout
         android:id="@+id/questionTitle"
@@ -31,102 +32,213 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/questionTitleTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:padding="15dp"
-                android:text="@string/Question"
-                android:textSize="25sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/currentOfQuestions"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/delimiter"
-                app:layout_constraintTop_toTopOf="parent" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="25dp">
 
-            <TextView
-                android:id="@+id/delimiter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/delimiter"
-                android:textSize="24sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/countOfQuestions"
-                app:layout_constraintTop_toTopOf="parent" />
+                <ImageView
+                    android:id="@+id/closeTab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_test_close_back"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/countOfQuestions"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="24sp"
-                android:layout_marginRight="15dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginEnd="15dp" />
+                <ImageView
+                    android:id="@+id/imageView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="18dp"
+                    android:src="@drawable/ic_test_close_ic"
+                    app:layout_constraintBottom_toBottomOf="@id/closeTab"
+                    app:layout_constraintEnd_toEndOf="@id/closeTab"
+                    app:layout_constraintStart_toStartOf="@id/closeTab"
+                    app:layout_constraintTop_toTopOf="@id/closeTab" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/testTheme"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Тест 1. Перебор подмножеств. Битовые маски"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/closeTab"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp">
+
+                <TextView
+                    android:id="@+id/questionTitleTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:padding="5dp"
+                    android:text="@string/Question"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/countOfQuestions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="15"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/delimiter"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/delimiter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="5dp"
+                    android:text="@string/delimiter"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/currentOfQuestions"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/currentOfQuestions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/questionTitleTv"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ProgressBar
+                android:id="@+id/progressBarTest"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:layout_marginTop="10dp"
+                android:paddingHorizontal="15dp"
+                android:progress="50"
+                android:progressDrawable="@drawable/test_linear_pb"
+                android:progressTint="@color/white" />
+        </LinearLayout>
 
     </FrameLayout>
 
-    <FrameLayout
-        android:id="@+id/questionFrame"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/actionsFrame"
-        android:layout_below="@id/questionTitle">
-
-
-    </FrameLayout>
-
 
     <FrameLayout
-        android:id="@+id/actionsFrame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:padding="16dp">
+        android:layout_below="@+id/questionTitle"
+        android:padding="25dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@drawable/question_background">
 
-            <Button
-                android:id="@+id/previousQuestionBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="2dp"
-                android:background="@color/colorPrimary"
-                android:text="@string/Back"
-                android:paddingHorizontal="5dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/nextQuestionBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="2dp"
-                android:paddingHorizontal="5dp"
-                android:background="@color/colorPrimary"
-                android:text="@string/Forward"
-                app:layout_constraintBottom_toBottomOf="parent"
+            <FrameLayout
+                android:id="@+id/questionFrame"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toTopOf="@+id/nextQuestBut"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </FrameLayout>
+
+
+            <ImageView
+                android:id="@+id/nextQuestBut"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_next_button"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <ImageView
+                android:id="@+id/nextQuestCheck"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_check_test"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="@id/nextQuestBut"
+                app:layout_constraintEnd_toEndOf="@id/nextQuestBut"
+                app:layout_constraintTop_toTopOf="@id/nextQuestBut"
+                app:layout_constraintBottom_toBottomOf="@id/nextQuestBut"/>
+
+            <ImageView
+                android:id="@+id/nextQuestArrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_next_quest_arrow"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="@id/nextQuestBut"
+                app:layout_constraintEnd_toEndOf="@id/nextQuestBut"
+                app:layout_constraintTop_toTopOf="@id/nextQuestBut"
+                app:layout_constraintBottom_toBottomOf="@id/nextQuestBut"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+
     </FrameLayout>
+
+<!--    <FrameLayout-->
+<!--        android:id="@+id/actionsFrame"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:padding="16dp">-->
+
+<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent">-->
+
+<!--            <Button-->
+<!--                android:id="@+id/previousQuestionBtn"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginHorizontal="2dp"-->
+<!--                android:background="@color/colorPrimary"-->
+<!--                android:paddingHorizontal="5dp"-->
+<!--                android:text="@string/Back"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--            <Button-->
+<!--                android:id="@+id/nextQuestionBtn"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginHorizontal="2dp"-->
+<!--                android:background="@color/colorPrimary"-->
+<!--                android:paddingHorizontal="5dp"-->
+<!--                android:text="@string/Forward"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent" />-->
+<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+<!--    </FrameLayout>-->
 
 </RelativeLayout>

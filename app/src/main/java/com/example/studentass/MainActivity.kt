@@ -5,6 +5,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.studentass.fragments.AboutProgramFragment
@@ -12,8 +13,6 @@ import com.example.studentass.fragments.LoginFragment
 import com.example.studentass.fragments.MainFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.properties.Delegates
-import kotlin.reflect.KClass
-import kotlin.reflect.KProperty1
 
 
 /*
@@ -32,20 +31,21 @@ class MainActivity : AppCompatActivity() {
     lateinit var fragmentManager: FragmentManager
     lateinit var actionBar: ActionBar
 
-    private var fragmentLayersDepth = -1                                                    // Номер текущего слоя (фрагмента) в контейнере активити
+    private var fragmentLayersDepth =
+        -1                                                    // Номер текущего слоя (фрагмента) в контейнере активити
     private val fragmentLayersMaxDepth = 32
-    private val fragmentLayers = arrayOfNulls<Fragment?>(fragmentLayersMaxDepth)            // Список слоёв (фргментов) в контейнере активити
+    private val fragmentLayers =
+        arrayOfNulls<Fragment?>(fragmentLayersMaxDepth)            // Список слоёв (фргментов) в контейнере активити
     private var fragmentsMainContainerId by Delegates.notNull<Int>()                        // ID контейнера активити
     //private var fragmentsSubjectContainerId by Delegates.notNull<Int>()                        // ID контейнера активити
 
-    lateinit var fragmentManagerSubject: FragmentManager
+    //not private
+    private lateinit var fragmentManagerSubject: FragmentManager
 
     /*
      * Создаёт панель действий
      */
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        // R.menu.mymenu is a reference to an xml file named mymenu.xml which should be inside your res/menu directory.
-        // If you don't have res/menu, just create a directory named "menu" inside res
         menuInflater.inflate(R.menu.action_bar, menu)
         return super.onCreateOptionsMenu(menu)
     }
@@ -90,6 +90,12 @@ class MainActivity : AppCompatActivity() {
         fragmentManager = supportFragmentManager
         actionBar = (this as AppCompatActivity).supportActionBar
             ?: throw Exception("Action bar missing")
+        actionBar.setBackgroundDrawable(
+            ContextCompat.getDrawable(
+                this,
+                R.drawable.actionbar_background_rectangle
+            )
+        )
         actionBar.hide()
 
         fragmentsMainContainerId = main_activity_fragment_container.id
@@ -159,30 +165,10 @@ class MainActivity : AppCompatActivity() {
         fragmentLayers[fragmentLayersDepth] = newFragment
     }
 
-    fun createFMforSubject() : FragmentManager{
+    fun createFragmentManagerForSubject(): FragmentManager {
         fragmentManagerSubject = supportFragmentManager
         return fragmentManagerSubject
     }
-
-
-    /*
-     * Перемещение на слой (фрагментов) вбок. Удаляет текущий фрагмент и создаёт новый на том же слое
-     */
-    fun <T : Fragment> switchSidewaysLTT(toEntityClass: Class<T>, containerId: Int) {
-        if (fragmentLayersDepth < 0) {
-            throw RuntimeException("SwitchSideways error: fragment layers depth is below 0")
-        }
-
-        val currentFragment = fragmentLayers[fragmentLayersDepth]
-            ?: throw RuntimeException("SwitchSideways error: current fragment is null")
-        fragmentManagerSubject.beginTransaction().remove(currentFragment).commit()
-
-        val newFragment = toEntityClass.newInstance()
-        fragmentManagerSubject.beginTransaction().add(containerId, newFragment).commit()
-        //fragmentLayers[fragmentLayersDepth] = newFragment
-    }
-
-
 
 
 }

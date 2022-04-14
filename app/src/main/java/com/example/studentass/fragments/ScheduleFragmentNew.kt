@@ -262,7 +262,7 @@ class ScheduleFragmentNew : Fragment() {
             var isEmptyDay = true
             if (scheduleDay != null) {
                 for (i in scheduleDay.lessons) {
-                    if (!(i.isEmpty())) {
+                    if (i.isNotEmpty()) {
                         isEmptyDay = false
                     }
                 }
@@ -275,7 +275,7 @@ class ScheduleFragmentNew : Fragment() {
             } else {
                 adapter.dataList.clear()
                 adapter.pairNumberArray.clear()
-                for (i in 0..(scheduleDay.lessons.size - 1)) {
+                for (i in 0 until scheduleDay.lessons.size) {
                     if (scheduleDay.lessons[i].isNotEmpty()) {
                         adapter.pairNumber = i + 1
                         adapter.pairNumberArray.add(adapter.pairNumber)
@@ -288,7 +288,6 @@ class ScheduleFragmentNew : Fragment() {
                 pairsAbsenceTv.visibility = View.INVISIBLE
             }
         }
-
 
         adapter.notifyDataSetChanged()
     }
@@ -403,7 +402,7 @@ class ScheduleFragmentNew : Fragment() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe(
-                { r -> getSch(r) },
+                { group -> getSch(group) },
                 { e -> Toast.makeText(context, "Get user error: $e", Toast.LENGTH_LONG).show() }
             )
         compositeDisposable.add(disposableSubjectListRx)
@@ -416,7 +415,7 @@ class ScheduleFragmentNew : Fragment() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe(
-                { r -> onGetGroupSchedule(r) },
+                { timeTable -> onGetGroupSchedule(timeTable) },
                 { e ->
                     Toast.makeText(context, "Get group schedule error: $e", Toast.LENGTH_LONG)
                         .show()

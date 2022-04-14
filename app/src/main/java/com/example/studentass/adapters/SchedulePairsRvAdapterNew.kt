@@ -5,7 +5,6 @@ import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
@@ -19,14 +18,14 @@ class SchedulePairsRvAdapterNew(private val context: Context) :
     RecyclerView.Adapter<SchedulePairsRvAdapterNew.ViewHolder>() {
     class PairTime(pairNum: Int) {
         var intervalString = when (pairNum) {
-            1 -> "08:00 - 09:30"
-            2 -> "09:40 - 11:10"
-            3 -> "11:30 - 13:00"
-            4 -> "13:10 - 14:40"
-            5 -> "14:50 - 16:20"
-            6 -> "16:30 - 18:00"
-            7 -> "18:10 - 19:40"
-            8 -> "19:50 - 21:20"
+            1 -> "08:30 - 09:30"
+            2 -> "10:00 - 11:20"
+            3 -> "11:30 - 12:50"
+            4 -> "13:30 - 14:50"
+            5 -> "15:00 - 16:20"
+            6 -> "16:30 - 17:50"
+            7 -> "18:00 - 19:20"
+            8 -> "19:30 - 20:50"
             else -> "Error"
         }
     }
@@ -38,24 +37,19 @@ class SchedulePairsRvAdapterNew(private val context: Context) :
         private val teacherNameTv: TextView = view.teacherNameTv
 
         private val pairLayout: ConstraintLayout = view.pairLayout
-        private val timeIv: ImageView = view.timeIv
-        private val locationIv: ImageView = view.locationIv
-        private val teacherNameIv: ImageView = view.teacherNameIv
         private val pairTypeTv: TextView = view.pairTypeTv
 
         fun bind(
             pair: ArrayList<TimetableLesson>,
             pairNumber: Int,
-            context: Context,
-            dataYear: Int,
-            dataDayOfYear: Int
+            context: Context
         ) {
             if (pair.size != 0) {
                 teacherNameTv.text = pair[0].teacher
                 locationTv.text = pair[0].room
                 val pairTime = PairTime(pairNumber)
                 val timeText =
-                    "${pairNumber} ${context.getString(R.string.schedule_pair)}, ${pairTime.intervalString}"
+                    "$pairNumber ${context.getString(R.string.schedule_pair)}, ${pairTime.intervalString}"
                 timeTv.text = timeText
 
                 val typePair = pair[0].nameOfLesson.split(".")
@@ -103,7 +97,7 @@ class SchedulePairsRvAdapterNew(private val context: Context) :
         }
     }
 
-    var pair = ArrayList<TimetableLesson>()
+    private var pair = ArrayList<TimetableLesson>()
     var dataList = arrayListOf(pair)
     var pairNumber: Int = 0
     var pairNumberArray = arrayListOf(pairNumber)
@@ -124,6 +118,6 @@ class SchedulePairsRvAdapterNew(private val context: Context) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val pairItem = dataList[position]
         val pairNumber = pairNumberArray[position]
-        holder.bind(pairItem, pairNumber, context, dataYear, dataDayOfYear)
+        holder.bind(pairItem, pairNumber, context)
     }
 }

@@ -29,4 +29,6 @@
     <string name="match_value">Значение</string>
     <string name="match_key">Ключ</string>
     <string name="nameOfUser">Имя</string>
+    <string name="noLiterature">Литературы нет</string>
+    <string name="privateData">Личные данные</string>
 </resources>

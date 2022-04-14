@@ -7,6 +7,19 @@
     android:layout_height="match_parent"
     tools:context=".fragments.LitertTaskTestFragment">
 
+    <TextView
+        android:id="@+id/contentAbsenceTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/noLiterature"
+        android:textColor="#567E7E7E"
+        android:textSize="24sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/literatureRv"
+        app:layout_constraintEnd_toEndOf="@+id/literatureRv"
+        app:layout_constraintStart_toStartOf="@+id/literatureRv"
+        app:layout_constraintTop_toTopOf="@+id/literatureRv"
+        app:layout_constraintVertical_bias="0.4" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/literatureRv"

@@ -94,12 +94,6 @@ class LoginFragment : Fragment() {
                 deleteTokens()
             }
         }
-//            return authApiService.logOut()
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribeOn(Schedulers.io())
-//                .map { onLogOutMap() }
-
-
 
         /*
          * Нужно для автоматического удаления данных авторизации
@@ -109,33 +103,6 @@ class LoginFragment : Fragment() {
                 deleteTokens()
             }
         }
-
-
-        /*
-         * Возвращает поток токенов, запрос не выполняется до вызова термиального оператора
-         */
-//        fun refreshTokens(): Observable<Tokens> {
-//            if (tokens == null)
-//                throw RuntimeException("Refresh error: tokens are null")
-//
-//            return authApiService.refresh(tokens!!.refrashToken)
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribeOn(Schedulers.io())
-//                .map { t -> onRefreshTokensMap(t) }
-//        }
-
-
-        /*
-         * Нужно для автоматической перезаписи данных авторизации
-         */
-//        private fun onRefreshTokensMap(r: Tokens): Tokens {
-//            tokens = r
-//            thread {
-//                writeTokens()
-//            }
-//            return r
-//        }
-
 
         /*
          * Извлекает роль из токена доступа

@@ -20,7 +20,8 @@ import kotlinx.android.synthetic.main.test_layout_item.view.*
 class TaskRvAdapter(private val context: Context) : RecyclerView.Adapter<TaskRvAdapter.ViewHolder>() {
 
 
-    class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
+    private lateinit var mListner: TaskRvAdapter.onFocusChangeListener
+    class ViewHolder(view: View, var mListner: TaskRvAdapter.onFocusChangeListener): RecyclerView.ViewHolder(view), View.OnFocusChangeListener {
 
         val titleTask = view.titleTask
         val descriptionTask = view.descriptionTask
@@ -38,10 +39,10 @@ class TaskRvAdapter(private val context: Context) : RecyclerView.Adapter<TaskRvA
 //            }
 
 
-            val drawable = DrawableCompat.wrap(ContextCompat.getDrawable(context, R.drawable.work_background_item_selector)!!)
-            DrawableCompat.setTint(drawable, ContextCompat.getColor(context, R.color.colorNotificationBackground))
-            DrawableCompat.setTintMode(drawable, PorterDuff.Mode.SRC_ATOP);
-            mainTaskLayout.background = drawable
+//            val drawable = DrawableCompat.wrap(ContextCompat.getDrawable(context, R.drawable.work_background_item_selector)!!)
+//            DrawableCompat.setTint(drawable, ContextCompat.getColor(context, R.color.colorNotificationBackground))
+//            DrawableCompat.setTintMode(drawable, PorterDuff.Mode.SRC_ATOP);
+//            mainTaskLayout.background = drawable
 
 
             var drawable1 = DrawableCompat.wrap(ContextCompat.getDrawable(context, when (itemData.type) {
@@ -59,7 +60,22 @@ class TaskRvAdapter(private val context: Context) : RecyclerView.Adapter<TaskRvA
                 "PRACTICE" -> "Не сдана"
                 else -> ({}).toString()
             }
+            mainTaskLayout.setOnFocusChangeListener{newFocus, _ ->
 
+            }
+
+        }
+
+        init {
+            mainTaskLayout.setOnFocusChangeListener(this)
+        }
+
+
+
+        override fun onFocusChange(v: View?, hasFocus: Boolean) {
+            if (mListner != null){
+                mListner.setOnClickListener(adapterPosition)
+            }
         }
 
     }
@@ -72,7 +88,7 @@ class TaskRvAdapter(private val context: Context) : RecyclerView.Adapter<TaskRvA
         viewType: Int
     ): TaskRvAdapter.ViewHolder {
         val inflater = LayoutInflater.from(context)
-        return TaskRvAdapter.ViewHolder(inflater.inflate(R.layout.task_layout_item_second, parent, false))
+        return TaskRvAdapter.ViewHolder(inflater.inflate(R.layout.task_layout_item_second, parent, false), mListner)
     }
 
 
@@ -81,10 +97,31 @@ class TaskRvAdapter(private val context: Context) : RecyclerView.Adapter<TaskRvA
     override fun onBindViewHolder(holder: TaskRvAdapter.ViewHolder, position: Int) {
         val itemData = dataList[position]
         holder.bind(itemData, context)
+        holder.mainTaskLayout.setOnFocusChangeListener(object : View.OnFocusChangeListener{
+
+
+            override fun onFocusChange(v: View?, hasFocus: Boolean) {
+                if (mListner != null){
+                    mListner.setOnClickListener(holder.getAdapterPosition())
+                }
+            }
+        })
+//        holder.mainTaskLayout.setOnClickListener(object : View.OnClickListener{
+//            override fun onClick(v: View?) {
+//                if (mListner != null){
+//                    mListner.setOnClickListener(holder.getAdapterPosition())
+//                }
+//            }
+//        })
 
     }
 
     override fun getItemCount(): Int = dataList.size
-
+    interface onFocusChangeListener{
+        fun setOnClickListener(position: Int)
+    }
+    fun setonFocusChangeListener(mListner: onFocusChangeListener) {
+        this.mListner = mListner
+    }
 
 }

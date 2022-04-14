@@ -5,8 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.studentass.MainActivity
@@ -22,7 +20,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_literature.*
-import kotlinx.android.synthetic.main.fragment_schedule.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
@@ -70,7 +67,7 @@ class LitertTaskTestFragment : Fragment() {
         literatureList = literatureLis
         adapter.dataList = literatureList as ArrayList<LiteratureData>
 
-        adapter.setOnItemClickListener(object : LiteratureRvAdapter.onItemClickListener {
+        adapter.setOnItemClickListener(object : LiteratureRvAdapter.OnItemClickListener {
             override fun setOnClickListener(position: Int) {
                 currentLiterId = (literatureList as ArrayList<LiteratureData>).get(position).id
                 Toast.makeText(context, currentLiterId.toString(), Toast.LENGTH_SHORT).show()

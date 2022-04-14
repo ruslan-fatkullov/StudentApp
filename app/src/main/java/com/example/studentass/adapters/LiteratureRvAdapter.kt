@@ -5,6 +5,7 @@ import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -16,51 +17,36 @@ class LiteratureRvAdapter(private val context: Context) :
     RecyclerView.Adapter<LiteratureRvAdapter.ViewHolder>() {
 
 
-    private lateinit var mListner: onItemClickListener
+    private lateinit var myListener: OnItemClickListener
 
-    class ViewHolder(view: View, var mListner: onItemClickListener) : RecyclerView.ViewHolder(view),
+    class ViewHolder(view: View, private var mListener: OnItemClickListener) : RecyclerView.ViewHolder(view),
         View.OnClickListener {
 
-        val literature_item_Rv = view.literature_item_Rv
-        val typeOfLiterature = view.typeOfLiterature
-        val nameOfLiterature = view.nameOfLiterature
-        val authorOfLiterature = view.authorOfLiterature
-        val descriptionOfLiterature = view.descriptionOfLiterature
+
+        private val literatureItemRv = view.literature_item_Rv
+
+        private val nameOfLiterature: TextView = view.nameOfLiterature
+        private val author: TextView = view.author
 
 
         fun bind(itemData: LiteratureData, context: Context) {
-            typeOfLiterature.text = when (itemData.type) {
-                "WORKBOOK" -> "Учебное пособие"
-                "BOOK" -> "Книга"
+            val typeLiterature = when (itemData.type) {
+                "WORKBOOK" -> "Учебное пособие:"
+                "BOOK" -> "Книга:"
                 else -> {
                     ""
                 }
             }
-            nameOfLiterature.text = itemData.title
-            authorOfLiterature.text = "${itemData.authors}"
-            descriptionOfLiterature.text = "${itemData.description}"
+            val nameOfLiteratureText = "$typeLiterature ${'"'} ${itemData.title} ${'"'}"
+            nameOfLiterature.text = nameOfLiteratureText
+            author.text = itemData.authors
 
-            var drawable = DrawableCompat.wrap(
-                ContextCompat.getDrawable(
-                    context, when (itemData.type) {
-                        "WORKBOOK" -> R.drawable.select__item_blue
-                        else -> R.drawable.select_answer_item_background
-                    }
-                )!!
-            )
-            DrawableCompat.setTintMode(drawable, PorterDuff.Mode.SRC_ATOP);
-            literature_item_Rv.background = drawable
 
-            var drawable1 = DrawableCompat.wrap(
-                ContextCompat.getDrawable(
-                    context, when (itemData.type) {
-                        "WORKBOOK" -> R.drawable.button_blue_background
-                        else -> R.drawable.button_green_background
-                    }
-                )!!
-            )
-            DrawableCompat.setTintMode(drawable, PorterDuff.Mode.SRC_ATOP);
-            typeOfLiterature.background = drawable1
+            val drawable = DrawableCompat.wrap(ContextCompat.getDrawable(context, R.drawable.work_background_item_selector)!!)
+            DrawableCompat.setTint(drawable, ContextCompat.getColor(context, R.color.colorNotificationBackground))
+            DrawableCompat.setTintMode(drawable, PorterDuff.Mode.SRC_ATOP)
+            literatureItemRv.background = drawable
+
         }
 
         init {
@@ -68,9 +54,7 @@ class LiteratureRvAdapter(private val context: Context) :
         }
 
         override fun onClick(v: View?) {
-            if (mListner != null) {
-                mListner.setOnClickListener(adapterPosition)
-            }
+            mListener.setOnClickListener(adapterPosition)
         }
     }
 
@@ -80,40 +64,34 @@ class LiteratureRvAdapter(private val context: Context) :
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): LiteratureRvAdapter.ViewHolder {
+    ): ViewHolder {
         val inflater = LayoutInflater.from(context)
-        return LiteratureRvAdapter.ViewHolder(
+        return ViewHolder(
             inflater.inflate(
                 R.layout.literature_layout_item,
                 parent,
                 false
-            ), mListner
+            ), myListener
         )
     }
 
 
-    override fun onBindViewHolder(holder: LiteratureRvAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val itemData = dataList[position]
         holder.bind(itemData, context)
-        holder.itemView.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                if (mListner != null) {
-                    mListner.setOnClickListener(holder.getAdapterPosition())
-                }
-            }
-        })
+        holder.itemView.setOnClickListener { myListener.setOnClickListener(holder.adapterPosition) }
 
 
     }
 
 
     override fun getItemCount(): Int = dataList.size
-    interface onItemClickListener {
+    interface OnItemClickListener {
         fun setOnClickListener(position: Int)
     }
 
-    fun setOnItemClickListener(mListner: onItemClickListener) {
-        this.mListner = mListner
+    fun setOnItemClickListener(myListener: OnItemClickListener) {
+        this.myListener = myListener
     }
 
 }

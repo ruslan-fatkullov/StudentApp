@@ -5,27 +5,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.studentass.MainActivity
 import com.example.studentass.R
-import com.example.studentass.adapters.LiteratureRvAdapter
-import com.example.studentass.adapters.TaskRvAdapter
 import com.example.studentass.adapters.TestRvAdapter
+import com.example.studentass.fragments.SubjectInfoFragmentNew.Companion.listOfListTest
 import com.example.studentass.getAppCompatActivity
 import com.example.studentass.models.*
-import com.example.studentass.services.LiteratureApiService
 import com.example.studentass.services.SubjectApiService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_literature.*
-import kotlinx.android.synthetic.main.fragment_schedule.*
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody.Companion.toRequestBody
-import org.json.JSONObject
 import java.util.ArrayList
 
 class TestListFragment : Fragment() {
@@ -41,7 +33,24 @@ class TestListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        loadThemes()
+        literatureRv.layoutManager =
+            LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
+        literatureRv.adapter = TestRvAdapter(context!!)
+        val adapter = literatureRv.adapter as TestRvAdapter
+
+
+        val indexOfSubject = SubjectsFragmentNew.subjects?.indexOf(SubjectsFragmentNew.curSub)
+        try {
+            val testList = listOfListTest[indexOfSubject!!]
+            setFragParams(adapter, testList)
+            //Toast.makeText(context, "все ок", Toast.LENGTH_SHORT).show()
+        } catch (e: IndexOutOfBoundsException) {
+            //Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show()
+            loadThemes(adapter, indexOfSubject)
+        }
+
+
+
         onHiddenChanged(false)
     }
 
@@ -54,15 +63,45 @@ class TestListFragment : Fragment() {
     }
 
 
+    private fun loadThemes(adapter: TestRvAdapter, indexOfSubject: Int?) {
 
+        val requestBody = "Bearer " + LoginFragment.token
+        val subjectId = SubjectsFragmentNew.curSub?.id
+
+        val disposableSubjectListRx = subService
+            .getPassedTests(requestBody, subjectId, AccountFragment.currentUser.id)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe(
+                { r -> onGetThemes(r, adapter, indexOfSubject) },
+                { e ->
+                    Toast.makeText(context, "Get test list error: $e", Toast.LENGTH_LONG)
+                        .show()
+                }
+            )
+        compositeDisposable.add(disposableSubjectListRx)
+    }
 
     private fun onGetThemes(
         themesList: List<PassedTests>,
         adapter: TestRvAdapter,
-        requestBody: String,
-        subjectId: Long?
+        indexOfSubject: Int?
     ) {
 
+        themesListOf = themesList
+        if (indexOfSubject != null) {
+            //Toast.makeText(context, themesList.toString(), Toast.LENGTH_SHORT).show()
+            //Toast.makeText(context, "тесты добавлены", Toast.LENGTH_SHORT).show()
+            listOfListTest.add(themesList)
+            //Toast.makeText(context, listOfListTest[indexOfSubject].toString(), Toast.LENGTH_SHORT).show()
+
+        }
+
+        setFragParams(adapter, themesList)
+
+    }
+
+    private fun setFragParams(adapter: TestRvAdapter, themesList: List<PassedTests>) {
         themesListOf = themesList
         adapter.dataList = themesListOf as ArrayList<PassedTests>
 
@@ -75,33 +114,12 @@ class TestListFragment : Fragment() {
 
         })
         adapter.notifyDataSetChanged()
+
+        if (themesList.isEmpty()) {
+            contentAbsenceTv.visibility = View.VISIBLE
+            contentAbsenceTv.text = "Тестов нет"
+        }
     }
-
-
-
-    fun loadThemes() {
-        literatureRv.layoutManager =
-            LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
-        literatureRv.adapter = TestRvAdapter(context!!)
-
-        val requestBody = "Bearer " + LoginFragment.token
-        val subjectId = SubjectsFragmentNew.curSub?.id?.toLong()
-        //val subjectId: Long = 1
-        val adapter = literatureRv.adapter as TestRvAdapter
-        val disposableSubjectListRx = subService
-            .getPassedTests(requestBody, subjectId, AccountFragment.currentUser.id)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribe(
-                { r -> onGetThemes(r, adapter, requestBody, subjectId) },
-                { e ->
-                    Toast.makeText(context, "Get literature list error: $e", Toast.LENGTH_LONG)
-                        .show()
-                }
-            )
-        compositeDisposable.add(disposableSubjectListRx)
-    }
-
 
 
 }

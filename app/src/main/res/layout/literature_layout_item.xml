@@ -1,114 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/literature_item_Rv"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_marginTop="15dp"
-    android:layout_marginLeft="15dp"
-    android:layout_marginRight="15dp"
-    android:paddingTop="15dp"
-    android:paddingLeft="15dp"
-    android:paddingRight="15dp"
+    android:layout_marginHorizontal="20dp"
+    android:layout_marginTop="10dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="15dp">
-
-        <TextView
-            android:id="@+id/nameOfLiterature"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="Название"
-            android:textSize="21sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/typeOfLiterature"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/typeOfLiterature"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="5dp"
-            android:text="Тип"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <View
-        android:id="@+id/view4"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#878993" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:padding="5dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/authorIcAndTv"
+
+        <ImageView
+            android:id="@+id/imageView6"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:padding="10dp"
-            app:layout_constraintEnd_toStartOf="@id/view5">
+            app:srcCompat="@drawable/ic_literature_background"
+            app:layout_constraintStart_toStartOf="parent"
+            android:contentDescription="Лого книги" />
 
-            <ImageView
-                android:id="@+id/imageView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_literature_ico_author" />
 
-            <TextView
-                android:id="@+id/authorOfLiterature"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:maxWidth="100sp"
-                android:layout_marginLeft="5dp"
-                android:text="Автор"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/imageView6"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:textSize="18dp" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/imageView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/imageView6"
+            app:layout_constraintBottom_toBottomOf="@id/imageView6"
+            app:layout_constraintStart_toStartOf="@id/imageView6"
+            app:layout_constraintEnd_toEndOf="@id/imageView6"
+            app:srcCompat="@drawable/ic_icon_book" />
 
-        <View
-            android:id="@+id/view5"
-            android:layout_width="1dp"
-            android:layout_height="0dp"
-            android:background="#878993"
-            app:layout_constraintEnd_toStartOf="@id/descriptionOfLiterature"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/authorIcAndTv"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/descriptionOfLiterature"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Описание"
-            android:textSize="18dp"
-            android:padding="5dp"
+            android:orientation="vertical"
+            android:paddingVertical="10dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imageView6"
+            app:layout_constraintTop_toTopOf="parent">
+            <TextView
+                android:id="@+id/nameOfLiterature"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="10dp"
+                android:text="Название"
+                android:textSize="16dp" />
 
-            app:layout_constraintStart_toEndOf="@+id/view5"
-            app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/author"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="10dp"
+                android:textSize="16dp"
+                android:text="Автор" />
+        </LinearLayout>
+
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

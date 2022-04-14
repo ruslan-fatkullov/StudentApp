@@ -41,15 +41,15 @@ class SubjectInfoFragment : Fragment() {
         subjectTaskLayout.bookIv.background = ContextCompat.getDrawable(context!!, R.drawable.ic_articles)
         subjectTestLayout.bookIv.background = ContextCompat.getDrawable(context!!, R.drawable.ic_projects)
 
-        sfm = getAppCompatActivity<MainActivity>()!!.createFMforSubject()
+        sfm = getAppCompatActivity<MainActivity>()!!.createFragmentManagerForSubject()
 
         testFragment = TestListFragment::class.java.newInstance()
         sfm.beginTransaction().add(subject_content_RV.id, testFragment!!).commit()
         sfm.beginTransaction().hide(testFragment as TestListFragment).commit()
 
-        taskFragment = TaskFragment::class.java.newInstance()
+        taskFragment = TaskListFragment::class.java.newInstance()
         sfm.beginTransaction().add(subject_content_RV.id, taskFragment!!).commit()
-        sfm.beginTransaction().hide(taskFragment as TaskFragment).commit()
+        sfm.beginTransaction().hide(taskFragment as TaskListFragment).commit()
 
         literFragment = LiteratureFragment::class.java.newInstance()
         sfm.beginTransaction().add(subject_content_RV.id, literFragment!!).commit()
@@ -66,7 +66,7 @@ class SubjectInfoFragment : Fragment() {
         subjectTaskLayout.setOnFocusChangeListener(){ _, _ ->
             currentFrag?.let { it1 -> sfm.beginTransaction().hide(it1).commit() }
             currentFrag = taskFragment
-            sfm.beginTransaction().show(taskFragment as TaskFragment).commit()
+            sfm.beginTransaction().show(taskFragment as TaskListFragment).commit()
         }
         subjectTestLayout.setOnFocusChangeListener(){ _, _ ->
             currentFrag?.let { it1 -> sfm.beginTransaction().hide(it1).commit() }

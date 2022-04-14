@@ -12,6 +12,9 @@ import com.example.studentass.R
 import com.example.studentass.fragments.SubjectsFragmentNew.Companion.curSub
 import com.example.studentass.fragments.SubjectsFragmentNew.Companion.subjects
 import com.example.studentass.getAppCompatActivity
+import com.example.studentass.models.LiteratureData
+import com.example.studentass.models.PassedTests
+import com.example.studentass.models.TaskModel
 import kotlinx.android.synthetic.main.fragment_subject_info_new.*
 import kotlinx.android.synthetic.main.liter_task_test_item.view.*
 import kotlinx.android.synthetic.main.subjects_overview_item_new.view.*
@@ -26,7 +29,9 @@ class SubjectInfoFragmentNew : Fragment() {
     private var currentFragID: Int? = 1
 
     companion object {
-        var selected_item: String? = null
+        var listOfListTest = arrayListOf<List<PassedTests>>()
+        var listOfListTask = arrayListOf<List<TaskModel>>()
+        var listOfListLiterature = arrayListOf<List<LiteratureData>>()
     }
 
 
@@ -38,10 +43,13 @@ class SubjectInfoFragmentNew : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         subOverView.nameSub.text = curSub?.name
-        if (subjects?.size == 1){
+        if (subjects?.size == 1) {
             nextSubBtn.visibility = View.INVISIBLE
         }
         prevSubBtn.visibility = View.INVISIBLE
+
+        subject_info_layout.background =
+            ContextCompat.getDrawable(context!!, R.drawable.actionbar_background_rectangle)
 
         subjectLiteratureLayout.bookTv.text = "Литература"
         subjectTaskLayout.bookTv.text = "Работы"
@@ -53,9 +61,6 @@ class SubjectInfoFragmentNew : Fragment() {
         subjectTestLayout.bookIv.background =
             ContextCompat.getDrawable(context!!, R.drawable.ic_projects)
 
-//        subItVP.adapter = SubjectsRvAdapterNew(context!!)
-//        val adapter = subItVP.adapter as SubjectsRvAdapterNew
-//        adapter.dataList = SubjectsFragmentNew.subjects as ArrayList<Subject>
 
         loadContent()
         nextSubBtn.setOnClickListener {
@@ -103,26 +108,26 @@ class SubjectInfoFragmentNew : Fragment() {
         return inflater.inflate(R.layout.fragment_subject_info_new, container, false)
     }
 
-    fun loadContent() {
+    private fun loadContent() {
         testFragment?.let { sfm.beginTransaction().remove(it).commit() }
         taskFragment?.let { sfm.beginTransaction().remove(it).commit() }
         literFragment?.let { sfm.beginTransaction().remove(it).commit() }
 
-        sfm = getAppCompatActivity<MainActivity>()!!.createFMforSubject()
+        sfm = getAppCompatActivity<MainActivity>()!!.createFragmentManagerForSubject()
 
         testFragment = TestListFragment::class.java.newInstance()
         sfm.beginTransaction().add(subject_content_RV.id, testFragment!!).commit()
         sfm.beginTransaction().hide(testFragment as TestListFragment).commit()
 
-        taskFragment = TaskFragment::class.java.newInstance()
+        taskFragment = TaskListFragment::class.java.newInstance()
         sfm.beginTransaction().add(subject_content_RV.id, taskFragment!!).commit()
-        sfm.beginTransaction().hide(taskFragment as TaskFragment).commit()
+        sfm.beginTransaction().hide(taskFragment as TaskListFragment).commit()
 
         literFragment = LiteratureFragment::class.java.newInstance()
         sfm.beginTransaction().add(subject_content_RV.id, literFragment!!).commit()
         sfm.beginTransaction().hide(literFragment as LiteratureFragment).commit()
 
-        currentFrag = when(currentFragID){
+        currentFrag = when (currentFragID) {
             1 -> taskFragment
             2 -> literFragment
             else -> testFragment
@@ -135,13 +140,13 @@ class SubjectInfoFragmentNew : Fragment() {
             currentFragID = 2
             sfm.beginTransaction().show(literFragment as LiteratureFragment).commit()
         }
-        subjectTaskLayout.setOnFocusChangeListener() { _, _ ->
+        subjectTaskLayout.setOnFocusChangeListener { _, _ ->
             currentFrag?.let { it1 -> sfm.beginTransaction().hide(it1).commit() }
             currentFrag = taskFragment
             currentFragID = 1
-            sfm.beginTransaction().show(taskFragment as TaskFragment).commit()
+            sfm.beginTransaction().show(taskFragment as TaskListFragment).commit()
         }
-        subjectTestLayout.setOnFocusChangeListener() { _, _ ->
+        subjectTestLayout.setOnFocusChangeListener { _, _ ->
             currentFrag?.let { it1 -> sfm.beginTransaction().hide(it1).commit() }
             currentFrag = testFragment
             currentFragID = 3

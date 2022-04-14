@@ -1,14 +1,11 @@
 package com.example.studentass.fragments
 
 import android.content.Context
-import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.studentass.MainActivity
@@ -27,8 +24,9 @@ import okhttp3.RequestBody.Companion.toRequestBody
 class TestFragment : Fragment() {
     private val subjectApiService = SubjectApiService.create()
     private lateinit var sfm: FragmentManager
-    private var testQuestions: List<TestQuestion>? = null
+    private var testQuestions: ArrayList<TestQuestion>? = null
     private var qFragment : Fragment? = null
+    private var countOfquest : Int? = null
 
 
     companion object{
@@ -44,37 +42,80 @@ class TestFragment : Fragment() {
         getAppCompatActivity<MainActivity>()?.actionBar?.hide()
 
 
-        loadTest(5)
+        loadTest(10)
 
         currentOfQuestions.text = (currentQuestionId + 1).toString()
 
-        var mainDraw = DrawableCompat.wrap(context?.let { ContextCompat.getDrawable(it, R.drawable.select_answer_item_background) }!!)
-        DrawableCompat.setTintMode(mainDraw, PorterDuff.Mode.SRC_ATOP);
-        var close = DrawableCompat.wrap(context?.let { ContextCompat.getDrawable(it, R.drawable.select_answer_item_background_cliked) }!!)
-        DrawableCompat.setTintMode(close, PorterDuff.Mode.SRC_ATOP);
-        previousQuestionBtn.background = mainDraw
-        nextQuestionBtn.background = mainDraw
-        questionTitle.setBackgroundColor(ContextCompat.getColor(context!!, R.color.testGreenColor))
+        testTheme.text = TestListFragment.currentTest?.theme?.name
 
-        previousQuestionBtn.setOnClickListener {
-            if (currentQuestionId > 0){
-                nextQuestionBtn.text = "Далее"
-                nextQuestionBtn.background = mainDraw
-                sfm.beginTransaction().remove(qFragment!!).commit()
-                currentQuestion = testQuestions?.get(--currentQuestionId)
-                qFragment = when(currentQuestion!!.questionType){
-                    "SELECT" -> QuestionTypeSelectFragment()
-                    "MATCH" -> QuestionTypeMatchFragment()
-                    "SEQUENCE" -> QuestionTypeSequenceFragment()
-                    else -> QuestionTypeWriteFragment()
-                }
-                sfm = getAppCompatActivity<MainActivity>()!!.fragmentManager
-                sfm.beginTransaction().add(questionFrame.id, qFragment!!).commit()
-                currentOfQuestions.text = (currentQuestionId + 1).toString()
-            }
-        }
-        nextQuestionBtn.setOnClickListener {
-            //добавляем ответы
+
+        nextQuestCheck.visibility = View.INVISIBLE
+        nextQuestArrow.visibility = View.VISIBLE
+
+//        var mainDraw = DrawableCompat.wrap(context?.let { ContextCompat.getDrawable(it, R.drawable.select_answer_item_background) }!!)
+//        DrawableCompat.setTintMode(mainDraw, PorterDuff.Mode.SRC_ATOP);
+//        var close = DrawableCompat.wrap(context?.let { ContextCompat.getDrawable(it, R.drawable.select_answer_item_background_cliked) }!!)
+//        DrawableCompat.setTintMode(close, PorterDuff.Mode.SRC_ATOP);
+//        previousQuestionBtn.background = mainDraw
+//        nextQuestionBtn.background = mainDraw
+        //questionTitle.setBackgroundColor(ContextCompat.getColor(context!!, R.color.testGreenColor))
+
+//        previousQuestionBtn.setOnClickListener {
+//
+//
+//
+//            if (currentQuestionId > 0){
+//                nextQuestionBtn.text = "Далее"
+//                nextQuestionBtn.background = mainDraw
+//                sfm.beginTransaction().remove(qFragment!!).commit()
+//                currentQuestion = testQuestions?.get(--currentQuestionId)
+//                updateProgressBar(currentQuestionId + 1)
+//                qFragment = when(currentQuestion!!.questionType){
+//                    "SELECT" -> QuestionTypeSelectFragment()
+//                    "MATCH" -> QuestionTypeMatchFragment()
+//                    "SEQUENCE" -> QuestionTypeSequenceFragment()
+//                    else -> QuestionTypeWriteFragment()
+//                }
+//                sfm = getAppCompatActivity<MainActivity>()!!.fragmentManager
+//                sfm.beginTransaction().add(questionFrame.id, qFragment!!).commit()
+//                currentOfQuestions.text = (currentQuestionId + 1).toString()
+//            }
+//        }
+//        nextQuestionBtn.setOnClickListener {
+//            //добавляем ответы
+//
+//            loadAnswers()
+//            ///
+//            if(currentQuestionId < testQuestions?.size!! - 1){
+//
+//                sfm.beginTransaction().remove(qFragment!!).commit()
+//
+//                //currentQuestion = data[++currentQuestionId]
+//                currentQuestion = testQuestions?.get(++currentQuestionId)
+//                updateProgressBar(currentQuestionId + 1)
+//                qFragment = when(currentQuestion!!.questionType){
+//                    "SELECT" -> QuestionTypeSelectFragment()
+//                    "MATCH" -> QuestionTypeMatchFragment()
+//                    "SEQUENCE" -> QuestionTypeSequenceFragment()
+//                    else -> QuestionTypeWriteFragment()
+//                }
+//                sfm = getAppCompatActivity<MainActivity>()!!.fragmentManager
+//                sfm.beginTransaction().add(questionFrame.id, qFragment!!).commit()
+//                //if (currentQuestionId == data.size - 1){
+//                if (currentQuestionId == testQuestions?.size?.minus(1)){
+//                    nextQuestionBtn.background = close
+//                    nextQuestionBtn.text = "Завершить"
+//                }
+//                currentOfQuestions.text = (currentQuestionId + 1).toString()
+//            }else{
+//
+//                currentQuestionId = 0
+//                currentQuestion = null
+//                checkTest()
+//
+//            }
+//        }
+        nextQuestBut.setOnClickListener {
             loadAnswers()
             ///
             if(currentQuestionId < testQuestions?.size!! - 1){
@@ -83,6 +124,7 @@ class TestFragment : Fragment() {
 
                 //currentQuestion = data[++currentQuestionId]
                 currentQuestion = testQuestions?.get(++currentQuestionId)
+                updateProgressBar(currentQuestionId + 1)
                 qFragment = when(currentQuestion!!.questionType){
                     "SELECT" -> QuestionTypeSelectFragment()
                     "MATCH" -> QuestionTypeMatchFragment()
@@ -93,8 +135,9 @@ class TestFragment : Fragment() {
                 sfm.beginTransaction().add(questionFrame.id, qFragment!!).commit()
                 //if (currentQuestionId == data.size - 1){
                 if (currentQuestionId == testQuestions?.size?.minus(1)){
-                    nextQuestionBtn.background = close
-                    nextQuestionBtn.text = "Завершить"
+                    nextQuestArrow.visibility = View.INVISIBLE
+                    //nextQuestBut.text = "Завершить"
+                    nextQuestCheck.visibility = View.VISIBLE
                 }
                 currentOfQuestions.text = (currentQuestionId + 1).toString()
             }else{
@@ -104,6 +147,9 @@ class TestFragment : Fragment() {
                 checkTest()
 
             }
+        }
+        closeTab.setOnClickListener {
+            getAppCompatActivity<MainActivity>()?.switchDown()
         }
 
 
@@ -159,10 +205,24 @@ class TestFragment : Fragment() {
     }
 
 
-    private fun getTest(context: Context?, questions: List<TestQuestion>){
-        testQuestions = questions
+    private fun getTest(questions: List<TestQuestion>){
 
-        countOfQuestions.text = testQuestions?.size.toString()
+
+        testQuestions = questions as ArrayList<TestQuestion>
+        var i = 0
+        while (i < testQuestions!!.size){
+            if (testQuestions!![i].questionType == "MATCH"){
+                testQuestions!!.removeAt(i)
+            }else{
+                i++
+            }
+        }
+
+        countOfquest = testQuestions?.size
+        countOfQuestions.text = countOfquest.toString()
+        progressBarTest.max = countOfquest!!
+
+        updateProgressBar(currentQuestionId + 1)
 
         currentQuestion = testQuestions?.get(currentQuestionId)
 
@@ -185,7 +245,7 @@ class TestFragment : Fragment() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe(
-                {r -> getTest(context, r)},
+                {r -> getTest(r)},
                 {e -> Toast.makeText(context, "Get question list error: $e", Toast.LENGTH_LONG).show()}
             )
     }
@@ -205,6 +265,10 @@ class TestFragment : Fragment() {
                 {r -> onCheckTest(context, r)},
                 {e -> Toast.makeText(context, "Get test result error: $e", Toast.LENGTH_LONG).show()}
             )
+    }
+
+    fun updateProgressBar(value: Int){
+        progressBarTest.progress = value
     }
 
 }

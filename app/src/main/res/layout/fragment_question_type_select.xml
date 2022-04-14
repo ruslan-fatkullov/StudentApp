@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/questionSelectBack"
+    android:padding="25dp">
 
 
     <LinearLayout
@@ -13,21 +15,21 @@
         android:orientation="vertical"
         tools:ignore="MissingConstraints">
 
-        <TextView
-            android:id="@+id/selectTvTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10sp"
-            android:text="@string/choseRightVariant"
-            android:textSize="18sp" />
+<!--        <TextView-->
+<!--            android:id="@+id/selectTvTitle"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:padding="10sp"-->
+<!--            android:text="@string/choseRightVariant"-->
+<!--            android:textSize="18sp" />-->
 
         <TextView
             android:id="@+id/selectTV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="25sp"
+            android:padding="15sp"
             android:text="@string/questionTitle"
-            android:textSize="24sp" />
+            android:textSize="16sp" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

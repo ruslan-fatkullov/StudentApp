@@ -41,5 +41,8 @@
     <color name="colorGreen">#27FF00</color>
     <color name="white">#FFFFFF</color>
     <color name="testGreenColor">#63C060</color>
+    <color name="testBackground">#5A9CFF</color>
+    <color name="textTaskColor">#6B6B6B</color>
+
 
 </resources>
