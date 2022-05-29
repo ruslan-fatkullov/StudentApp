@@ -35,9 +35,11 @@ class AccountFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         var drawable = DrawableCompat.wrap(context?.let { ContextCompat.getDrawable(it, R.drawable.account_data_background) }!!)
-        DrawableCompat.setTintMode(drawable, PorterDuff.Mode.SRC_ATOP);
-        var drawable1 = DrawableCompat.wrap(context?.let { ContextCompat.getDrawable(it, R.drawable.select_answer_item_background) }!!)
-        DrawableCompat.setTintMode(drawable1, PorterDuff.Mode.SRC_ATOP);
+        DrawableCompat.setTintMode(drawable, PorterDuff.Mode.SRC_ATOP)
+        var drawable1 = DrawableCompat.wrap(context?.let { ContextCompat.getDrawable(it, R.drawable.test_info_count) }!!)
+        DrawableCompat.setTintMode(drawable1, PorterDuff.Mode.SRC_ATOP)
+        var drawable2 = DrawableCompat.wrap(context?.let { ContextCompat.getDrawable(it, R.drawable.change_pass_button) }!!)
+        DrawableCompat.setTintMode(drawable1, PorterDuff.Mode.SRC_ATOP)
 
         firstnameOfUser.background = drawable
         lastnameOfUser.background = drawable
@@ -48,6 +50,8 @@ class AccountFragment : Fragment() {
         groupOfUser.background = drawable
         privateDataCL.background = drawable1
         accountDataCL.background = drawable1
+
+        changePassButton.background = drawable2
 
         val disposableSubjectListRx = userApiService
             .getUser(requestBody)

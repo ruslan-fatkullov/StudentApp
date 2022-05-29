@@ -7,6 +7,7 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="20dp"
     android:layout_marginTop="10dp"
+    android:elevation="5dp"
     android:padding="10dp">
 
 
@@ -43,7 +44,8 @@
             android:id="@+id/passedTestLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Пройден"
+            android:padding="5dp"
+            android:text="Статус"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

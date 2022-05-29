@@ -56,8 +56,9 @@ class TaskRvAdapter(private val context: Context) : RecyclerView.Adapter<TaskRvA
             titleTask.text = itemData.title
             //descriptionTask.text = itemData.description
             typeTask.text = when(itemData.type){
-                "LAB" -> "Сдана"
-                "PRACTICE" -> "Не сдана"
+                "LAB" -> "Лабораторная"
+                "PRACTICE" -> "Практическая"
+                "ESSAY" -> "Эссе"
                 else -> ({}).toString()
             }
             mainTaskLayout.setOnFocusChangeListener{newFocus, _ ->

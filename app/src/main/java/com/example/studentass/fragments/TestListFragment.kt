@@ -90,11 +90,7 @@ class TestListFragment : Fragment() {
 
         themesListOf = themesList
         if (indexOfSubject != null) {
-            //Toast.makeText(context, themesList.toString(), Toast.LENGTH_SHORT).show()
-            //Toast.makeText(context, "тесты добавлены", Toast.LENGTH_SHORT).show()
             listOfListTest.add(themesList)
-            //Toast.makeText(context, listOfListTest[indexOfSubject].toString(), Toast.LENGTH_SHORT).show()
-
         }
 
         setFragParams(adapter, themesList)
@@ -105,11 +101,11 @@ class TestListFragment : Fragment() {
         themesListOf = themesList
         adapter.dataList = themesListOf as ArrayList<PassedTests>
 
-        adapter.setOnItemClickListener(object : TestRvAdapter.onItemClickListener {
+        adapter.setOnItemClickListener(object : TestRvAdapter.OnItemClickListener {
             override fun setOnClickListener(position: Int) {
                 currentTest = (themesListOf as ArrayList<PassedTests>)[position]
                 getAppCompatActivity<MainActivity>()?.actionBar?.hide()
-                getAppCompatActivity<MainActivity>()?.switchUp(TestFragment::class.java)
+                getAppCompatActivity<MainActivity>()?.switchUp(TestStartPage::class.java)
             }
 
         })

@@ -16,6 +16,9 @@ import kotlin.collections.ArrayList
 
 class SchedulePairsRvAdapterNew(private val context: Context) :
     RecyclerView.Adapter<SchedulePairsRvAdapterNew.ViewHolder>() {
+
+
+    private lateinit var mListener: OnItemClickListener
     class PairTime(pairNum: Int) {
         var intervalString = when (pairNum) {
             1 -> "08:30 - 09:30"
@@ -30,13 +33,13 @@ class SchedulePairsRvAdapterNew(private val context: Context) :
         }
     }
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View, private var mListener: OnItemClickListener) : RecyclerView.ViewHolder(view), View.OnClickListener {
         private val pairNameTv: TextView = view.pairNameTv
         private val timeTv: TextView = view.timeTv
         private val locationTv: TextView = view.locationTv
         private val teacherNameTv: TextView = view.teacherNameTv
 
-        private val pairLayout: ConstraintLayout = view.pairLayout
+        val pairLayout: ConstraintLayout = view.pairLayout
         private val pairTypeTv: TextView = view.pairTypeTv
 
         fun bind(
@@ -95,6 +98,14 @@ class SchedulePairsRvAdapterNew(private val context: Context) :
 
 
         }
+
+        init {
+            pairLayout.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            mListener.setOnClickListener(adapterPosition)
+        }
     }
 
     private var pair = ArrayList<TimetableLesson>()
@@ -110,14 +121,25 @@ class SchedulePairsRvAdapterNew(private val context: Context) :
         viewType: Int
     ): ViewHolder {
         val inflater = LayoutInflater.from(context)
-        return ViewHolder(inflater.inflate(R.layout.schedule_pair_rv_item_new, parent, false))
+        return ViewHolder(inflater.inflate(R.layout.schedule_pair_rv_item_new, parent, false), mListener)
     }
 
-    override fun getItemCount(): Int = dataList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val pairItem = dataList[position]
         val pairNumber = pairNumberArray[position]
         holder.bind(pairItem, pairNumber, context)
+        holder.pairLayout.setOnClickListener {
+            mListener.setOnClickListener(holder.adapterPosition)
+        }
     }
+
+    override fun getItemCount(): Int = dataList.size
+    interface OnItemClickListener{
+        fun setOnClickListener(position: Int)
+    }
+    fun setOnItemClickListener(mListner: OnItemClickListener) {
+        this.mListener = mListner
+    }
+
 }

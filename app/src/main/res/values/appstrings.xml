@@ -46,11 +46,19 @@
     <string name="schedule_pair_practice">Практика</string>
     <string name="schedule_pair_lab">Лаб</string>
 
-    <string name="rating_tip">Ознакомься со своими позициями в рейтинге и результатами обучения.</string>
+    <string name="rating_tip">Ознакомьтесь с результатами обучения.</string>
     <string name="rating_in_group">В группе</string>
     <string name="rating_in_department">На кафедре</string>
     <string name="rating_in_university">По университету</string>
     <string name="rating_attendance">Посещаемость</string>
     <string name="rating_attendance_lections">Лекции</string>
     <string name="rating_attendance_practices">Практики</string>
+
+
+    <string name="perf_donework">Выполненные работы</string>
+    <string name="perfomance_laboratory">Лабораторные</string>
+    <string name="perfomance_practice">Практические</string>
+    <string name="perfomance_test">Тесты</string>
+    <string name="perfomance_essay">Эссе</string>
+
 </resources>

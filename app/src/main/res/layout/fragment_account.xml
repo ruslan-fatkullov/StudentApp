@@ -11,7 +11,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="25dp">
+        android:padding="15dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -20,6 +20,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/privateDataCL"
+                android:elevation="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorRatingAttendancePracticesBackground"
@@ -31,8 +32,9 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/privateData"
-                    android:textSize="28sp"
+                    android:textSize="18sp"
                     android:textStyle="bold"
+                    android:paddingVertical="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -49,6 +51,7 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/lastnameOfUser"
+                        android:elevation="5dp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginTop="5dp"
@@ -62,7 +65,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:padding="8dp"
+                            android:padding="4dp"
                             android:text="Фамилия"
                             android:textSize="16sp"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -74,9 +77,9 @@
                             android:id="@+id/lastNameLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginTop="5dp"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginTop="4dp"
                             android:text="Фамилия"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -84,6 +87,7 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/firstnameOfUser"
+                        android:elevation="5dp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginTop="5dp"
@@ -97,7 +101,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:padding="8dp"
+                            android:padding="4dp"
                             android:text="Имя"
                             android:textSize="16sp"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -109,9 +113,9 @@
                             android:id="@+id/firstNameLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginTop="5dp"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginTop="4dp"
                             android:text="Имя"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -120,6 +124,7 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/patronomycOfUser"
+                        android:elevation="5dp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginTop="5dp"
@@ -133,7 +138,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:padding="8dp"
+                            android:padding="4dp"
                             android:text="Отчество"
                             android:textSize="16sp"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -145,9 +150,9 @@
                             android:id="@+id/patronomycLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginTop="5dp"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginTop="4dp"
                             android:text="Отчество"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -155,6 +160,7 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/groupOfUser"
+                        android:elevation="5dp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginTop="5dp"
@@ -168,7 +174,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:padding="8dp"
+                            android:padding="4dp"
                             android:text="Группа"
                             android:textSize="16sp"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -180,9 +186,9 @@
                             android:id="@+id/groupLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginTop="5dp"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginTop="4dp"
                             android:text="Группа"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -196,7 +202,8 @@
                 android:id="@+id/accountDataCL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="25sp"
+                android:layout_marginTop="15sp"
+                android:elevation="10dp"
                 android:background="@color/colorTaskLaboratoryBackground"
                 android:padding="15dp">
 
@@ -206,14 +213,16 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="Данные авторизации"
-                    android:textSize="28sp"
+                    android:textSize="18sp"
                     android:textStyle="bold"
+                    android:paddingVertical="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/emailOfUser"
+                    android:elevation="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="5dp"
@@ -227,7 +236,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:padding="8dp"
+                        android:padding="4dp"
                         android:text="Почта"
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -239,9 +248,9 @@
                         android:id="@+id/emailLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginTop="4dp"
                         android:text="Почта"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -249,6 +258,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/loginOfUser"
+                    android:elevation="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="5dp"
@@ -262,7 +272,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:padding="8dp"
+                        android:padding="4dp"
                         android:text="Логин"
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -274,9 +284,9 @@
                         android:id="@+id/loginLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginTop="4dp"
                         android:text="Логин"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -285,6 +295,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/phoneOfUser"
+                    android:elevation="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="5dp"
@@ -298,7 +309,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:padding="8dp"
+                        android:padding="4dp"
                         android:text="Телефон"
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -310,9 +321,9 @@
                         android:id="@+id/phoneLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginTop="4dp"
                         android:text="Телефон"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -321,7 +332,40 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/changePassButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:elevation="10dp"
+                android:background="@color/colorTestInfoResult">
+
+
+                <ImageView
+                    android:id="@+id/changePassIv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="15dp"
+                    android:src="@drawable/change_pass_ico"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:text="Сменить пароль"
+                    android:textColor="#0A5905"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/changePassIv"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
         </LinearLayout>
+
     </ScrollView>
 
 

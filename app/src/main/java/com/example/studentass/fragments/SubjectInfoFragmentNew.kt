@@ -18,6 +18,7 @@ import com.example.studentass.models.TaskModel
 import kotlinx.android.synthetic.main.fragment_subject_info_new.*
 import kotlinx.android.synthetic.main.liter_task_test_item.view.*
 import kotlinx.android.synthetic.main.subjects_overview_item_new.view.*
+import kotlin.random.Random
 
 
 class SubjectInfoFragmentNew : Fragment() {
@@ -42,11 +43,22 @@ class SubjectInfoFragmentNew : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val maxSub = subjects?.size
+        val numOfCurrentSub = "1"
+        //subOverView.countOfSub.text = "$numOfCurrentSub/$maxSub"
+
+        val nextValues = subjects?.size?.let { List(it) { Random.nextInt(0, 3) } }
+        //val ran = Random.nextInt(0,3)
+        var subjectBackground = nextValues?.get(0)?.let { background_for_subject(it) }
+        subOverView.subItemCL.background = subjectBackground?.let { ContextCompat.getDrawable(context!!, it) }
+
         subOverView.nameSub.text = curSub?.name
         if (subjects?.size == 1) {
             nextSubBtn.visibility = View.INVISIBLE
         }
         prevSubBtn.visibility = View.INVISIBLE
+
+        subOverView.subItemCL.elevation = 15.0F
 
         subject_info_layout.background =
             ContextCompat.getDrawable(context!!, R.drawable.actionbar_background_rectangle)
@@ -67,21 +79,26 @@ class SubjectInfoFragmentNew : Fragment() {
             prevSubBtn.visibility = View.VISIBLE
             val ind = subjects?.indexOf(curSub)
             if (ind != null) {
+                subjectBackground = nextValues?.get(ind)?.let { background_for_subject(it) }
+                subOverView.subItemCL.background = subjectBackground?.let { ContextCompat.getDrawable(context!!, it) }
                 curSub = subjects?.get(ind + 1)
+                //subOverView.countOfSub.text = "${ind+2}/$maxSub"
                 subOverView.nameSub.text = curSub?.name
                 if (ind == subjects?.size?.minus(2)) {
                     nextSubBtn.visibility = View.INVISIBLE
                 }
             }
-
             loadContent()
-
         }
         prevSubBtn.setOnClickListener {
             nextSubBtn.visibility = View.VISIBLE
             val ind = subjects?.indexOf(curSub)
             if (ind != null) {
+                subjectBackground = nextValues?.get(ind)?.let { background_for_subject(it) }
+                subOverView.subItemCL.background = subjectBackground?.let { ContextCompat.getDrawable(context!!, it) }
+
                 curSub = subjects?.get(ind - 1)
+                //subOverView.countOfSub.text = "${ind}/$maxSub"
                 subOverView.nameSub.text = curSub?.name
                 if (ind == 1) {
                     prevSubBtn.visibility = View.INVISIBLE
@@ -155,5 +172,13 @@ class SubjectInfoFragmentNew : Fragment() {
         }
     }
 
+    private fun background_for_subject(ran: Int): Int{
+        return when(ran){
+            0 -> R.drawable.subject_background_rectangl_blue
+            1 -> R.drawable.subject_background_rectangl_orange
+            2 -> R.drawable.subject_background_rectangl_purple
+            else -> {R.drawable.subject_background_rectangl_purple}
+        }
+    }
 
 }

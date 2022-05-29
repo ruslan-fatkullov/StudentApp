@@ -89,7 +89,7 @@
 
 
             <TextView
-                android:id="@+id/countOfTryes"
+                android:id="@+id/countOfTries"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Попыток"
@@ -104,7 +104,7 @@
                 android:text="Результат"
                 android:layout_marginLeft="15dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/countOfTryes"
+                app:layout_constraintStart_toEndOf="@id/countOfTries"
                 app:layout_constraintTop_toTopOf="parent" />
 
 

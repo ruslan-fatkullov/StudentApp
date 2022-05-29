@@ -21,11 +21,13 @@ class RatingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setRatingGroupValue(35, 50)
-        setRatingDepartmentValue(50, 120)
-        setRatingUniversityValue(100, 1445)
-//        setAttendanceLectionsValue(33)
-//        setAttendancePracticesValue(75)
+//        setRatingGroupValue(35, 50)
+//        setRatingDepartmentValue(50, 120)
+//        setRatingUniversityValue(100, 1445)
+        setAttendanceLaboratoryValue(33)
+        setAttendancePracticeValue(75)
+        setAttendanceTestsValue(44)
+        setAttendanceEssayValue(22)
 
         onHiddenChanged(false)
     }
@@ -50,7 +52,7 @@ class RatingFragment : Fragment() {
         super.onHiddenChanged(hidden)
 
         if (!hidden) {
-            getAppCompatActivity<MainActivity>()?.actionBar?.title = "Рейтинг"
+            getAppCompatActivity<MainActivity>()?.actionBar?.title = "Успеваемость"
         }
     }
 
@@ -58,51 +60,67 @@ class RatingFragment : Fragment() {
     /*
      * Устанавливает рейтинг по группе
      */
-    private fun setRatingGroupValue(value: Int, maxValue: Int) {
-        ratingGroupPb.max = maxValue
-        ratingGroupPb.progress = value
-        val tvText = "$value/$maxValue"
-        ratingGroupTv.text = tvText
-    }
-
-
-    /*
-     * Устанавливает рейтинг по факультету
-     */
-    private fun setRatingDepartmentValue(value: Int, maxValue: Int) {
-        ratingDepartmentPb.max = maxValue
-        ratingDepartmentPb.progress = value
-        val tvText = "$value/$maxValue"
-        ratingDepartmentTv.text = tvText
-    }
-
-
-    /*
-     * Устанавливает рейтинг по университету
-     */
-    private fun setRatingUniversityValue(value: Int, maxValue: Int) {
-        ratingUniversityPb.max = maxValue
-        ratingUniversityPb.progress = value
-        val tvText = "$value/$maxValue"
-        ratingUniversityTv.text = tvText
-    }
+//    private fun setRatingGroupValue(value: Int, maxValue: Int) {
+//        ratingGroupPb.max = maxValue
+//        ratingGroupPb.progress = value
+//        val tvText = "$value/$maxValue"
+//        ratingGroupTv.text = tvText
+//    }
+//
+//
+//    /*
+//     * Устанавливает рейтинг по факультету
+//     */
+//    private fun setRatingDepartmentValue(value: Int, maxValue: Int) {
+//        ratingDepartmentPb.max = maxValue
+//        ratingDepartmentPb.progress = value
+//        val tvText = "$value/$maxValue"
+//        ratingDepartmentTv.text = tvText
+//    }
+//
+//
+//    /*
+//     * Устанавливает рейтинг по университету
+//     */
+//    private fun setRatingUniversityValue(value: Int, maxValue: Int) {
+//        ratingUniversityPb.max = maxValue
+//        ratingUniversityPb.progress = value
+//        val tvText = "$value/$maxValue"
+//        ratingUniversityTv.text = tvText
+//    }
 
 
     /*
      * Устанавливает посещаемость лекций
      */
-//    private fun setAttendanceLectionsValue(value: Int) {
-//        attendanceLectionsGg.value = value
-//        val tvText = "$value%"
-//        attendanceLectionsTv.text = tvText
-//    }
+    private fun setAttendanceLaboratoryValue(value: Int) {
+        attendanceLaboratoryGg.value = value
+        val tvText = "$value%"
+        attendanceLaboratoryTv.text = tvText
+    }
 
     /*
      * Устанавливает посещаемость практик
      */
-//    private fun setAttendancePracticesValue(value: Int) {
-//        attendancePracticesGg.value = value
-//        val tvText = "$value%"
-//        attendancePracticesTv.text = tvText
-//    }
+    private fun setAttendancePracticeValue(value: Int) {
+        attendancePracticesGg.value = value
+        val tvText = "$value%"
+        attendancePracticesTv.text = tvText
+    }
+    /*
+     * Устанавливает посещаемость практик
+     */
+    private fun setAttendanceTestsValue(value: Int) {
+        attendanceTestGg.value = value
+        val tvText = "$value%"
+        attendanceTestTv.text = tvText
+    }
+    /*
+     * Устанавливает посещаемость практик
+     */
+    private fun setAttendanceEssayValue(value: Int) {
+        attendanceEssayGg.value = value
+        val tvText = "$value%"
+        attendanceEssayTv.text = tvText
+    }
 }

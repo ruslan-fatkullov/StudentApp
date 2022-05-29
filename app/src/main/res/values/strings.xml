@@ -31,4 +31,7 @@
     <string name="nameOfUser">Имя</string>
     <string name="noLiterature">Литературы нет</string>
     <string name="privateData">Личные данные</string>
+    <string name="testCloseConDesc">закрыть тест</string>
+
+    <string name="testClose"><u>Закрыть</u></string>
 </resources>

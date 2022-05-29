@@ -5,11 +5,10 @@
     android:id="@+id/subject_info_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E5E5E5"
     tools:context=".fragments.SubjectsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/subItCL"
+        android:id="@+id/subItemCL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,7 +20,7 @@
             android:layout_width="30dp"
             android:layout_height="0dp"
             android:layout_marginStart="10dp"
-            android:src="@drawable/ic_schedule_weeks_prev"
+            android:src="@drawable/subject_prev"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -32,6 +31,8 @@
             layout="@layout/subjects_overview_item_new"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/nextSubBtn"
             app:layout_constraintStart_toEndOf="@id/prevSubBtn"
             app:layout_constraintTop_toTopOf="parent" />
@@ -42,7 +43,7 @@
             android:layout_height="0dp"
             android:layout_marginRight="10dp"
             android:visibility="visible"
-            android:src="@drawable/ic_schedule_weeks_next"
+            android:src="@drawable/subject_next"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -51,31 +52,35 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
+    <HorizontalScrollView
+        android:id="@+id/menuScroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:orientation="horizontal"
-        android:padding="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/subItCL">
+        android:scrollbars="none"
+        app:layout_constraintTop_toBottomOf="@+id/subItemCL">
 
-        <include
-            android:id="@+id/subjectTaskLayout"
-            layout="@layout/liter_task_test_item" />
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:padding="5dp">
 
-        <include
-            android:id="@+id/subjectLiteratureLayout"
-            layout="@layout/liter_task_test_item" />
+            <include
+                android:id="@+id/subjectTaskLayout"
+                layout="@layout/liter_task_test_item" />
 
-        <include
-            android:id="@+id/subjectTestLayout"
-            layout="@layout/liter_task_test_item" />
+            <include
+                android:id="@+id/subjectLiteratureLayout"
+                layout="@layout/liter_task_test_item" />
+
+            <include
+                android:id="@+id/subjectTestLayout"
+                layout="@layout/liter_task_test_item" />
 
 
-    </LinearLayout>
+        </LinearLayout>
+    </HorizontalScrollView>
 
     <FrameLayout
         android:id="@+id/subject_content_RV"
@@ -84,7 +89,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/linearLayout">
+        app:layout_constraintTop_toBottomOf="@id/menuScroll">
 
     </FrameLayout>
 

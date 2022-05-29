@@ -9,6 +9,7 @@
     android:orientation="vertical"
     android:clickable="true"
     android:focusable="true"
+    android:elevation="5dp"
     android:focusableInTouchMode="true"
     android:background="@drawable/work_background_item_selector">
 

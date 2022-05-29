@@ -31,16 +31,37 @@
     <color name="colorRatingAttendancePracticesProgress">#5A9CFF</color>
     <color name="colorRatingAttendancePracticesBackground">#E2E7FF</color>
 
+
+    <color name="colorPerfomancePracticeProgress">#FD6374</color>
+    <color name="colorPerfomanceLaboratoryProgress">#5A9CFF</color>
+    <color name="colorPerfomanceTestsProgress">#1EE817</color>
+    <color name="colorPerfomanceEssayProgress">#F6DE0A</color>
+
+    <color name="colorPerfomancePracticeProgressBackground">#FEDDE3</color>
+    <color name="colorPerfomanceLaboratoryProgressBackground">#E2E7FF</color>
+    <color name="colorPerfomanceTestsProgressBackground">#DDFEDF</color>
+    <color name="colorPerfomanceEssayProgressBackground">#FEFCDD</color>
+
+
     <color name="colorNotificationBackground">#FFFFFF</color>
     <color name="colorNotificationNewBackground">#ebf2ff</color>
 
     <color name="colorTaskLaboratoryBackground">#1A62DCDE</color>
     <color name="colorTaskPracticeBackground">#1AFFA45A</color>
 
+    <color name="colorTestPassed">#338DDE62</color>
+    <color name="colorTestNotPassed">#33DECD62</color>
+
+    <color name="colorTestInfoCount">#995A9CFF</color>
+    <color name="colorTestInfoResult">#9955DD37</color>
+
+
+
     <color name="colorSubjectBackgroundDefault">#F2F7FF</color>
     <color name="colorGreen">#27FF00</color>
     <color name="white">#FFFFFF</color>
-    <color name="testGreenColor">#63C060</color>
+    <color name="testGreenColor">#95E293</color>
+    <color name="testYelowColor">#C0B660</color>
     <color name="testBackground">#5A9CFF</color>
     <color name="textTaskColor">#6B6B6B</color>
 

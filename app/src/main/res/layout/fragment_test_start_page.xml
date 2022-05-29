@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/testBackground"
+    tools:context=".fragments.TestFragment">
+
+
+
+    <FrameLayout
+        android:id="@+id/questionTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true">
+
+
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="25dp">
+
+                <ImageView
+                    android:id="@+id/closeTab"
+                    android:contentDescription="@string/testCloseConDesc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_test_close_back"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/imageView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="18dp"
+                    android:src="@drawable/ic_test_close_ic"
+                    app:layout_constraintBottom_toBottomOf="@id/closeTab"
+                    app:layout_constraintEnd_toEndOf="@id/closeTab"
+                    app:layout_constraintStart_toStartOf="@id/closeTab"
+                    app:layout_constraintTop_toTopOf="@id/closeTab" />
+
+                <TextView
+                    android:id="@+id/testTheme"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Тест 1. Перебор подмножеств. Битовые маски"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/closeTab"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+    </FrameLayout>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/questionTitle"
+        android:layout_alignParentBottom="true"
+        android:padding="25dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/testStartBody"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/question_background">
+
+
+            <TextView
+                android:id="@+id/testDescriptionTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingHorizontal="35dp"
+                android:text="Описание теста"
+                android:textSize="26dp"
+                app:layout_constraintBottom_toTopOf="@+id/countOfTries"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/closeTestButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:padding="10dp"
+                app:layout_constraintBottom_toBottomOf="@+id/repeatButton"
+                app:layout_constraintStart_toEndOf="@+id/repeatButton"
+                app:layout_constraintTop_toTopOf="@+id/repeatButton">
+
+                <TextView
+                    android:id="@+id/textView13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="@string/testClose"
+                    android:textSize="18dp"
+                    app:layout_constraintBottom_toBottomOf="@id/nextQuestBut"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/repeatIcon"
+                    app:layout_constraintTop_toTopOf="@id/nextQuestBut" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/repeatButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="35dp"
+                android:layout_marginBottom="35dp"
+                android:background="@drawable/repeat_background"
+                android:padding="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <TextView
+                    android:id="@+id/textView13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="Пройти снова"
+                    android:textColor="@color/white"
+                    android:textSize="18dp"
+                    app:layout_constraintBottom_toBottomOf="@id/nextQuestBut"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/repeatIcon"
+                    app:layout_constraintTop_toTopOf="@id/nextQuestBut" />
+
+                <ImageView
+                    android:id="@+id/repeatIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:src="@drawable/ic_repeat"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="@id/nextQuestBut"
+                    app:layout_constraintStart_toStartOf="@id/nextQuestBut"
+                    app:layout_constraintTop_toTopOf="@id/nextQuestBut" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/resultOfTries"
+                android:layout_width="140dp"
+                android:layout_height="0dp"
+                android:layout_marginRight="25dp"
+                android:background="@color/colorTestPassed"
+                android:maxWidth="140dp"
+                android:padding="10dp"
+                app:layout_constraintBottom_toBottomOf="@+id/countOfTries"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/countOfTries">
+
+                <TextView
+                    android:id="@+id/resultOfTriesLabelTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Результат"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/resultOfTriesTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="100%"
+                    android:textSize="40dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/resultOfTriesLabelTV" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/countOfTries"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginBottom="40dp"
+                android:background="@color/colorTestPassed"
+                android:maxWidth="140dp"
+                android:padding="10dp"
+                app:layout_constraintBottom_toTopOf="@+id/repeatButton"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <TextView
+                    android:id="@+id/countOfTriesLabelTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Попыток"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/countOfTriesTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="6"
+                    android:textSize="40dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/countOfTriesLabelTV" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <!--            <TextView-->
+            <!--                android:id="@+id/testResult"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:text="Результат"-->
+            <!--                android:layout_marginRight="80dp"-->
+            <!--                android:layout_marginBottom="40dp"-->
+            <!--                app:layout_constraintBottom_toTopOf="@+id/closeTestButton"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent" />-->
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </FrameLayout>
+
+
+</RelativeLayout>

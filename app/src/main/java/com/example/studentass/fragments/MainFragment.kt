@@ -31,7 +31,6 @@ class MainFragment : Fragment() {
 
         val ratingFragment = RatingFragment()
         val scheduleFragmentNew = ScheduleFragmentNew()
-        //val subjectsFragment = SubjectsFragment()
         val subjectsFragmentNew = SubjectsFragmentNew()
 
         val notificationsFragment = NotificationsFragment()
@@ -40,8 +39,6 @@ class MainFragment : Fragment() {
         sfm.beginTransaction().add(fragment_container.id, scheduleFragmentNew).commit()
         sfm.beginTransaction().hide(scheduleFragmentNew).commit()
 
-//        sfm.beginTransaction().add(fragment_container.id, subjectsFragment).commit()
-//        sfm.beginTransaction().hide(subjectsFragment).commit()
         sfm.beginTransaction().add(fragment_container.id, subjectsFragmentNew).commit()
         sfm.beginTransaction().hide(subjectsFragmentNew).commit()
 
@@ -56,6 +53,8 @@ class MainFragment : Fragment() {
 
 
 
+
+
         currentFragment = scheduleFragmentNew
         sfm.beginTransaction().show(currentFragment).commit()
 
@@ -63,10 +62,10 @@ class MainFragment : Fragment() {
             sfm.beginTransaction().hide(currentFragment).commit()
             currentFragment = when (it.itemId) {
                 R.id.bnv_schedule -> scheduleFragmentNew
-                //R.id.bnv_subjects -> subjectsFragment
                 R.id.bnv_subjects -> subjectsFragmentNew
                 R.id.bnv_rating -> ratingFragment
                 R.id.bnv_account -> accountFragment
+                //R.id.bnv_account -> notificationsFragment
                 else -> currentFragment
             }
             sfm.beginTransaction().show(currentFragment).commit()

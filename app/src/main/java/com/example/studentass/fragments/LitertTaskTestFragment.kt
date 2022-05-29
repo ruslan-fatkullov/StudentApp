@@ -89,7 +89,7 @@ class LitertTaskTestFragment : Fragment() {
         themesListOf = themesList
         adapter.dataList = themesListOf as ArrayList<PassedTests>
 
-        adapter.setOnItemClickListener(object : TestRvAdapter.onItemClickListener {
+        adapter.setOnItemClickListener(object : TestRvAdapter.OnItemClickListener {
             override fun setOnClickListener(position: Int) {
                 currentTest = (themesListOf as ArrayList<PassedTests>)[position]
                 getAppCompatActivity<MainActivity>()?.actionBar?.hide()

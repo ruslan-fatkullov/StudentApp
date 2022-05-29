@@ -10,12 +10,15 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.studentass.MainActivity
 import com.example.studentass.R
 import com.example.studentass.adapters.SchedulePairsRvAdapterNew
+import com.example.studentass.adapters.TestRvAdapter
 import com.example.studentass.getAppCompatActivity
 import com.example.studentass.models.Group
+import com.example.studentass.models.PassedTests
 import com.example.studentass.models.ScheduleNew.SubjectList
 import com.example.studentass.models.ScheduleNew.Timetable
 import com.example.studentass.models.ScheduleNew.TimetableLesson
@@ -35,6 +38,7 @@ import java.util.*
  * Фрагмент расписания
  */
 class ScheduleFragmentNew : Fragment() {
+    private lateinit var sfm: FragmentManager
     private val scheduleApiServiceNew = ScheduleApiServiceNew.create()
     private var schedule: Timetable? = null
     private var weekNum: Int = 0
@@ -167,6 +171,12 @@ class ScheduleFragmentNew : Fragment() {
 
 
         val adapter = schedulePairsRv.adapter as SchedulePairsRvAdapterNew
+        adapter.setOnItemClickListener(object : SchedulePairsRvAdapterNew.OnItemClickListener {
+            override fun setOnClickListener(position: Int) {
+                Toast.makeText(context, "success", Toast.LENGTH_SHORT).show()
+            }
+
+        })
         adapter.notifyDataSetChanged()
 
 
@@ -282,7 +292,6 @@ class ScheduleFragmentNew : Fragment() {
                         adapter.dataList.add(scheduleDay.lessons[i] as ArrayList<TimetableLesson>)
                     }
                 }
-                //adapter.dataList = scheduleDay.lessons as List<List<TimetableLesson>>
                 adapter.dataYear = calendar.get(Calendar.YEAR)
                 adapter.dataDayOfYear = calendar.get(Calendar.DAY_OF_YEAR)
                 pairsAbsenceTv.visibility = View.INVISIBLE
