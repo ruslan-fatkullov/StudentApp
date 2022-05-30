@@ -66,10 +66,10 @@ class QuestionSelectRvAdapter(private val context: Context) :
         holder.bind(itemData, context, cl)
         holder.selectItem.setOnClickListener {
             if (cl) {
-                QuestionTypeSelectFragment.answ.remove(dataList[holder.adapterPosition].id)
+                QuestionTypeSelectFragment.answer.remove(dataList[holder.adapterPosition].id)
                 clicked[holder.adapterPosition] = false
             } else {
-                QuestionTypeSelectFragment.answ.add(dataList[holder.adapterPosition].id)
+                QuestionTypeSelectFragment.answer.add(dataList[holder.adapterPosition].id)
                 clicked[holder.adapterPosition] = true
             }
             notifyItemChanged(holder.adapterPosition)

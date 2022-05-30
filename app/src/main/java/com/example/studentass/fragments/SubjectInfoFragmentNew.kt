@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.studentass.MainActivity
 import com.example.studentass.R
+import com.example.studentass.fragments.MainFragment.Companion.colorTheme
 import com.example.studentass.fragments.SubjectsFragmentNew.Companion.curSub
 import com.example.studentass.fragments.SubjectsFragmentNew.Companion.subjects
 import com.example.studentass.getAppCompatActivity
@@ -43,14 +44,17 @@ class SubjectInfoFragmentNew : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val maxSub = subjects?.size
-        val numOfCurrentSub = "1"
+//        val maxSub = subjects?.size
+//        val numOfCurrentSub = "1"
         //subOverView.countOfSub.text = "$numOfCurrentSub/$maxSub"
+
+        subject_info_layout.background = colorTheme
 
         val nextValues = subjects?.size?.let { List(it) { Random.nextInt(0, 3) } }
         //val ran = Random.nextInt(0,3)
-        var subjectBackground = nextValues?.get(0)?.let { background_for_subject(it) }
-        subOverView.subItemCL.background = subjectBackground?.let { ContextCompat.getDrawable(context!!, it) }
+        var subjectBackground = nextValues?.get(0)?.let { backgroundForSubject(it) }
+        subOverView.subItemCL.background =
+            subjectBackground?.let { ContextCompat.getDrawable(context!!, it) }
 
         subOverView.nameSub.text = curSub?.name
         if (subjects?.size == 1) {
@@ -60,8 +64,6 @@ class SubjectInfoFragmentNew : Fragment() {
 
         subOverView.subItemCL.elevation = 15.0F
 
-        subject_info_layout.background =
-            ContextCompat.getDrawable(context!!, R.drawable.actionbar_background_rectangle)
 
         subjectLiteratureLayout.bookTv.text = "Литература"
         subjectTaskLayout.bookTv.text = "Работы"
@@ -79,8 +81,9 @@ class SubjectInfoFragmentNew : Fragment() {
             prevSubBtn.visibility = View.VISIBLE
             val ind = subjects?.indexOf(curSub)
             if (ind != null) {
-                subjectBackground = nextValues?.get(ind)?.let { background_for_subject(it) }
-                subOverView.subItemCL.background = subjectBackground?.let { ContextCompat.getDrawable(context!!, it) }
+                subjectBackground = nextValues?.get(ind + 1)?.let { backgroundForSubject(it) }
+                subOverView.subItemCL.background =
+                    subjectBackground?.let { ContextCompat.getDrawable(context!!, it) }
                 curSub = subjects?.get(ind + 1)
                 //subOverView.countOfSub.text = "${ind+2}/$maxSub"
                 subOverView.nameSub.text = curSub?.name
@@ -94,8 +97,9 @@ class SubjectInfoFragmentNew : Fragment() {
             nextSubBtn.visibility = View.VISIBLE
             val ind = subjects?.indexOf(curSub)
             if (ind != null) {
-                subjectBackground = nextValues?.get(ind)?.let { background_for_subject(it) }
-                subOverView.subItemCL.background = subjectBackground?.let { ContextCompat.getDrawable(context!!, it) }
+                subjectBackground = nextValues?.get(ind - 1)?.let { backgroundForSubject(it) }
+                subOverView.subItemCL.background =
+                    subjectBackground?.let { ContextCompat.getDrawable(context!!, it) }
 
                 curSub = subjects?.get(ind - 1)
                 //subOverView.countOfSub.text = "${ind}/$maxSub"
@@ -172,12 +176,14 @@ class SubjectInfoFragmentNew : Fragment() {
         }
     }
 
-    private fun background_for_subject(ran: Int): Int{
-        return when(ran){
+    private fun backgroundForSubject(ran: Int): Int {
+        return when (ran) {
             0 -> R.drawable.subject_background_rectangl_blue
             1 -> R.drawable.subject_background_rectangl_orange
             2 -> R.drawable.subject_background_rectangl_purple
-            else -> {R.drawable.subject_background_rectangl_purple}
+            else -> {
+                R.drawable.subject_background_rectangl_purple
+            }
         }
     }
 

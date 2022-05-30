@@ -43,7 +43,7 @@ class RegistrationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        nameEt.addTextChangedListener (object: TextWatcher {
+        nameEt.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -51,39 +51,61 @@ class RegistrationFragment : Fragment() {
                 if (nameValidity == "") {
                     nameIv.setColorFilter(ContextCompat.getColor(context!!, R.color.colorAuthField))
                     nameOkIv.visibility = View.VISIBLE
-                }
-                else {
-                    nameIv.setColorFilter(ContextCompat.getColor(context!!, R.color.colorAuthInactive))
+                } else {
+                    nameIv.setColorFilter(
+                        ContextCompat.getColor(
+                            context!!,
+                            R.color.colorAuthInactive
+                        )
+                    )
                     nameOkIv.visibility = View.GONE
                 }
             }
         })
-        groupEt.addTextChangedListener (object: TextWatcher {
+        groupEt.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 groupValidity = validateGroup(s.toString())
                 if (groupValidity == "") {
-                    groupIv.setColorFilter(ContextCompat.getColor(context!!, R.color.colorAuthField))
+                    groupIv.setColorFilter(
+                        ContextCompat.getColor(
+                            context!!,
+                            R.color.colorAuthField
+                        )
+                    )
                     groupOkIv.visibility = View.VISIBLE
-                }
-                else {
-                    groupIv.setColorFilter(ContextCompat.getColor(context!!, R.color.colorAuthInactive))
+                } else {
+                    groupIv.setColorFilter(
+                        ContextCompat.getColor(
+                            context!!,
+                            R.color.colorAuthInactive
+                        )
+                    )
                     groupOkIv.visibility = View.GONE
                 }
             }
         })
-        emailRegEt.addTextChangedListener (object: TextWatcher {
+        emailRegEt.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 emailRegValidity = validateEmailReg(s.toString())
                 if (emailRegValidity == "") {
-                    emailRegIv.setColorFilter(ContextCompat.getColor(context!!, R.color.colorAuthField))
+                    emailRegIv.setColorFilter(
+                        ContextCompat.getColor(
+                            context!!,
+                            R.color.colorAuthField
+                        )
+                    )
                     emailRegOkIv.visibility = View.VISIBLE
-                }
-                else {
-                    emailRegIv.setColorFilter(ContextCompat.getColor(context!!, R.color.colorAuthInactive))
+                } else {
+                    emailRegIv.setColorFilter(
+                        ContextCompat.getColor(
+                            context!!,
+                            R.color.colorAuthInactive
+                        )
+                    )
                     emailRegOkIv.visibility = View.GONE
                 }
             }
@@ -128,7 +150,9 @@ class RegistrationFragment : Fragment() {
      */
     private fun validateEmailReg(emailReg: String): String {
         if (emailReg.isEmpty()) return "Поле не должно быть пустым"
-        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(emailReg).matches()) return "Неверый формат"
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(emailReg)
+                .matches()
+        ) return "Неверый формат"
         return ""
     }
 
@@ -139,7 +163,8 @@ class RegistrationFragment : Fragment() {
     private fun onSignupButtonClick() {
         if (nameValidity == null) nameValidity = validateName(nameEt.text.toString())
         if (groupValidity == null) groupValidity = validateGroup(groupEt.text.toString())
-        if (emailRegValidity == null) emailRegValidity = validateEmailReg(emailRegEt.text.toString())
+        if (emailRegValidity == null) emailRegValidity =
+            validateEmailReg(emailRegEt.text.toString())
         var validData = true
 
         if (nameValidity != "") {
@@ -161,8 +186,7 @@ class RegistrationFragment : Fragment() {
             //loginRole = "student"
             //MainActivity.switchFragment(this, MainActivity.mainFragment)
             getAppCompatActivity<MainActivity>()?.switchDown()
-        }
-        else {
+        } else {
             val shake: Animation = AnimationUtils.loadAnimation(context, R.anim.anim_shake)
             signupBn.startAnimation(shake)
             Toast.makeText(context, "Обнаружены некорректные данные", Toast.LENGTH_SHORT).show()

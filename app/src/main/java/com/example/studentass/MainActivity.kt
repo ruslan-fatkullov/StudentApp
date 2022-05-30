@@ -1,13 +1,18 @@
 package com.example.studentass
 
+import android.content.Context
+import android.graphics.PorterDuff
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.example.studentass.common.MemoryManager
 import com.example.studentass.fragments.AboutProgramFragment
 import com.example.studentass.fragments.LoginFragment
 import com.example.studentass.fragments.MainFragment
@@ -168,6 +173,24 @@ class MainActivity : AppCompatActivity() {
     fun createFragmentManagerForSubject(): FragmentManager {
         fragmentManagerSubject = supportFragmentManager
         return fragmentManagerSubject
+    }
+
+    fun getColorTheme(context: Context): Drawable? {
+        val colorTheme = MemoryManager.loadColorTheme(context)
+        val colorBack = DrawableCompat.wrap(context.let {
+            ContextCompat.getDrawable(
+                it, when (colorTheme) {
+                    "0" -> R.drawable.colorback_white
+                    "1" -> R.drawable.colorback_pink
+                    "2" -> R.drawable.colorback_green
+                    "3" -> R.drawable.colorback_blue
+                    "4" -> R.drawable.ic_pattern_8
+                    else -> R.drawable.ic_pattern_5
+                }
+            )
+        }!!)
+        DrawableCompat.setTintMode(colorBack, PorterDuff.Mode.SRC_ATOP)
+        return colorBack
     }
 
 

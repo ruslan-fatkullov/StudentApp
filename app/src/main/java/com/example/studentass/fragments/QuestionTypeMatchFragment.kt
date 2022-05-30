@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,7 +14,6 @@ import com.example.studentass.adapters.QuestionMatchRvAdapter
 import com.example.studentass.models.TestAnswer
 import kotlinx.android.synthetic.main.fragment_question_type_match.*
 import kotlinx.android.synthetic.main.fragment_question_type_match.view.*
-import kotlinx.android.synthetic.main.fragment_question_type_sequence.*
 
 
 class QuestionTypeMatchFragment : Fragment() {
@@ -23,24 +21,29 @@ class QuestionTypeMatchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var questionBack = DrawableCompat.wrap(context?.let { ContextCompat.getDrawable(it, R.drawable.ic_question_back) }!!)
-        DrawableCompat.setTintMode(questionBack, PorterDuff.Mode.SRC_ATOP);
+        val questionBack = DrawableCompat.wrap(context?.let {
+            ContextCompat.getDrawable(
+                it,
+                R.drawable.ic_question_back
+            )
+        }!!)
+        DrawableCompat.setTintMode(questionBack, PorterDuff.Mode.SRC_ATOP)
         questionMatchBack.background = questionBack
 
 
-        match_item_RV.layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
+        match_item_RV.layoutManager =
+            LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
         match_item_RV.adapter = QuestionMatchRvAdapter(context!!)
 
         val question = view.matchTV
         question.text = TestFragment.currentQuestion?.question
 
 
-
         val adapter = match_item_RV.adapter as QuestionMatchRvAdapter
         adapter.dataList = TestFragment.currentQuestion?.answers as ArrayList<TestAnswer>
 
 
-        adapter.setOnItemClickListener(object: QuestionMatchRvAdapter.onItemClickListener{
+        adapter.setOnItemClickListener(object : QuestionMatchRvAdapter.OnItemClickListener {
             override fun setOnClickListener(position: Int) {
 
             }
@@ -50,6 +53,7 @@ class QuestionTypeMatchFragment : Fragment() {
 
         super.onHiddenChanged(false)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -58,15 +62,5 @@ class QuestionTypeMatchFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_question_type_match, container, false)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-    }
-
-//    override fun onHiddenChanged(hidden: Boolean) {
-//        super.onHiddenChanged(hidden)
-//
-//        getAppCompatActivity<MainActivity>()?.actionBar?.hide()
-//
-//    }
 
 }

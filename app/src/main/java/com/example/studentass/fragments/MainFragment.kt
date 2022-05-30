@@ -1,5 +1,6 @@
 package com.example.studentass.fragments
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +20,9 @@ class MainFragment : Fragment() {
     private lateinit var sfm: FragmentManager
     private lateinit var currentFragment: Fragment
 
+    companion object {
+        var colorTheme: Drawable? = null
+    }
 
 
     /*
@@ -26,6 +30,10 @@ class MainFragment : Fragment() {
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        colorTheme = context?.let {
+            getAppCompatActivity<MainActivity>()?.getColorTheme(it)
+        }
 
         sfm = getAppCompatActivity<MainActivity>()!!.fragmentManager
 
@@ -79,7 +87,6 @@ class MainFragment : Fragment() {
     }
 
 
-
     /*
      * Наполнение фрагмента интерфейсом
      */
@@ -105,8 +112,7 @@ class MainFragment : Fragment() {
         if (::currentFragment.isInitialized) {
             if (hidden) {
                 sfm.beginTransaction().hide(currentFragment).commit()
-            }
-            else {
+            } else {
                 sfm.beginTransaction().show(currentFragment).commit()
             }
         }

@@ -19,7 +19,8 @@ class LiteratureRvAdapter(private val context: Context) :
 
     private lateinit var myListener: OnItemClickListener
 
-    class ViewHolder(view: View, private var mListener: OnItemClickListener) : RecyclerView.ViewHolder(view),
+    class ViewHolder(view: View, private var mListener: OnItemClickListener) :
+        RecyclerView.ViewHolder(view),
         View.OnClickListener {
 
 
@@ -42,8 +43,16 @@ class LiteratureRvAdapter(private val context: Context) :
             author.text = itemData.authors
 
 
-            val drawable = DrawableCompat.wrap(ContextCompat.getDrawable(context, R.drawable.work_background_item_selector)!!)
-            DrawableCompat.setTint(drawable, ContextCompat.getColor(context, R.color.colorNotificationBackground))
+            val drawable = DrawableCompat.wrap(
+                ContextCompat.getDrawable(
+                    context,
+                    R.drawable.work_background_item_selector
+                )!!
+            )
+            DrawableCompat.setTint(
+                drawable,
+                ContextCompat.getColor(context, R.color.colorNotificationBackground)
+            )
             DrawableCompat.setTintMode(drawable, PorterDuff.Mode.SRC_ATOP)
             literatureItemRv.background = drawable
 

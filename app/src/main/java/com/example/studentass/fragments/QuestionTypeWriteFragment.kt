@@ -1,43 +1,35 @@
 package com.example.studentass.fragments
 
-import android.content.Context
 import android.graphics.PorterDuff
 import android.os.Bundle
-import android.text.Editable
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import com.example.studentass.R
-import com.example.studentass.fragments.LoginFragment.Companion.token
-import com.example.studentass.models.testResultModel.testResult
-import com.example.studentass.services.SubjectApiService
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.fragment_question_type_select.*
 import kotlinx.android.synthetic.main.fragment_question_type_write.*
 import kotlinx.android.synthetic.main.fragment_question_type_write.view.*
-import kotlinx.android.synthetic.main.fragment_test.*
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody.Companion.toRequestBody
 
 
 class QuestionTypeWriteFragment : Fragment() {
-    companion object{
-        var questionId : Long? = null
-        var anWindow : EditText? = null
+    companion object {
+        var questionId: Long? = null
+        var anWindow: EditText? = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var questionBack = DrawableCompat.wrap(context?.let { ContextCompat.getDrawable(it, R.drawable.ic_question_back) }!!)
-        DrawableCompat.setTintMode(questionBack, PorterDuff.Mode.SRC_ATOP);
+        val questionBack = DrawableCompat.wrap(context?.let {
+            ContextCompat.getDrawable(
+                it,
+                R.drawable.ic_question_back
+            )
+        }!!)
+        DrawableCompat.setTintMode(questionBack, PorterDuff.Mode.SRC_ATOP)
         questionWriteBack.background = questionBack
 
         questionId = TestFragment.currentQuestion?.id
@@ -48,6 +40,7 @@ class QuestionTypeWriteFragment : Fragment() {
         anWindow = view.editTextWriteAnswer
         super.onHiddenChanged(false)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

@@ -5,23 +5,20 @@
     <item
         android:id="@+id/bnv_schedule"
         android:icon="@drawable/ic_bnv_schedule"
-        android:title="Расписание" />
+        android:title="@string/schedule_label" />
     <item
         android:id="@+id/bnv_subjects"
         android:icon="@drawable/ic_bnv_subjects"
-        android:title="Предметы" />
+        android:title="@string/subject_label" />
     <item
         android:id="@+id/bnv_rating"
         android:icon="@drawable/ic_bnv_rating"
-        android:title="Рейтинг" />
-<!--    <item-->
-<!--        android:id="@+id/bnv_notifications"-->
-<!--        android:icon="@drawable/ic_bnv_notifications"-->
-<!--        android:title="Уведомления" />-->
+        android:title="@string/rating_label" />
+
     <item
         android:id="@+id/bnv_account"
         android:icon="@drawable/ic_bnv_account"
-        android:title="Аккаунт" />
+        android:title="@string/account_label" />
 
 
 </menu>

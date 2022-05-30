@@ -1,0 +1,23 @@
+<!-- drawable/bars_status.xml -->
+<vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="48.54dp"
+    android:viewportWidth="361"
+    android:viewportHeight="48.54"
+    >
+
+    <group>
+
+        <clip-path
+            android:pathData="M0 0H361V48.5375H0V0Z"
+            />
+
+        <path
+            android:pathData="M0 0V48.5375H361V0"
+            android:fillColor="#807FDCEC"
+            />
+
+    </group>
+
+</vector>

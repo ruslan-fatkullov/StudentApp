@@ -17,30 +17,30 @@
     <color name="colorScheduleDayOfWeekOnFocus">#FFFFFF</color>
     <color name="colorSchedulePairTypeLab">#62DCDE</color>
     <color name="colorSchedulePairTypeBackgroundLab">#1A62DCDE</color>
-    <color name="colorSchedulePairTypeLection">#5A9CFF</color>
+    <color name="colorSchedulePairTypeLecture">#5A9CFF</color>
     <color name="colorSchedulePairTypeAnyDone">#D1D0D6</color>
-    <color name="colorSchedulePairTypeBackgroundLection">#1A5A9CFF</color>
+    <color name="colorSchedulePairTypeBackgroundLecture">#1A5A9CFF</color>
     <color name="colorSchedulePairTypePractice">#FFA45A</color>
     <color name="colorSchedulePairTypeBackgroundPractice">#1AFFA45A</color>
 
     <color name="colorRatingGroup">#FFA45A</color>
     <color name="colorRatingDepartment">#FD6374</color>
     <color name="colorRatingUniversity">#33D69F</color>
-    <color name="colorRatingAttendanceLectionsProgress">#FD6374</color>
-    <color name="colorRatingAttendanceLectionsBackground">#FEDDE3</color>
+    <color name="colorRatingAttendanceLectureProgress">#FD6374</color>
+    <color name="colorRatingAttendanceLecturesBackground">#FEDDE3</color>
     <color name="colorRatingAttendancePracticesProgress">#5A9CFF</color>
     <color name="colorRatingAttendancePracticesBackground">#E2E7FF</color>
 
 
-    <color name="colorPerfomancePracticeProgress">#FD6374</color>
-    <color name="colorPerfomanceLaboratoryProgress">#5A9CFF</color>
-    <color name="colorPerfomanceTestsProgress">#1EE817</color>
-    <color name="colorPerfomanceEssayProgress">#F6DE0A</color>
+    <color name="colorPerformancePracticeProgress">#FD6374</color>
+    <color name="colorPerformanceLaboratoryProgress">#5A9CFF</color>
+    <color name="colorPerformanceTestsProgress">#1EE817</color>
+    <color name="colorPerformanceEssayProgress">#F6DE0A</color>
 
-    <color name="colorPerfomancePracticeProgressBackground">#FEDDE3</color>
-    <color name="colorPerfomanceLaboratoryProgressBackground">#E2E7FF</color>
-    <color name="colorPerfomanceTestsProgressBackground">#DDFEDF</color>
-    <color name="colorPerfomanceEssayProgressBackground">#FEFCDD</color>
+    <color name="colorPerformancePracticeProgressBackground">#FEDDE3</color>
+    <color name="colorPerformanceLaboratoryProgressBackground">#E2E7FF</color>
+    <color name="colorPerformanceTestsProgressBackground">#DDFEDF</color>
+    <color name="colorPerformanceEssayProgressBackground">#FEFCDD</color>
 
 
     <color name="colorNotificationBackground">#FFFFFF</color>
@@ -54,16 +54,23 @@
 
     <color name="colorTestInfoCount">#995A9CFF</color>
     <color name="colorTestInfoResult">#9955DD37</color>
+    <color name="colorTestInfoDescription">#99FFC107</color>
 
+    <color name="colorChangePass">#55DD37</color>
 
 
     <color name="colorSubjectBackgroundDefault">#F2F7FF</color>
     <color name="colorGreen">#27FF00</color>
     <color name="white">#FFFFFF</color>
     <color name="testGreenColor">#95E293</color>
-    <color name="testYelowColor">#C0B660</color>
+    <color name="testYellowColor">#C0B660</color>
     <color name="testBackground">#5A9CFF</color>
     <color name="textTaskColor">#6B6B6B</color>
+
+
+    <color name="accountDataItem">#6B6B6B</color>
+    <color name="accountDataTextColor">#575454</color>
+    <color name="accountDataItemSegregation">#BAB6B6</color>
 
 
 </resources>

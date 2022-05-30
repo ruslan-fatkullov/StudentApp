@@ -26,7 +26,7 @@ Font family: Inter
 Line height: 24sp
 -->
     <!-- styles.xml -->
-    <style name="the_maptrix">
+    <style name="the_matrix">
 
         <item name="android:textSize">
             20sp

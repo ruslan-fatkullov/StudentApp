@@ -32,5 +32,9 @@ interface LiteratureApiService {
      */
     //@Headers({"Authorization", "Bearer "+ token})
     @GET("literature/learning")
-    fun getIdLiterature(@Header("Authorization") auth: String?, @Query("subjectId") subjectId: Long?, @Query("userid") userId: Int): Observable<List<LiteratureData>>
+    fun getIdLiterature(
+        @Header("Authorization") auth: String?,
+        @Query("subjectId") subjectId: Long?,
+        @Query("userid") userId: Int
+    ): Observable<List<LiteratureData>>
 }

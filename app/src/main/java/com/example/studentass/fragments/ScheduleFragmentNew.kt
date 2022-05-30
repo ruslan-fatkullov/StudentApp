@@ -10,18 +10,16 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.studentass.MainActivity
 import com.example.studentass.R
 import com.example.studentass.adapters.SchedulePairsRvAdapterNew
-import com.example.studentass.adapters.TestRvAdapter
+import com.example.studentass.fragments.MainFragment.Companion.colorTheme
 import com.example.studentass.getAppCompatActivity
 import com.example.studentass.models.Group
-import com.example.studentass.models.PassedTests
-import com.example.studentass.models.ScheduleNew.SubjectList
-import com.example.studentass.models.ScheduleNew.Timetable
-import com.example.studentass.models.ScheduleNew.TimetableLesson
+import com.example.studentass.models.scheduleNew.SubjectList
+import com.example.studentass.models.scheduleNew.Timetable
+import com.example.studentass.models.scheduleNew.TimetableLesson
 import com.example.studentass.models.User
 import com.example.studentass.services.GroupApiService
 import com.example.studentass.services.ScheduleApiServiceNew
@@ -38,7 +36,6 @@ import java.util.*
  * Фрагмент расписания
  */
 class ScheduleFragmentNew : Fragment() {
-    private lateinit var sfm: FragmentManager
     private val scheduleApiServiceNew = ScheduleApiServiceNew.create()
     private var schedule: Timetable? = null
     private var weekNum: Int = 0
@@ -69,7 +66,9 @@ class ScheduleFragmentNew : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        ///
+
+        scheduleLayout.background = colorTheme
+
         schedulePairsRv.visibility = View.INVISIBLE
         loadingImage.visibility = View.VISIBLE
 

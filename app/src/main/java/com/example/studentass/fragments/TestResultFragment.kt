@@ -19,24 +19,29 @@ class TestResultFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val testResultPercent = view.testResultPercent
         val backToTestBottom = view.backToTestBottom
-        var drawable = DrawableCompat.wrap(ContextCompat.getDrawable(context!!, R.drawable.button_green_background)!!)
-        DrawableCompat.setTintMode(drawable, PorterDuff.Mode.SRC_ATOP);
+        val drawable = DrawableCompat.wrap(
+            ContextCompat.getDrawable(
+                context!!,
+                R.drawable.button_green_background
+            )!!
+        )
+        DrawableCompat.setTintMode(drawable, PorterDuff.Mode.SRC_ATOP)
 
         backToTestBottom.background = drawable
-        testResultPercent.text = "${TestFragment.ratingOfTest.toString()}%"
+        val resultTest = TestFragment.ratingOfTest.toString()
+        testResultPercent.text = "${resultTest}%"
 
         backToTestBottom.setOnClickListener {
-            getAppCompatActivity<MainActivity>()?.switchDown()//TestFragment::class.java
+            getAppCompatActivity<MainActivity>()?.switchDown()
         }
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_test_result, container, false)
     }
-
 
 
 }

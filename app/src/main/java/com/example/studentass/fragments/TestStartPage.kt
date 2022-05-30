@@ -20,12 +20,6 @@ class TestStartPage : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-//        val displayMetrics = DisplayMetrics()
-//        windowManager.defaultDisplay.getMetrics(displayMetrics)
-//
-//        val width = displayMetrics.widthPixels
-//        val layoutParams = countOfTries.layoutParams
-//        layoutParams.width = 34
 
         val drawable = DrawableCompat.wrap(
             context?.let { ContextCompat.getDrawable(it, R.drawable.test_info_count) }!!
@@ -35,11 +29,15 @@ class TestStartPage : Fragment() {
             context?.let { ContextCompat.getDrawable(it, R.drawable.test_info_result) }!!
         )
         DrawableCompat.setTintMode(drawable1, PorterDuff.Mode.SRC_ATOP)
+        val drawable3 = DrawableCompat.wrap(
+            context?.let { ContextCompat.getDrawable(it, R.drawable.test_info_description) }!!
+        )
+        DrawableCompat.setTintMode(drawable3, PorterDuff.Mode.SRC_ATOP)
 
+        testDescriptionCL.background = drawable3
         countOfTries.background = drawable
         resultOfTries.background = drawable1
 
-        //countOfTries.layoutParams.width = 360
 
         val test = TestListFragment.currentTest
         if (test != null) {
@@ -62,8 +60,10 @@ class TestStartPage : Fragment() {
         super.onViewCreated(view, savedInstanceState)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_test_start_page, container, false)
     }
 

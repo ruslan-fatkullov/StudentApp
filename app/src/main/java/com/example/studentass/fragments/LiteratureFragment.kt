@@ -42,7 +42,6 @@ class LiteratureFragment : Fragment() {
         }
 
 
-        //loadLiterature(adapter)
         onHiddenChanged(false)
     }
 
@@ -79,7 +78,6 @@ class LiteratureFragment : Fragment() {
         literList: List<LiteratureData>,
         adapter: LiteratureRvAdapter,
         indexOfSubject: Int?,
-        //indexOfSubject: Int?
     ) {
         literatureList = literList
 
@@ -99,9 +97,7 @@ class LiteratureFragment : Fragment() {
         adapter.setOnItemClickListener(object : LiteratureRvAdapter.OnItemClickListener {
             override fun setOnClickListener(position: Int) {
                 currentLiterId = literatureLis[position].id
-                Toast.makeText(context, currentLiterId.toString(), Toast.LENGTH_SHORT).show()
             }
-
         })
 
         adapter.notifyDataSetChanged()

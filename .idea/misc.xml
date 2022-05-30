@@ -14,8 +14,18 @@
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/cbdfbdfh.xml" value="0.1" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/change_pass_button.xml" value="0.1235" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/change_pass_ico.xml" value="0.1235" />
+        <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/colorBackPink.xml" value="0.144" />
+        <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/color_theme_sel.xml" value="0.144" />
+        <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/color_theme_sel_clicked.xml" value="0.144" />
+        <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/color_theme_selector.xml" value="0.144" />
+        <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/colorback_blue.xml" value="0.144" />
+        <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/colorback_green.xml" value="0.144" />
+        <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/colorback_header_blue.xml" value="0.158" />
+        <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/colorback_pink.xml" value="0.144" />
+        <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/colorback_white.xml" value="0.158" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/dg.xml" value="0.1" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/group_rating_pb.xml" value="0.1235" />
+        <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/ic_abstract_tiled_background.xml" value="0.1" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/ic_articles.xml" value="0.1405" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/ic_auth_ico_confirmed.xml" value="0.147" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/ic_auth_ico_group.xml" value="0.147" />
@@ -23,6 +33,7 @@
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/ic_auth_ico_name.xml" value="0.113" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/ic_auth_ico_password.xml" value="0.147" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/ic_auth_title.xml" value="0.147" />
+        <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/ic_background_colors.xml" value="0.1235" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/ic_backtolist.xml" value="0.1415" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/ic_backtolist_blue.xml" value="0.1235" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/ic_bnv_account.xml" value="0.1" />
@@ -30,6 +41,7 @@
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/ic_bnv_rating.xml" value="0.147" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/ic_bnv_schedule.xml" value="0.147" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/ic_bnv_subjects.xml" value="0.147" />
+        <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/ic_city.xml" value="0.4466666666666667" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/ic_down_new.xml" value="0.1385" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/ic_flask.xml" value="0.1415" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/ic_group_22.xml" value="0.1235" />
@@ -60,6 +72,8 @@
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/ic_notifications_message.xml" value="0.147" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/ic_notifications_options.xml" value="0.147" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/ic_notifications_schedule_changed.xml" value="0.147" />
+        <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/ic_pattern_5.xml" value="0.158" />
+        <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/ic_pattern_8.xml" value="0.158" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/ic_question_back.xml" value="0.1415" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/ic_recta_orange.xml" value="0.1235" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/ic_schedule_days_background_click.xml" value="0.147" />
@@ -113,8 +127,10 @@
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/task_item_practice_background.xml" value="0.141" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/task_type_laboratory.xml" value="0.141" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/task_type_practice.xml" value="0.141" />
+        <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/test_background_item_selector.xml" value="0.158" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/test_close_button.xml" value="0.1415" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/test_info_count.xml" value="0.1235" />
+        <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/test_info_description.xml" value="0.1235" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/test_info_result.xml" value="0.1235" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/test_linear_pb.xml" value="0.1415" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/test_not_passed.xml" value="0.1235" />
@@ -123,19 +139,25 @@
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/work_background.xml" value="0.1415" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/work_background_item_selector.xml" value="0.1415" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/drawable/work_background_pressed.xml" value="0.1415" />
-        <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout-v21/fragment_rating.xml" value="0.22" />
+        <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout-v21/fragment_account.xml" value="0.1" />
+        <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout-v21/fragment_rating.xml" value="0.1" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout-v21/literature_layout_item.xml" value="0.1796875" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout-v21/notifications_rv_item.xml" value="0.22" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout-v21/schedule_pair_rv_item_new.xml" value="0.1796875" />
+        <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout-v21/task_layout_item_second.xml" value="0.1" />
+        <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout-v21/test_layout_item_second.xml" value="0.1" />
+        <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout-v23/color_theme_item.xml" value="0.4466666666666667" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout-v23/liter_task_test_item.xml" value="0.17916666666666667" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout-v23/schedule_days_layout_item.xml" value="0.1796875" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout-v28/task_layout_item.xml" value="0.1796875" />
+        <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout/account_data_item.xml" value="0.5" />
+        <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout/acount_data_item.xml" value="0.1359375" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout/activity_main.xml" value="0.1796875" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout/answer_of_works_item.xml" value="0.22" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout/fragment_LitTaskTest.xml" value="0.1" />
-        <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout/fragment_about_program.xml" value="0.1796875" />
+        <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout/fragment_about_program.xml" value="0.1" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout/fragment_academic_performance.xml" value="0.1796875" />
-        <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout/fragment_account.xml" value="0.22" />
+        <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout/fragment_account.xml" value="0.1" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout/fragment_item_list.xml" value="0.165625" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout/fragment_literature.xml" value="0.1796875" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout/fragment_login.xml" value="0.1796875" />
@@ -153,7 +175,7 @@
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout/fragment_subjects_new.xml" value="0.14666666666666667" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout/fragment_task.xml" value="0.22" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout/fragment_task_description.xml" value="0.22" />
-        <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout/fragment_test.xml" value="0.16666666666666666" />
+        <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout/fragment_test.xml" value="0.1" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout/fragment_test_result.xml" value="0.16666666666666666" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout/fragment_test_start_page.xml" value="0.22" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout/literature_layout.xml" value="0.22" />
@@ -168,7 +190,7 @@
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout/select_question_item.xml" value="0.1796875" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout/sequence_question_item.xml" value="0.22" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout/subjects_overview_item.xml" value="0.22" />
-        <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout/subjects_overview_item_new.xml" value="0.2892086330935252" />
+        <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout/subjects_overview_item_new.xml" value="0.16666666666666666" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout/subjects_overview_item_new_orange.xml" value="0.22" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout/task_layout_item.xml" value="0.22" />
         <entry key="..\:/AndroidProjects/kama/app/src/main/res/layout/task_layout_item_second.xml" value="0.3319327731092437" />

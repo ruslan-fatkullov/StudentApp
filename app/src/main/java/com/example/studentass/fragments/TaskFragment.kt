@@ -26,16 +26,19 @@ class TaskFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //getAppCompatActivity<MainActivity>()?.actionBar?.hide()
 
-        task_type.text = when (TaskListFragment.currentTask.type){
+        task_type.text = when (TaskListFragment.currentTask.type) {
             "LAB" -> "Лабораторная работа"
             else -> "Практическая работа"
         }
-        typeTaskIV.setImageDrawable(ContextCompat.getDrawable(context!!, when(TaskListFragment.currentTask.type){
-            "LAB" -> R.drawable.ic_flask
-            else -> R.drawable.ic_practice_paper
-        }))
+        typeTaskIV.setImageDrawable(
+            ContextCompat.getDrawable(
+                context!!, when (TaskListFragment.currentTask.type) {
+                    "LAB" -> R.drawable.ic_flask
+                    else -> R.drawable.ic_practice_paper
+                }
+            )
+        )
         task_name.text = TaskListFragment.currentTask.title
         task_description.text = TaskListFragment.currentTask.description
 
@@ -54,11 +57,10 @@ class TaskFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_task_description, container, false)
     }
 
-    private fun loadWork(){
+    private fun loadWork() {
         val header = "Bearer " + LoginFragment.token
         val userId = AccountFragment.currentUser.id
         val taskId = TaskListFragment.currentTask.id
@@ -94,27 +96,37 @@ class TaskFragment : Fragment() {
     }
 
     private fun onGetWork(r: List<WorkModel>) {
-        if (r.isNotEmpty()){
+        if (r.isNotEmpty()) {
 
             mark_label.visibility = View.VISIBLE
             mark.visibility = View.VISIBLE
             teacherComment.visibility = View.VISIBLE
             teacherComment_label.visibility = View.VISIBLE
 
-            mark.text = when(r[0].mark){
+            mark.text = when (r[0].mark) {
                 "TWO" -> "2"
                 "TREE" -> "3"
                 "FOUR" -> "4"
                 "FIVE" -> "5"
                 else -> "1"
             }
-            doneTaskIV.setImageDrawable(ContextCompat.getDrawable(context!!, R.drawable.ic_done_task))
+            doneTaskIV.setImageDrawable(
+                ContextCompat.getDrawable(
+                    context!!,
+                    R.drawable.ic_done_task
+                )
+            )
             doneLabel.text = "Сдано"
             teacherComment.text = r[0].teacherComment
             teacherComment.setTextColor(ContextCompat.getColor(context!!, R.color.textTaskColor))
             mark.setTextColor(ContextCompat.getColor(context!!, R.color.textTaskColor))
-        }else{
-            doneTaskIV.setImageDrawable(ContextCompat.getDrawable(context!!, R.drawable.ic_not_done_task))
+        } else {
+            doneTaskIV.setImageDrawable(
+                ContextCompat.getDrawable(
+                    context!!,
+                    R.drawable.ic_not_done_task
+                )
+            )
             doneLabel.text = "Не сдано"
             mark_label.visibility = View.INVISIBLE
             mark.visibility = View.INVISIBLE

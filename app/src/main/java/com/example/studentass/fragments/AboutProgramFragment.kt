@@ -56,8 +56,7 @@ class AboutProgramFragment : Fragment() {
 
         if (!hidden) {
             getAppCompatActivity<MainActivity>()?.actionBar?.hide()
-        }
-        else {
+        } else {
             getAppCompatActivity<MainActivity>()?.actionBar?.show()
         }
     }

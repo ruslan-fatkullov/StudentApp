@@ -43,9 +43,7 @@ class TestListFragment : Fragment() {
         try {
             val testList = listOfListTest[indexOfSubject!!]
             setFragParams(adapter, testList)
-            //Toast.makeText(context, "все ок", Toast.LENGTH_SHORT).show()
         } catch (e: IndexOutOfBoundsException) {
-            //Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show()
             loadThemes(adapter, indexOfSubject)
         }
 

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.studentass.MainActivity
 import com.example.studentass.R
+import com.example.studentass.fragments.MainFragment.Companion.colorTheme
 import com.example.studentass.getAppCompatActivity
 import kotlinx.android.synthetic.main.fragment_rating.*
 
@@ -20,6 +21,9 @@ class RatingFragment : Fragment() {
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+        ratingLayout.background = colorTheme
 
 //        setRatingGroupValue(35, 50)
 //        setRatingDepartmentValue(50, 120)
@@ -107,6 +111,7 @@ class RatingFragment : Fragment() {
         val tvText = "$value%"
         attendancePracticesTv.text = tvText
     }
+
     /*
      * Устанавливает посещаемость практик
      */
@@ -115,6 +120,7 @@ class RatingFragment : Fragment() {
         val tvText = "$value%"
         attendanceTestTv.text = tvText
     }
+
     /*
      * Устанавливает посещаемость практик
      */

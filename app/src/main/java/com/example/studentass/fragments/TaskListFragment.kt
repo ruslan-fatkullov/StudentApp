@@ -34,7 +34,6 @@ class TaskListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         literatureRv.layoutManager =
             LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
         literatureRv.adapter = TaskRvAdapter(context!!)
@@ -47,12 +46,8 @@ class TaskListFragment : Fragment() {
             val testList = SubjectInfoFragmentNew.listOfListTask[indexOfSubject!!]
             setFragParams(adapter, testList)
         } catch (e: IndexOutOfBoundsException) {
-            //Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show()
             loadTask(indexOfSubject, adapter)
         }
-
-        //loadTask(indexOfSubject, adapter)
-
         onHiddenChanged(false)
     }
 
@@ -60,7 +55,6 @@ class TaskListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_literature, container, false)
     }
 
@@ -102,9 +96,10 @@ class TaskListFragment : Fragment() {
 
     private fun setFragParams(adapter: TaskRvAdapter, taskList: List<TaskModel>) {
         adapter.dataList = taskList as ArrayList<TaskModel>
-        adapter.setonFocusChangeListener(object : TaskRvAdapter.onFocusChangeListener {
+        adapter.setOnClickListener(object : TaskRvAdapter.OnClickListener {
             override fun setOnClickListener(position: Int) {
                 currentTask = taskList[position]
+                getAppCompatActivity<MainActivity>()?.actionBar?.hide()
                 getAppCompatActivity<MainActivity>()?.switchUp(TaskFragment::class.java)
             }
 

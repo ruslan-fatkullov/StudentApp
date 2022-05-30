@@ -38,11 +38,11 @@ class LoginFragment : Fragment() {
     companion object {
         private val authApiService = AuthApiService.create()
         private val compositeDisposable = CompositeDisposable()
-        private lateinit var context: Context                       // Статичные методы не имеют контекста, поэтому его нужно им передавать
+        private lateinit var context: Context // Статичные методы не имеют контекста, поэтому его нужно им передавать
         var token: String? = null
-        //        var tokens: Tokens? = null                                  // Токены доступа и обновления
-//            private set
-        var role: String? = null                                    // Роль, извлекается из токенов
+
+        // Токены доступа и обновления
+        var role: String? = null// Роль, извлекается из токенов
             private set
 
         fun init(context: Context) {
@@ -54,18 +54,17 @@ class LoginFragment : Fragment() {
         /*
          * Возвращает поток с токенами, запрос не выполняется до вызова термиального оператора
          */
-        fun logIn(login: String, password: String) : Observable<ResponseBody> {
+        fun logIn(login: String, password: String): Observable<ResponseBody> {
 
             val jsonObject = JSONObject()
             jsonObject.put("login", login)
             jsonObject.put("password", password)
             val jsonObjectString = jsonObject.toString()
             val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
-            val responseBody = authApiService.logIn(requestBody)
+            return authApiService.logIn(requestBody)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .map { t -> onLogInMap(t) }
-            return responseBody
         }
 
 
@@ -90,15 +89,6 @@ class LoginFragment : Fragment() {
          * Возвращает пустой поток, запрос не выполняется до вызова термиального оператора
          */
         fun logOut() {
-            thread {
-                deleteTokens()
-            }
-        }
-
-        /*
-         * Нужно для автоматического удаления данных авторизации
-         */
-        private fun onLogOutMap() {
             thread {
                 deleteTokens()
             }
@@ -130,10 +120,8 @@ class LoginFragment : Fragment() {
          * Записывает токены в постоянную память
          */
         private fun writeTokens(token: String) {
-            if (token == null)
-                throw RuntimeException("Write tokens error: tokens are null")
 
-            MemoryManager.saveTokens(context, token!!)
+            MemoryManager.saveTokens(context, token)
         }
 
 
@@ -167,32 +155,50 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        emailEt.addTextChangedListener (object: TextWatcher {
+        emailEt.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 emailValidity = validateEmail(s.toString())
                 if (emailValidity == "") {
-                    emailIv?.setColorFilter(ContextCompat.getColor(context!!, R.color.colorAuthField))
+                    emailIv?.setColorFilter(
+                        ContextCompat.getColor(
+                            context!!,
+                            R.color.colorAuthField
+                        )
+                    )
                     emailOkIv.visibility = View.VISIBLE
-                }
-                else {
-                    emailIv?.setColorFilter(ContextCompat.getColor(context!!, R.color.colorAuthInactive))
+                } else {
+                    emailIv?.setColorFilter(
+                        ContextCompat.getColor(
+                            context!!,
+                            R.color.colorAuthInactive
+                        )
+                    )
                     emailOkIv.visibility = View.GONE
                 }
             }
         })
-        passwordEt.addTextChangedListener (object: TextWatcher {
+        passwordEt.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 passwordValidity = validatePassword(s.toString())
                 if (passwordValidity == "") {
-                    passwordIv.setColorFilter(ContextCompat.getColor(context!!, R.color.colorAuthField))
+                    passwordIv.setColorFilter(
+                        ContextCompat.getColor(
+                            context!!,
+                            R.color.colorAuthField
+                        )
+                    )
                     passwordOkIv.visibility = View.VISIBLE
-                }
-                else {
-                    passwordIv.setColorFilter(ContextCompat.getColor(context!!, R.color.colorAuthInactive))
+                } else {
+                    passwordIv.setColorFilter(
+                        ContextCompat.getColor(
+                            context!!,
+                            R.color.colorAuthInactive
+                        )
+                    )
                     passwordOkIv.visibility = View.GONE
                 }
             }
@@ -201,15 +207,24 @@ class LoginFragment : Fragment() {
         passwordModeIv.setOnClickListener {
             if (passwordEt.transformationMethod == null) {
                 passwordEt.transformationMethod = PasswordTransformationMethod()
-                passwordModeIv.setColorFilter(ContextCompat.getColor(context!!, R.color.colorAuthField))
-            }
-            else {
+                passwordModeIv.setColorFilter(
+                    ContextCompat.getColor(
+                        context!!,
+                        R.color.colorAuthField
+                    )
+                )
+            } else {
                 passwordEt.transformationMethod = null
-                passwordModeIv.setColorFilter(ContextCompat.getColor(context!!, R.color.colorAuthInactive))
+                passwordModeIv.setColorFilter(
+                    ContextCompat.getColor(
+                        context!!,
+                        R.color.colorAuthInactive
+                    )
+                )
             }
         }
         loginBn.setOnClickListener { onLoginButtonClick() }
-        registrationTv.setOnClickListener { onRegistrationTextViewClick()}
+        registrationTv.setOnClickListener { onRegistrationTextViewClick() }
         onHiddenChanged(false)
     }
 
@@ -240,7 +255,7 @@ class LoginFragment : Fragment() {
     private fun onLogInSuccess() {
         val mainActivity = getAppCompatActivity<MainActivity>()
         if (mainActivity != null) {
-              //mainActivity.switchSideways(MainFragment::class.java)
+            //mainActivity.switchSideways(MainFragment::class.java)
             when (role) {
                 "USER" -> mainActivity.switchSideways(MainFragment::class.java)
                 "TEACHER" -> mainActivity.switchSideways(MainFragment::class.java)
@@ -312,13 +327,12 @@ class LoginFragment : Fragment() {
             loginBn.startAnimation()
             compositeDisposable.add(
                 logIn(login, password)
-                    .subscribe (
+                    .subscribe(
                         { this.onLogInSuccess() },
                         { e -> this.onLogInError(e) }
                     )
             )
-        }
-        else {
+        } else {
             val shake: Animation = AnimationUtils.loadAnimation(context, R.anim.anim_shake)
             loginBn.startAnimation(shake)
             Toast.makeText(context, "Обнаружены некорректные данные", Toast.LENGTH_LONG).show()
@@ -332,7 +346,6 @@ class LoginFragment : Fragment() {
     private fun onRegistrationTextViewClick() {
         getAppCompatActivity<MainActivity>()?.switchUp(RegistrationFragment::class.java)
     }
-
 
 
 }

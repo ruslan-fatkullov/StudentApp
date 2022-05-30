@@ -10,7 +10,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studentass.R
-import com.example.studentass.models.ScheduleNew.TimetableLesson
+import com.example.studentass.models.scheduleNew.TimetableLesson
 import kotlinx.android.synthetic.main.schedule_pair_rv_item_new.view.*
 import kotlin.collections.ArrayList
 
@@ -19,6 +19,7 @@ class SchedulePairsRvAdapterNew(private val context: Context) :
 
 
     private lateinit var mListener: OnItemClickListener
+
     class PairTime(pairNum: Int) {
         var intervalString = when (pairNum) {
             1 -> "08:30 - 09:30"
@@ -33,7 +34,8 @@ class SchedulePairsRvAdapterNew(private val context: Context) :
         }
     }
 
-    class ViewHolder(view: View, private var mListener: OnItemClickListener) : RecyclerView.ViewHolder(view), View.OnClickListener {
+    class ViewHolder(view: View, private var mListener: OnItemClickListener) :
+        RecyclerView.ViewHolder(view), View.OnClickListener {
         private val pairNameTv: TextView = view.pairNameTv
         private val timeTv: TextView = view.timeTv
         private val locationTv: TextView = view.locationTv
@@ -61,17 +63,17 @@ class SchedulePairsRvAdapterNew(private val context: Context) :
 
                 val pairTypeText = when (typePair[0]) {
                     "пр" -> context.getString(R.string.schedule_pair_practice)
-                    "лек" -> context.getString(R.string.schedule_pair_lection)
+                    "лек" -> context.getString(R.string.schedule_pair_lecture)
                     else -> context.getString(R.string.schedule_pair_lab)
                 }
                 val pairTypeColor = when (typePair[0]) {
                     "пр" -> R.color.colorSchedulePairTypePractice
-                    "лек" -> R.color.colorSchedulePairTypeLection
+                    "лек" -> R.color.colorSchedulePairTypeLecture
                     else -> R.color.colorSchedulePairTypeLab
                 }
                 val pairTypeBackgroundColor = when (typePair[0]) {
                     "пр" -> R.color.colorSchedulePairTypeBackgroundPractice
-                    "лек" -> R.color.colorSchedulePairTypeBackgroundLection
+                    "лек" -> R.color.colorSchedulePairTypeBackgroundLecture
                     else -> R.color.colorSchedulePairTypeBackgroundLab
                 }
                 pairTypeTv.text = pairTypeText
@@ -80,7 +82,7 @@ class SchedulePairsRvAdapterNew(private val context: Context) :
                 shapeDrawable.setColor(ContextCompat.getColor(context, pairTypeBackgroundColor))
 
                 pairLayout.background = when (typePair[0]) {
-                    "пр"  -> ContextCompat.getDrawable(
+                    "пр" -> ContextCompat.getDrawable(
                         context,
                         R.drawable.ic_im_schedule_pair_background_practice
                     )
@@ -121,7 +123,10 @@ class SchedulePairsRvAdapterNew(private val context: Context) :
         viewType: Int
     ): ViewHolder {
         val inflater = LayoutInflater.from(context)
-        return ViewHolder(inflater.inflate(R.layout.schedule_pair_rv_item_new, parent, false), mListener)
+        return ViewHolder(
+            inflater.inflate(R.layout.schedule_pair_rv_item_new, parent, false),
+            mListener
+        )
     }
 
 
@@ -135,9 +140,10 @@ class SchedulePairsRvAdapterNew(private val context: Context) :
     }
 
     override fun getItemCount(): Int = dataList.size
-    interface OnItemClickListener{
+    interface OnItemClickListener {
         fun setOnClickListener(position: Int)
     }
+
     fun setOnItemClickListener(mListner: OnItemClickListener) {
         this.mListener = mListner
     }

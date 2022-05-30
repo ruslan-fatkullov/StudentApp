@@ -35,7 +35,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            tools:ignore="UselessParent">
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -47,6 +48,7 @@
                     android:id="@+id/closeTab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:contentDescription="@string/close_button_image"
                     android:src="@drawable/ic_test_close_back"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -148,8 +150,8 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_below="@+id/questionTitle"
+        android:layout_alignParentBottom="true"
         android:padding="25dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -183,10 +185,10 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_check_test"
                 android:visibility="gone"
-                app:layout_constraintStart_toStartOf="@id/nextQuestBut"
+                app:layout_constraintBottom_toBottomOf="@id/nextQuestBut"
                 app:layout_constraintEnd_toEndOf="@id/nextQuestBut"
-                app:layout_constraintTop_toTopOf="@id/nextQuestBut"
-                app:layout_constraintBottom_toBottomOf="@id/nextQuestBut"/>
+                app:layout_constraintStart_toStartOf="@id/nextQuestBut"
+                app:layout_constraintTop_toTopOf="@id/nextQuestBut" />
 
             <ImageView
                 android:id="@+id/nextQuestArrow"
@@ -194,51 +196,14 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_next_quest_arrow"
                 android:visibility="gone"
-                app:layout_constraintStart_toStartOf="@id/nextQuestBut"
+                app:layout_constraintBottom_toBottomOf="@id/nextQuestBut"
                 app:layout_constraintEnd_toEndOf="@id/nextQuestBut"
-                app:layout_constraintTop_toTopOf="@id/nextQuestBut"
-                app:layout_constraintBottom_toBottomOf="@id/nextQuestBut"/>
+                app:layout_constraintStart_toStartOf="@id/nextQuestBut"
+                app:layout_constraintTop_toTopOf="@id/nextQuestBut" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </FrameLayout>
 
-<!--    <FrameLayout-->
-<!--        android:id="@+id/actionsFrame"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_alignParentBottom="true"-->
-<!--        android:padding="16dp">-->
-
-<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent">-->
-
-<!--            <Button-->
-<!--                android:id="@+id/previousQuestionBtn"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginHorizontal="2dp"-->
-<!--                android:background="@color/colorPrimary"-->
-<!--                android:paddingHorizontal="5dp"-->
-<!--                android:text="@string/Back"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--            <Button-->
-<!--                android:id="@+id/nextQuestionBtn"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginHorizontal="2dp"-->
-<!--                android:background="@color/colorPrimary"-->
-<!--                android:paddingHorizontal="5dp"-->
-<!--                android:text="@string/Forward"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent" />-->
-<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-<!--    </FrameLayout>-->
 
 </RelativeLayout>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     android:id="@+id/questionWriteBack"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="25dp"
     android:windowSoftInputMode="stateHidden|adjustResize">
@@ -14,7 +14,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/writeTv"
@@ -29,10 +29,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
+                android:autofillHints="thisHint"
                 android:ems="12"
                 android:hint="@string/answer_choice"
                 android:minHeight="48dp"
-                android:autofillHints="thisHint"/>
+                android:inputType="text" />
         </LinearLayout>
     </ScrollView>
 

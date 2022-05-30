@@ -15,7 +15,7 @@ import com.example.studentass.services.SubjectApiService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.fragment_subjects.subjectAbsenceTv
+import kotlinx.android.synthetic.main.fragment_subjects_new.subjectAbsenceTv
 import kotlinx.android.synthetic.main.fragment_subjects_new.*
 
 

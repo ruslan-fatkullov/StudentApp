@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ratingLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.NotificationsFragment">
@@ -22,166 +23,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--        android:id="@+id/constraintLayout"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="16dp"-->
-<!--        android:layout_marginLeft="16dp"-->
-<!--        android:layout_marginTop="16dp"-->
-<!--        android:layout_marginEnd="16dp"-->
-<!--        android:layout_marginRight="16dp"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/textView8">-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/textView9"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:fontFamily="sans-serif-medium"-->
-<!--            android:text="@string/rating_in_group"-->
-<!--            android:textColor="#000000"-->
-<!--            android:textSize="18sp"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/ratingGroupTv"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:fontFamily="sans-serif-medium"-->
-<!--            android:text="0/0"-->
-<!--            android:textColor="@color/colorRatingGroup"-->
-<!--            android:textSize="18sp"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--        <ProgressBar-->
-<!--            android:id="@+id/ratingGroupPb"-->
-<!--            style="?android:attr/progressBarStyleHorizontal"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="8dp"-->
-<!--            android:layout_marginTop="10dp"-->
-<!--            android:progress="50"-->
-<!--            android:progressDrawable="@drawable/rating_linear_pb"-->
-<!--            android:progressTint="@color/colorRatingGroup"-->
-<!--            android:progressTintMode="src_atop"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/textView9" />-->
-<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--        android:id="@+id/constraintLayout2"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="16dp"-->
-<!--        android:layout_marginLeft="16dp"-->
-<!--        android:layout_marginTop="16dp"-->
-<!--        android:layout_marginEnd="16dp"-->
-<!--        android:layout_marginRight="16dp"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.0"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/textView10"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:fontFamily="sans-serif-medium"-->
-<!--            android:text="@string/rating_in_department"-->
-<!--            android:textColor="#000000"-->
-<!--            android:textSize="18sp"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/ratingDepartmentTv"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:fontFamily="sans-serif-medium"-->
-<!--            android:text="0/0"-->
-<!--            android:textColor="@color/colorRatingDepartment"-->
-<!--            android:textSize="18sp"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--        <ProgressBar-->
-<!--            android:id="@+id/ratingDepartmentPb"-->
-<!--            style="?android:attr/progressBarStyleHorizontal"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="8dp"-->
-<!--            android:layout_marginTop="10dp"-->
-<!--            android:progress="50"-->
-<!--            android:progressDrawable="@drawable/rating_linear_pb"-->
-<!--            android:progressTint="@color/colorRatingDepartment"-->
-<!--            android:progressTintMode="src_atop"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/textView10" />-->
-<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--        android:id="@+id/constraintLayout3"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="16dp"-->
-<!--        android:layout_marginLeft="16dp"-->
-<!--        android:layout_marginTop="16dp"-->
-<!--        android:layout_marginEnd="16dp"-->
-<!--        android:layout_marginRight="16dp"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.0"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/textView11"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:fontFamily="sans-serif-medium"-->
-<!--            android:text="@string/rating_in_university"-->
-<!--            android:textColor="#000000"-->
-<!--            android:textSize="18sp"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/ratingUniversityTv"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:fontFamily="sans-serif-medium"-->
-<!--            android:text="0/0"-->
-<!--            android:textColor="@color/colorRatingUniversity"-->
-<!--            android:textSize="18sp"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--        <ProgressBar-->
-<!--            android:id="@+id/ratingUniversityPb"-->
-<!--            style="?android:attr/progressBarStyleHorizontal"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="8dp"-->
-<!--            android:layout_marginTop="10dp"-->
-<!--            android:progress="50"-->
-<!--            android:progressDrawable="@drawable/rating_linear_pb"-->
-<!--            android:progressTint="@color/colorRatingUniversity"-->
-<!--            android:progressTintMode="src_atop"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/textView11" />-->
-<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
 
     <TextView
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginTop="28dp"
-        android:text="@string/perf_donework"
+        android:text="@string/perf_done_work"
         android:textColor="#000000"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -192,6 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
+        android:baselineAligned="false"
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView7">
@@ -200,9 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -229,12 +77,12 @@
                         android:paddingRight="10dp"
                         android:paddingBottom="10dp"
                         app:gaugeEndValue="100"
-                        app:gaugePointEndColor="@color/colorPerfomancePracticeProgress"
-                        app:gaugePointStartColor="@color/colorPerfomancePracticeProgress"
+                        app:gaugePointEndColor="@color/colorPerformancePracticeProgress"
+                        app:gaugePointStartColor="@color/colorPerformancePracticeProgress"
                         app:gaugeStartAngle="270"
                         app:gaugeStartValue="0"
                         app:gaugeStrokeCap="ROUND"
-                        app:gaugeStrokeColor="@color/colorPerfomancePracticeProgressBackground"
+                        app:gaugeStrokeColor="@color/colorPerformancePracticeProgressBackground"
                         app:gaugeStrokeWidth="12dp"
                         app:gaugeSweepAngle="360" />
 
@@ -243,8 +91,9 @@
                         android:layout_width="72dp"
                         android:layout_height="72dp"
                         android:layout_gravity="center"
+                        android:contentDescription="@string/done_percent"
                         android:src="@drawable/rating_attendance_inner_circle"
-                        app:tint="@color/colorPerfomancePracticeProgress"
+                        app:tint="@color/colorPerformancePracticeProgress"
                         app:tintMode="src_atop" />
 
                     <TextView
@@ -274,7 +123,7 @@
                     android:layout_height="16dp"
                     android:layout_gravity="center"
                     android:src="@drawable/rating_attendance_inner_circle"
-                    app:tint="@color/colorRatingAttendanceLectionsProgress"
+                    app:tint="@color/colorRatingAttendanceLectureProgress"
                     app:tintMode="src_atop" />
 
                 <TextView
@@ -283,7 +132,7 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginLeft="5dp"
                     android:fontFamily="sans-serif"
-                    android:text="@string/perfomance_laboratory"
+                    android:text="@string/performance_laboratory"
                     android:textColor="#000000"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -323,8 +172,8 @@
                         android:paddingRight="10dp"
                         android:paddingBottom="10dp"
                         app:gaugeEndValue="100"
-                        app:gaugePointEndColor="@color/colorPerfomanceLaboratoryProgress"
-                        app:gaugePointStartColor="@color/colorPerfomanceLaboratoryProgress"
+                        app:gaugePointEndColor="@color/colorPerformanceLaboratoryProgress"
+                        app:gaugePointStartColor="@color/colorPerformanceLaboratoryProgress"
                         app:gaugeStartAngle="270"
                         app:gaugeStartValue="0"
                         app:gaugeStrokeCap="ROUND"
@@ -338,7 +187,7 @@
                         android:layout_height="72dp"
                         android:layout_gravity="center"
                         android:src="@drawable/rating_attendance_inner_circle"
-                        app:tint="@color/colorPerfomanceLaboratoryProgress"
+                        app:tint="@color/colorPerformanceLaboratoryProgress"
                         app:tintMode="src_atop" />
 
                     <TextView
@@ -368,7 +217,7 @@
                     android:layout_height="16dp"
                     android:layout_gravity="center"
                     android:src="@drawable/rating_attendance_inner_circle"
-                    app:tint="@color/colorPerfomanceLaboratoryProgress"
+                    app:tint="@color/colorPerformanceLaboratoryProgress"
                     app:tintMode="src_atop" />
 
                 <TextView
@@ -377,7 +226,7 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginLeft="5dp"
                     android:fontFamily="sans-serif"
-                    android:text="@string/perfomance_practice"
+                    android:text="@string/performance_practice"
                     android:textColor="#000000"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -427,12 +276,12 @@
                         android:paddingRight="10dp"
                         android:paddingBottom="10dp"
                         app:gaugeEndValue="100"
-                        app:gaugePointEndColor="@color/colorPerfomanceTestsProgress"
-                        app:gaugePointStartColor="@color/colorPerfomanceTestsProgress"
+                        app:gaugePointEndColor="@color/colorPerformanceTestsProgress"
+                        app:gaugePointStartColor="@color/colorPerformanceTestsProgress"
                         app:gaugeStartAngle="270"
                         app:gaugeStartValue="0"
                         app:gaugeStrokeCap="ROUND"
-                        app:gaugeStrokeColor="@color/colorPerfomanceTestsProgressBackground"
+                        app:gaugeStrokeColor="@color/colorPerformanceTestsProgressBackground"
                         app:gaugeStrokeWidth="12dp"
                         app:gaugeSweepAngle="360" />
 
@@ -442,7 +291,7 @@
                         android:layout_height="72dp"
                         android:layout_gravity="center"
                         android:src="@drawable/rating_attendance_inner_circle"
-                        app:tint="@color/colorPerfomanceTestsProgress"
+                        app:tint="@color/colorPerformanceTestsProgress"
                         app:tintMode="src_atop" />
 
                     <TextView
@@ -472,7 +321,7 @@
                     android:layout_height="16dp"
                     android:layout_gravity="center"
                     android:src="@drawable/rating_attendance_inner_circle"
-                    app:tint="@color/colorPerfomanceTestsProgress"
+                    app:tint="@color/colorPerformanceTestsProgress"
                     app:tintMode="src_atop" />
 
                 <TextView
@@ -481,7 +330,7 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginLeft="5dp"
                     android:fontFamily="sans-serif"
-                    android:text="@string/perfomance_test"
+                    android:text="@string/performance_test"
                     android:textColor="#000000"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -521,12 +370,12 @@
                         android:paddingRight="10dp"
                         android:paddingBottom="10dp"
                         app:gaugeEndValue="100"
-                        app:gaugePointEndColor="@color/colorPerfomanceEssayProgress"
-                        app:gaugePointStartColor="@color/colorPerfomanceEssayProgress"
+                        app:gaugePointEndColor="@color/colorPerformanceEssayProgress"
+                        app:gaugePointStartColor="@color/colorPerformanceEssayProgress"
                         app:gaugeStartAngle="270"
                         app:gaugeStartValue="0"
                         app:gaugeStrokeCap="ROUND"
-                        app:gaugeStrokeColor="@color/colorPerfomanceEssayProgressBackground"
+                        app:gaugeStrokeColor="@color/colorPerformanceEssayProgressBackground"
                         app:gaugeStrokeWidth="12dp"
                         app:gaugeSweepAngle="360" />
 
@@ -536,7 +385,7 @@
                         android:layout_height="72dp"
                         android:layout_gravity="center"
                         android:src="@drawable/rating_attendance_inner_circle"
-                        app:tint="@color/colorPerfomanceEssayProgress"
+                        app:tint="@color/colorPerformanceEssayProgress"
                         app:tintMode="src_atop" />
 
                     <TextView
@@ -566,7 +415,7 @@
                     android:layout_height="16dp"
                     android:layout_gravity="center"
                     android:src="@drawable/rating_attendance_inner_circle"
-                    app:tint="@color/colorPerfomanceEssayProgress"
+                    app:tint="@color/colorPerformanceEssayProgress"
                     app:tintMode="src_atop" />
 
                 <TextView
@@ -575,14 +424,13 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginLeft="5dp"
                     android:fontFamily="sans-serif"
-                    android:text="@string/perfomance_essay"
+                    android:text="@string/performance_essay"
                     android:textColor="#000000"
                     android:textSize="14sp" />
             </LinearLayout>
 
         </LinearLayout>
     </LinearLayout>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

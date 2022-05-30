@@ -21,7 +21,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             android:fontFamily="sans-serif-medium"
-            android:text="О программе"
+            android:text="@string/aboutProgramLabel"
             android:textColor="#000000"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -35,7 +35,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
-            android:text="Назад"
+            android:text="@string/backButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -54,7 +54,7 @@
                 android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Бла\nБла\nБл5а\nБла\nБла\nБла\nБла\nБла\nБла\nБла\nБла\nБла\nБла\nБла\nБла\nБла\nБла5\nБла\nБла\nБла\nБла\nБла\nБла\nБла\nБла\nБлаБла\nБла\nБла\nБла\nБла\n24Бла\nБла\nБла\nБла\nБла\nБла\nБл1а\nБла\nБла\nБла\nБла\nБла\nБла\nБла\nБла\nБла\nБла\nБла\nБла\nБла\nБла" />
+                android:text="@string/aboutProgramText" />
         </LinearLayout>
     </ScrollView>
 

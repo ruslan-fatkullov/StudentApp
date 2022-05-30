@@ -2,11 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/ab_about_program"
-        app:showAsAction="never"
-        android:title="@string/about_programm_string"/>
-    <item android:id="@+id/ab_exit"
-        app:showAsAction="never"
-        android:title="@string/exit_from_app_string"/>
+    <item
+        android:id="@+id/ab_about_program"
+        android:title="@string/about_program_string"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/ab_exit"
+        android:title="@string/exit_from_app_string"
+        app:showAsAction="never" />
 
 </menu>

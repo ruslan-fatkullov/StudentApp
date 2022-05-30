@@ -16,9 +16,10 @@ import com.example.studentass.fragments.QuestionTypeSequenceFragment
 import com.example.studentass.models.TestAnswer
 import kotlinx.android.synthetic.main.sequence_question_item.view.*
 
-class QuestionSequenceRvAdapter(private val context: Context) : RecyclerView.Adapter<QuestionSequenceRvAdapter.ViewHolder>() {
+class QuestionSequenceRvAdapter(private val context: Context) :
+    RecyclerView.Adapter<QuestionSequenceRvAdapter.ViewHolder>() {
 
-    class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         private val seq: ConstraintLayout = view.sequence_item
         val up: FrameLayout = view.itemUp
@@ -26,7 +27,12 @@ class QuestionSequenceRvAdapter(private val context: Context) : RecyclerView.Ada
         private val ans: TextView = view.answer_text_seq
         fun bind(itemData: TestAnswer, context: Context) {
             ans.text = itemData.answer
-            val drawable = DrawableCompat.wrap(ContextCompat.getDrawable(context, R.drawable.select_answer_item_background)!!)
+            val drawable = DrawableCompat.wrap(
+                ContextCompat.getDrawable(
+                    context,
+                    R.drawable.select_answer_item_background
+                )!!
+            )
             DrawableCompat.setTintMode(drawable, PorterDuff.Mode.SRC_ATOP)
             seq.background = drawable
         }
@@ -34,7 +40,6 @@ class QuestionSequenceRvAdapter(private val context: Context) : RecyclerView.Ada
     }
 
     var dataList = ArrayList<TestAnswer>()
-
 
 
     override fun onCreateViewHolder(
@@ -75,10 +80,10 @@ class QuestionSequenceRvAdapter(private val context: Context) : RecyclerView.Ada
 
     override fun getItemCount(): Int = dataList.size
 
-    private fun updateDataList(){
-        QuestionTypeSequenceFragment.answ.clear()
-        for (i in dataList){
-            QuestionTypeSequenceFragment.answ.add(i.id)
+    private fun updateDataList() {
+        QuestionTypeSequenceFragment.answer.clear()
+        for (i in dataList) {
+            QuestionTypeSequenceFragment.answer.add(i.id)
         }
     }
 

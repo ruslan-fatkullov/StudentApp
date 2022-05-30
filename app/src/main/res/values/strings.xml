@@ -3,17 +3,16 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string name="url_base">https://4b7af1df-c62e-49e5-b0a5-929837fb7e36.mock.pstmn.io/</string>
-    <!--<string name="url_base">http://test.asus.russianitgroup.ru/</string>-->
+    <string name="url_base">"http://192.168.43.5:8080"</string>
     <string name="url_login">api/auth/login</string>
-    <string name="url_refresh">api/auth/refrash</string>
+    <string name="url_refresh">api/auth/refresh</string>
     <string name="url_logout">api/auth/logout</string>
     <string name="url_get_group_list">api/schedule/group-list</string>
     <string name="url_get_group_schedule">api/schedule/group</string>
     <string name="typeOfWorkTitle">Тип работы</string>
     <string name="taskDescriptionTitle">Описание</string>
     <string name="taskTitle">Заголовок</string>
-    <string name="about_programm_string">О программе</string>
+    <string name="about_program_string">О программе</string>
     <string name="exit_from_app_string">Выйти</string>
     <string name="delimiter">/</string>
     <string name="questionTitle">Вопрос</string>
@@ -34,4 +33,44 @@
     <string name="testCloseConDesc">закрыть тест</string>
 
     <string name="testClose"><u>Закрыть</u></string>
+    <string name="emailLabel">E-mail</string>
+    <string name="loginExample">ruslan_fatkullov</string>
+    <string name="loginLabel">Логин</string>
+    <string name="aboutProgramLabel">О программе</string>
+    <string name="backButton">Назад</string>
+    <string name="aboutProgramText">Программа</string>
+    <string name="fioExample">Фаткуллов Руслан Альфредович</string>
+    <string name="groupLabel">Группа</string>
+    <string name="groupExample">ИВТАПбд-31</string>
+    <string name="accountLabel">Аккаунт</string>
+    <string name="settingsLabel">Настройки</string>
+    <string name="colorSchemeLabel">Цветовая схема</string>
+    <string name="changePass">поменять пароль</string>
+    <string name="monthExample">Октябрь 2020</string>
+    <string name="arrow_subject">arrowSubject</string>
+    <string name="arrow_image">arrowImage</string>
+    <string name="logo_ct">Логотип</string>
+    <string name="done_percent">процент выполнения</string>
+    <string name="test_completed">Тест пройден</string>
+    <string name="percentExample">35%</string>
+    <string name="back">Вернуться</string>
+    <string name="close_button_image">closeButtonImage</string>
+    <string name="lite_task_test_image">lite_task_test_image</string>
+    <string name="literExample">XXXXX</string>
+    <string name="book_logo">Лого книги</string>
+    <string name="up_arrow">up_arrow</string>
+    <string name="warning_image">warning_image</string>
+    <string name="day_example">XX</string>
+    <string name="number_day_example">0</string>
+    <string name="pairName">Название пары, пг</string>
+    <string name="clock">clock</string>
+    <string name="subject_name_example">Исследование операций</string>
+    <string name="person_image">person_image</string>
+    <string name="task_icon">Иконка заданий</string>
+    <string name="test_icon">test_icon</string>
+    <string name="schedule_label">Расписание</string>
+    <string name="subject_label">Предметы</string>
+    <string name="rating_label">Рейтинг</string>
+    <string name="account_label">Аккаунт</string>
+    <string name="no_subject">Предметов нет</string>
 </resources>

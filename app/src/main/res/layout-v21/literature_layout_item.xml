@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/literature_item_Rv"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="20dp"
     android:layout_marginTop="10dp"
-    android:elevation="5dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:elevation="5dp">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,21 +20,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
+            android:contentDescription="@string/book_logo"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_literature_background"
             app:layout_constraintStart_toStartOf="parent"
-            android:contentDescription="Лого книги" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_literature_background" />
 
 
         <ImageView
             android:id="@+id/imageView10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@id/imageView6"
             app:layout_constraintBottom_toBottomOf="@id/imageView6"
-            app:layout_constraintStart_toStartOf="@id/imageView6"
             app:layout_constraintEnd_toEndOf="@id/imageView6"
+            app:layout_constraintStart_toStartOf="@id/imageView6"
+            app:layout_constraintTop_toTopOf="@id/imageView6"
             app:srcCompat="@drawable/ic_icon_book" />
 
         <LinearLayout
@@ -45,6 +45,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/imageView6"
             app:layout_constraintTop_toTopOf="parent">
+
             <TextView
                 android:id="@+id/nameOfLiterature"
                 android:layout_width="match_parent"
@@ -58,10 +59,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="10dp"
-                android:textSize="16dp"
-                android:text="Автор" />
+                android:text="Автор"
+                android:textSize="16dp" />
         </LinearLayout>
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,7 +8,6 @@
     tools:context=".fragments.TestFragment">
 
 
-
     <FrameLayout
         android:id="@+id/questionTitle"
         android:layout_width="match_parent"
@@ -16,48 +15,44 @@
         android:layout_alignParentTop="true">
 
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="25dp">
 
+            <ImageView
+                android:id="@+id/closeTab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/testCloseConDesc"
+                android:src="@drawable/ic_test_close_back"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="25dp">
+            <ImageView
+                android:id="@+id/imageView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="18dp"
+                android:src="@drawable/ic_test_close_ic"
+                app:layout_constraintBottom_toBottomOf="@id/closeTab"
+                app:layout_constraintEnd_toEndOf="@id/closeTab"
+                app:layout_constraintStart_toStartOf="@id/closeTab"
+                app:layout_constraintTop_toTopOf="@id/closeTab" />
 
-                <ImageView
-                    android:id="@+id/closeTab"
-                    android:contentDescription="@string/testCloseConDesc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_test_close_back"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/testTheme"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Тест 1. Перебор подмножеств. Битовые маски"
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/closeTab"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/imageView9"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="18dp"
-                    android:src="@drawable/ic_test_close_ic"
-                    app:layout_constraintBottom_toBottomOf="@id/closeTab"
-                    app:layout_constraintEnd_toEndOf="@id/closeTab"
-                    app:layout_constraintStart_toStartOf="@id/closeTab"
-                    app:layout_constraintTop_toTopOf="@id/closeTab" />
-
-                <TextView
-                    android:id="@+id/testTheme"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Тест 1. Перебор подмножеств. Битовые маски"
-                    android:textColor="@color/white"
-                    android:textSize="20dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/closeTab"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </FrameLayout>
@@ -74,27 +69,50 @@
             android:id="@+id/testStartBody"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/question_background">
+            android:background="@drawable/question_background"
+            android:elevation="40dp">
 
 
-            <TextView
-                android:id="@+id/testDescriptionTV"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/testDescriptionCL"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingHorizontal="35dp"
-                android:text="Описание теста"
-                android:textSize="26dp"
+                android:layout_height="0dp"
+                android:layout_margin="25dp"
+                android:background="@color/colorTestPassed"
+                android:elevation="10dp"
                 app:layout_constraintBottom_toTopOf="@+id/countOfTries"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/textView11"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center_horizontal"
+                    android:text="Описание"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/testDescriptionTV"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:gravity="center_horizontal"
+                    android:paddingHorizontal="35dp"
+                    android:text="Описание теста"
+                    android:textSize="26dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView11"
+                    tools:layout_editor_absoluteX="25dp" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/closeTestButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:elevation="10dp"
                 android:padding="10dp"
                 app:layout_constraintBottom_toBottomOf="@+id/repeatButton"
                 app:layout_constraintStart_toEndOf="@+id/repeatButton"
@@ -122,6 +140,7 @@
                 android:layout_marginLeft="35dp"
                 android:layout_marginBottom="35dp"
                 android:background="@drawable/repeat_background"
+                android:elevation="10dp"
                 android:padding="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
@@ -159,6 +178,7 @@
                 android:layout_height="0dp"
                 android:layout_marginRight="25dp"
                 android:background="@color/colorTestPassed"
+                android:elevation="10dp"
                 android:maxWidth="140dp"
                 android:padding="10dp"
                 app:layout_constraintBottom_toBottomOf="@+id/countOfTries"
@@ -194,6 +214,7 @@
                 android:layout_marginLeft="25dp"
                 android:layout_marginBottom="40dp"
                 android:background="@color/colorTestPassed"
+                android:elevation="10dp"
                 android:maxWidth="140dp"
                 android:padding="10dp"
                 app:layout_constraintBottom_toTopOf="@+id/repeatButton"
