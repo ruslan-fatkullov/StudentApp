@@ -50,16 +50,12 @@ class TestRvAdapter(private val context: Context) :
                 else -> passedTestsLabel.text = "Пройден"
             }
 
-            val drawable1 = DrawableCompat.wrap(
-                ContextCompat.getDrawable(
-                    context, when (itemData.ratings.size) {
-                        0 -> R.drawable.test_not_passed
-                        else -> R.drawable.test_passed
-                    }
-                )!!
-            )
-            DrawableCompat.setTintMode(drawable1, PorterDuff.Mode.SRC_ATOP)
-            passedTestsLabel.background = drawable1
+            val textColor = when(itemData.ratings.size){
+                0 -> R.color.testNotPassed
+                else -> R.color.testPassed
+            }
+            passedTestsLabel.setTextColor(ContextCompat.getColor(context, textColor))
+
 
         }
 

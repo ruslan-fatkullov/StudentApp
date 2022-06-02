@@ -6,9 +6,6 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="20dp"
     android:layout_marginTop="10dp"
-    android:clickable="true"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
     android:orientation="vertical">
 
 
@@ -26,7 +23,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_task_icon" />
+            app:srcCompat="@drawable/ic_labeltask" />
 
         <TextView
             android:id="@+id/titleTask"

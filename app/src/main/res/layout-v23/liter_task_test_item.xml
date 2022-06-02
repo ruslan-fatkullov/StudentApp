@@ -4,9 +4,9 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="5dp"
+    android:elevation="5dp"
     android:background="@drawable/liter_task_test_item_selector"
     android:clickable="true"
-    android:elevation="5dp"
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:padding="10dp">
@@ -16,21 +16,21 @@
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:background="@drawable/ic_articles"
-        android:contentDescription="@string/lite_task_test_image"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/lite_task_test_image" />
 
     <TextView
         android:id="@+id/bookTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="8dp"
-        android:layout_marginLeft="4dp"
         android:text="@string/literExample"
+        android:layout_marginLeft="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/bookIv"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginHorizontal="8dp"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

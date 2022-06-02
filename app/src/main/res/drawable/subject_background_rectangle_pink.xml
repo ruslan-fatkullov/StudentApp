@@ -1,0 +1,45 @@
+<!-- drawable/rectangle.xml -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="263dp"
+    android:height="199dp"
+    android:viewportWidth="263"
+    android:viewportHeight="199"
+    >
+
+  <group>
+
+    <clip-path android:pathData="M14 0H249C256.732 0 263 6.26801 263 14V185C263 192.732 256.732 199 249 199H14C6.26801 199 0 192.732 0 185V14C0 6.26801 6.26801 0 14 0Z" />
+
+    <path
+        android:fillColor="#AB7DF6"
+        android:pathData="M0 0V199H263V0" />
+    <path
+        android:pathData="M6,14.285L36.857,14.285A6,6 0,0 1,42.857 20.285L42.857,79.714A6,6 0,0 1,36.857 85.714L6,85.714A6,6 0,0 1,0 79.714L0,20.285A6,6 0,0 1,6 14.285z"
+        android:strokeAlpha="0.1"
+        android:fillColor="#ffffff"
+        android:fillAlpha="0.1"/>
+    <path
+        android:pathData="M113.715,12.857L169.144,12.857A8,8 0,0 1,177.144 20.857L177.144,76.286A8,8 0,0 1,169.144 84.286L113.715,84.286A8,8 0,0 1,105.715 76.286L105.715,20.857A8,8 0,0 1,113.715 12.857z"
+        android:fillColor="#ffffff"
+        android:fillAlpha="0.2"/>
+    <path
+        android:pathData="M57.285,28.572L65.571,28.572A3,3 0,0 1,68.571 31.572L68.571,97.001A3,3 0,0 1,65.571 100.001L57.285,100.001A3,3 0,0 1,54.285 97.001L54.285,31.572A3,3 0,0 1,57.285 28.572z"
+        android:strokeAlpha="0.3"
+        android:fillColor="#ffffff"
+        android:fillAlpha="0.2"/>
+    <path
+        android:pathData="M83,0L91.286,0A3,3 0,0 1,94.286 3L94.286,68.429A3,3 0,0 1,91.286 71.429L83,71.429A3,3 0,0 1,80 68.429L80,3A3,3 0,0 1,83 0z"
+        android:strokeAlpha="0.7"
+        android:fillColor="#ffffff"
+        android:fillAlpha="0.1"/>
+
+
+
+
+  </group>
+
+
+
+
+</vector>

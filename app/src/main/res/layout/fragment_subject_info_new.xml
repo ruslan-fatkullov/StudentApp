@@ -32,8 +32,6 @@
             layout="@layout/subjects_overview_item_new"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:elevation="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/nextSubBtn"
             app:layout_constraintStart_toEndOf="@id/prevSubBtn"
@@ -59,26 +57,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="none"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginHorizontal="15dp"
         app:layout_constraintTop_toBottomOf="@+id/subItemCL">
 
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:padding="5dp">
+            android:orientation="horizontal">
 
             <include
                 android:id="@+id/subjectTaskLayout"
-                layout="@layout/liter_task_test_item" />
+                layout="@layout/liter_task_test_item_card"
+                android:layout_marginLeft="15dp"/>
 
             <include
                 android:id="@+id/subjectLiteratureLayout"
-                layout="@layout/liter_task_test_item" />
+                layout="@layout/liter_task_test_item_card" />
 
             <include
                 android:id="@+id/subjectTestLayout"
-                layout="@layout/liter_task_test_item" />
+                layout="@layout/liter_task_test_item_card" />
 
 
         </LinearLayout>

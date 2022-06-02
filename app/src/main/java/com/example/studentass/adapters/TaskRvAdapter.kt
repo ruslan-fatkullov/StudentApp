@@ -5,6 +5,7 @@ import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
@@ -27,6 +28,7 @@ class TaskRvAdapter(private val context: Context) :
 
         private val titleTask: TextView = view.titleTask
         private val typeTask: TextView = view.typeTask
+        private val imageView2: ImageView = view.imageView2
         val mainTaskLayoutSecond: ConstraintLayout = view.mainTaskLayoutSecond
 
 
@@ -47,21 +49,37 @@ class TaskRvAdapter(private val context: Context) :
             mainTaskLayoutSecond.background = drawable
 
 
-            val drawable1 = DrawableCompat.wrap(
+            val imageLabel = DrawableCompat.wrap(
                 ContextCompat.getDrawable(
-                    context, when (itemData.type) {
-                        "LAB" -> R.drawable.task_type_laboratory
-                        else -> R.drawable.task_type_practice
+                    context,
+                    when (itemData.type) {
+                        "LAB" -> R.drawable.ic_labeltask
+                        "PRACTICE" -> R.drawable.ic_label_task_practice
+                        "COURSEWORK" -> R.drawable.ic_label_task_coursework
+                        else -> {
+                            R.drawable.ic_labeltask
+                        }
                     }
                 )!!
             )
-            DrawableCompat.setTintMode(drawable1, PorterDuff.Mode.SRC_ATOP)
-            typeTask.background = drawable1
+            imageView2.setImageDrawable(imageLabel)
+
+            val textColor = when (itemData.type) {
+                "LAB" -> R.color.colorRatingAttendancePracticesProgress
+                "PRACTICE" -> R.color.typeSubjectTextOrange
+                "COURSEWORK" -> R.color.typeSubjectTextPurple
+                "ESSAY" -> R.color.colorPerformanceEssayProgress
+                else -> {
+                    R.color.black
+                }
+            }
+            typeTask.setTextColor(ContextCompat.getColor(context, textColor))
 
             titleTask.text = itemData.title
             typeTask.text = when (itemData.type) {
                 "LAB" -> "Лабораторная"
                 "PRACTICE" -> "Практическая"
+                "COURSEWORK" -> "Курсовая"
                 "ESSAY" -> "Эссе"
                 else -> ({}).toString()
             }

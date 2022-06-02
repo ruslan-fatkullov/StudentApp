@@ -37,16 +37,16 @@
     <color name="colorPerformanceTestsProgress">#1EE817</color>
     <color name="colorPerformanceEssayProgress">#F6DE0A</color>
 
-    <color name="colorPerformancePracticeProgressBackground">#FEDDE3</color>
-    <color name="colorPerformanceLaboratoryProgressBackground">#E2E7FF</color>
-    <color name="colorPerformanceTestsProgressBackground">#DDFEDF</color>
-    <color name="colorPerformanceEssayProgressBackground">#FEFCDD</color>
+    <color name="colorPerformancePracticeProgressBackground">#4DFF002E</color>
+    <color name="colorPerformanceLaboratoryProgressBackground">#80002CFF</color>
+    <color name="colorPerformanceTestsProgressBackground">#8000FF0F</color>
+    <color name="colorPerformanceEssayProgressBackground">#80FFF000</color>
 
 
     <color name="colorNotificationBackground">#FFFFFF</color>
     <color name="colorNotificationNewBackground">#ebf2ff</color>
 
-    <color name="colorTaskLaboratoryBackground">#1A62DCDE</color>
+    <color name="colorTaskLaboratoryBackground">#805A9CFF</color>
     <color name="colorTaskPracticeBackground">#1AFFA45A</color>
 
     <color name="colorTestPassed">#338DDE62</color>
@@ -71,6 +71,19 @@
     <color name="accountDataItem">#6B6B6B</color>
     <color name="accountDataTextColor">#575454</color>
     <color name="accountDataItemSegregation">#BAB6B6</color>
+
+    <color name="typeSubjectBackground">#DF5B5B</color>
+    <color name="typeSubjectTextPurple">#FD6374</color>
+    <color name="typeSubjectTextBlue">#25CED1</color>
+    <color name="typeSubjectTextOrange">#FAA73E</color>
+    <color name="typeSubjectTextPink">#AB7DF6</color>
+
+    <color name="testPassed">#33D69F</color>
+    <color name="testNotPassed">#FD6374</color>
+
+    <color name="activeTab">#495ECA</color>
+    <color name="noActiveTab">#97A1D7</color>
+    97A1D7
 
 
 </resources>
