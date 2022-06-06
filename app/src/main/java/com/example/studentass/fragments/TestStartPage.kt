@@ -22,15 +22,15 @@ class TestStartPage : Fragment() {
 
 
         val drawable = DrawableCompat.wrap(
-            context?.let { ContextCompat.getDrawable(it, R.drawable.test_info_count) }!!
+            context?.let { ContextCompat.getDrawable(it, R.drawable.ic_count_test_back) }!!
         )
         DrawableCompat.setTintMode(drawable, PorterDuff.Mode.SRC_ATOP)
         val drawable1 = DrawableCompat.wrap(
-            context?.let { ContextCompat.getDrawable(it, R.drawable.test_info_result) }!!
+            context?.let { ContextCompat.getDrawable(it, R.drawable.ic_result_test_back) }!!
         )
         DrawableCompat.setTintMode(drawable1, PorterDuff.Mode.SRC_ATOP)
         val drawable3 = DrawableCompat.wrap(
-            context?.let { ContextCompat.getDrawable(it, R.drawable.test_info_description) }!!
+            context?.let { ContextCompat.getDrawable(it, R.drawable.test_back__decyption) }!!
         )
         DrawableCompat.setTintMode(drawable3, PorterDuff.Mode.SRC_ATOP)
 

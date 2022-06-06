@@ -29,16 +29,25 @@ class TaskFragment : Fragment() {
 
         task_type.text = when (TaskListFragment.currentTask.type) {
             "LAB" -> "Лабораторная работа"
+            "COURSEWORK" -> "Курсовая работа"
             else -> "Практическая работа"
         }
-        typeTaskIV.setImageDrawable(
-            ContextCompat.getDrawable(
-                context!!, when (TaskListFragment.currentTask.type) {
-                    "LAB" -> R.drawable.ic_flask
-                    else -> R.drawable.ic_practice_paper
-                }
-            )
-        )
+        task_type.background = ContextCompat.getDrawable(context!!, when(TaskListFragment.currentTask.type){
+            "LAB" -> R.drawable.laboratory_task_band
+            "COURSEWORK" -> R.drawable.courework_task_band
+            else -> R.drawable.practice_task_band
+        })
+
+        task_type.setTextColor(ContextCompat.getColor(context!!, when(TaskListFragment.currentTask.type){
+            "LAB" -> R.color.colorTypeLaboratory
+            "COURSEWORK" -> R.color.colorTypeCoursework
+            else -> R.color.colorTypePractice
+        }))
+
+        teacherCommentCL.background = ContextCompat.getDrawable(context!!, R.drawable.teacher_comment_background_selector)
+
+        task_descriptionCL.background = ContextCompat.getDrawable(context!!, R.drawable.task_decryption_back)
+
         task_name.text = TaskListFragment.currentTask.title
         task_description.text = TaskListFragment.currentTask.description
 
@@ -47,6 +56,10 @@ class TaskFragment : Fragment() {
 
 
         loadWork()
+
+        teacherCommentCL.setOnClickListener {
+            getAppCompatActivity<MainActivity>()?.switchUp(ChatFragment::class.java)
+        }
 
         backCL.setOnClickListener {
             getAppCompatActivity<MainActivity>()?.switchDown()
@@ -99,17 +112,30 @@ class TaskFragment : Fragment() {
         if (r.isNotEmpty()) {
 
             mark_label.visibility = View.VISIBLE
-            mark.visibility = View.VISIBLE
-            teacherComment.visibility = View.VISIBLE
+            //teacherComment.visibility = View.VISIBLE
             teacherComment_label.visibility = View.VISIBLE
 
-            mark.text = when (r[0].mark) {
-                "TWO" -> "2"
-                "TREE" -> "3"
-                "FOUR" -> "4"
-                "FIVE" -> "5"
-                else -> "1"
+            val commentToWorks = "Комметарии к ответам (${r.size})"
+            teacherComment_label.text = commentToWorks
+            mark_label.text = when (r[0].mark) {
+                "TREE" -> "Удовлетворительно"
+                "FOUR" -> "Хорошо"
+                "FIVE" -> "Отлично"
+                else -> "Не удовлетворительно"
             }
+            mark_label.setTextColor(ContextCompat.getColor(context!!, when(r[0].mark){
+                "TREE" -> R.color.three
+                "FOUR" -> R.color.four
+                "FIVE" -> R.color.five
+                else -> R.color.white
+            }))
+            mark_label.background = ContextCompat.getDrawable(context!!, when (r[0].mark) {
+                "TREE" -> R.drawable.label_for_3
+                "FOUR" -> R.drawable.ic_label_for_4
+                "FIVE" -> R.drawable.ic_label_for_5
+                else -> R.color.white
+            })
+
             doneTaskIV.setImageDrawable(
                 ContextCompat.getDrawable(
                     context!!,
@@ -117,9 +143,8 @@ class TaskFragment : Fragment() {
                 )
             )
             doneLabel.text = "Сдано"
-            teacherComment.text = r[0].teacherComment
-            teacherComment.setTextColor(ContextCompat.getColor(context!!, R.color.textTaskColor))
-            mark.setTextColor(ContextCompat.getColor(context!!, R.color.textTaskColor))
+            //teacherComment.text = r[0].teacherComment
+            //teacherComment.setTextColor(ContextCompat.getColor(context!!, R.color.textTaskColor))
         } else {
             doneTaskIV.setImageDrawable(
                 ContextCompat.getDrawable(
@@ -129,9 +154,9 @@ class TaskFragment : Fragment() {
             )
             doneLabel.text = "Не сдано"
             mark_label.visibility = View.INVISIBLE
-            mark.visibility = View.INVISIBLE
-            teacherComment.visibility = View.INVISIBLE
+            //teacherComment.visibility = View.INVISIBLE
             teacherComment_label.visibility = View.INVISIBLE
+            teacherCommentCL.visibility = View.INVISIBLE
         }
     }
 

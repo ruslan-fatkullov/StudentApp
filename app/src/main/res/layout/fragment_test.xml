@@ -8,24 +8,6 @@
     tools:context=".fragments.TestFragment">
 
 
-    <!--    <FrameLayout-->
-    <!--        android:id="@+id/nameOfTestFrame"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_alignParentTop="true">-->
-    <!--        <TextView-->
-    <!--            android:id="@+id/nameOfTest"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:padding="15dp"-->
-    <!--            android:gravity="center_horizontal"-->
-    <!--            android:textSize="25sp"-->
-    <!--            android:text="Тема теста"-->
-    <!--            android:background="@color/colorActionBar"-->
-    <!--            android:textAlignment="center" />-->
-
-    <!--    </FrameLayout>-->
-
     <FrameLayout
         android:id="@+id/questionTitle"
         android:layout_width="match_parent"

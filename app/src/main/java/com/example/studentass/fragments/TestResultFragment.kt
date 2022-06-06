@@ -19,15 +19,7 @@ class TestResultFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val testResultPercent = view.testResultPercent
         val backToTestBottom = view.backToTestBottom
-        val drawable = DrawableCompat.wrap(
-            ContextCompat.getDrawable(
-                context!!,
-                R.drawable.button_green_background
-            )!!
-        )
-        DrawableCompat.setTintMode(drawable, PorterDuff.Mode.SRC_ATOP)
 
-        backToTestBottom.background = drawable
         val resultTest = TestFragment.ratingOfTest.toString()
         testResultPercent.text = "${resultTest}%"
 

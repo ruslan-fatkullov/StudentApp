@@ -52,7 +52,7 @@
     <color name="colorTestPassed">#338DDE62</color>
     <color name="colorTestNotPassed">#33DECD62</color>
 
-    <color name="colorTestInfoCount">#995A9CFF</color>
+    <color name="colorTestInfoCount">#990066FF</color>
     <color name="colorTestInfoResult">#9955DD37</color>
     <color name="colorTestInfoDescription">#99FFC107</color>
 
@@ -83,7 +83,20 @@
 
     <color name="activeTab">#495ECA</color>
     <color name="noActiveTab">#97A1D7</color>
-    97A1D7
+
+    <color name="three">#D1C025</color>
+    <color name="four">#2593D1</color>
+    <color name="five">#25D141</color>
+
+    <color name="colorTypeLaboratory">#3B37F4</color>
+    <color name="colorTypePractice">#FFC107</color>
+    <color name="colorTypeCoursework">#F43753</color>
+
+
+
+    <color name="chatHeader">#E4E5E6</color>
+
+
 
 
 </resources>
